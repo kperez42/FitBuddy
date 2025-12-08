@@ -1,6 +1,6 @@
 //
 //  BiometricAuthManager.swift
-//  Celestia
+//  FitBuddy
 //
 //  Manages Face ID and Touch ID authentication
 //  Provides secure biometric login and app locking
@@ -82,7 +82,7 @@ class BiometricAuthManager: ObservableObject {
     /// Authenticate user with biometrics
     /// - Parameter reason: Reason shown to user in prompt
     /// - Returns: True if authentication succeeded
-    func authenticate(reason: String = "Authenticate to access Celestia") async throws -> Bool {
+    func authenticate(reason: String = "Authenticate to access FitBuddy") async throws -> Bool {
         let context = LAContext()
 
         var error: NSError?
@@ -112,7 +112,7 @@ class BiometricAuthManager: ObservableObject {
     /// Authenticate with fallback to passcode
     /// - Parameter reason: Reason shown to user
     /// - Returns: True if authentication succeeded
-    func authenticateWithPasscode(reason: String = "Authenticate to access Celestia") async throws -> Bool {
+    func authenticateWithPasscode(reason: String = "Authenticate to access FitBuddy") async throws -> Bool {
         let context = LAContext()
         context.localizedFallbackTitle = "Use Passcode"
 
@@ -142,7 +142,7 @@ class BiometricAuthManager: ObservableObject {
         }
 
         // Verify user can authenticate before enabling
-        let success = try await authenticate(reason: "Enable \(biometricTypeString) for Celestia")
+        let success = try await authenticate(reason: "Enable \(biometricTypeString) for FitBuddy")
 
         if success {
             isEnabled = true
@@ -297,7 +297,7 @@ enum BiometricError: LocalizedError {
      }
  }
 
- // In App Launch (CelestiaApp.swift or RootView):
+ // In App Launch (FitBuddyApp.swift or RootView):
 
  .onAppear {
      if BiometricAuthManager.shared.shouldAuthenticateOnLaunch() {

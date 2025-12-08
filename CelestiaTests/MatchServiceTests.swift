@@ -1,12 +1,12 @@
 //
 //  MatchServiceTests.swift
-//  CelestiaTests
+//  FitBuddyTests
 //
 //  Comprehensive unit tests for MatchService
 //
 
 import Testing
-@testable import Celestia
+@testable import FitBuddy
 import Foundation
 
 @Suite("MatchService Tests")

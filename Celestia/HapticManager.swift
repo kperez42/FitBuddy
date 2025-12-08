@@ -1,6 +1,6 @@
 //
 //  HapticManager.swift
-//  Celestia
+//  FitBuddy
 //
 //  Created by Claude
 //  Centralized haptic feedback management

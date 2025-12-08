@@ -1,6 +1,6 @@
 //
 //  InterestService.swift
-//  Celestia
+//  FitBuddy
 //
 //  Service for handling user interests and likes
 //
@@ -62,9 +62,9 @@ class InterestService: ObservableObject, ListenerLifecycleAware {
         // Check rate limiting
         guard RateLimiter.shared.canSendLike() else {
             if let timeRemaining = RateLimiter.shared.timeUntilReset(for: .like) {
-                throw CelestiaError.rateLimitExceededWithTime(timeRemaining)
+                throw FitBuddyError.rateLimitExceededWithTime(timeRemaining)
             }
-            throw CelestiaError.rateLimitExceeded
+            throw FitBuddyError.rateLimitExceeded
         }
 
         // UX FIX: Properly handle interest check instead of silent failure
@@ -82,7 +82,7 @@ class InterestService: ObservableObject, ListenerLifecycleAware {
         if let msg = message, !msg.isEmpty {
             guard ContentModerator.shared.isAppropriate(msg) else {
                 let violations = ContentModerator.shared.getViolations(msg)
-                throw CelestiaError.inappropriateContentWithReasons(violations)
+                throw FitBuddyError.inappropriateContentWithReasons(violations)
             }
         }
 

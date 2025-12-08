@@ -1,6 +1,6 @@
 //
 //  ProfilePremiumFlowTests.swift
-//  CelestiaUITests
+//  FitBuddyUITests
 //
 //  Tests for Profile Editing and Premium Upgrade flows
 //
@@ -18,7 +18,7 @@ final class ProfilePremiumFlowTests: XCTestCase {
         app.launchArguments = ["--uitesting", "--authenticated"]
         app.launchEnvironment = [
             "UITEST_DISABLE_ANIMATIONS": "1",
-            "UITEST_USER_EMAIL": "test@celestia.app"
+            "UITEST_USER_EMAIL": "test@fitbuddy.app"
         ]
         app.launch()
     }

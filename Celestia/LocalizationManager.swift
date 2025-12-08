@@ -1,6 +1,6 @@
 //
 //  LocalizationManager.swift
-//  Celestia
+//  FitBuddy
 //
 //  Centralized localization management
 //  Provides type-safe string access and language switching
@@ -114,7 +114,7 @@ class LocalizationManager: ObservableObject {
 // MARK: - Notification Extension
 
 extension Notification.Name {
-    static let languageChanged = Notification.Name("com.celestia.languageChanged")
+    static let languageChanged = Notification.Name("com.fitbuddy.languageChanged")
 }
 
 // MARK: - Localized String Keys
@@ -171,7 +171,7 @@ enum LocalizedStrings {
         static let age = "profile.age"
         static let location = "profile.location"
         static let gender = "profile.gender"
-        static let lookingFor = "profile.looking_for"
+        static let workoutPreference = "profile.looking_for"
         static let male = "profile.male"
         static let female = "profile.female"
         static let nonBinary = "profile.non_binary"

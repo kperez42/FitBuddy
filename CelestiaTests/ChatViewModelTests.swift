@@ -1,13 +1,13 @@
 //
 //  ChatViewModelTests.swift
-//  CelestiaTests
+//  FitBuddyTests
 //
 //  Comprehensive tests for ChatViewModel
 //
 
 import Testing
 import FirebaseFirestore
-@testable import Celestia
+@testable import FitBuddy
 
 @Suite("ChatViewModel Tests")
 @MainActor

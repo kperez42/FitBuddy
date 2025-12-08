@@ -1,13 +1,13 @@
 //
-//  CelestiaUITestsLaunchTests.swift
-//  CelestiaUITests
+//  FitBuddyUITestsLaunchTests.swift
+//  FitBuddyUITests
 //
 //  Created by Kevin Perez  on 10/29/25.
 //
 
 import XCTest
 
-final class CelestiaUITestsLaunchTests: XCTestCase {
+final class FitBuddyUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true

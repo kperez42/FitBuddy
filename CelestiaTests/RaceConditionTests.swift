@@ -1,6 +1,6 @@
 //
 //  RaceConditionTests.swift
-//  CelestiaTests
+//  FitBuddyTests
 //
 //  Tests for race conditions and concurrency issues:
 //  - Concurrent message sending
@@ -12,7 +12,7 @@
 
 import Testing
 import Foundation
-@testable import Celestia
+@testable import FitBuddy
 
 @Suite("Race Condition Tests")
 struct RaceConditionTests {

@@ -1,6 +1,6 @@
 //
 //  ImageCache.swift
-//  Celestia
+//  FitBuddy
 //
 //  Created by Claude
 //  High-performance image caching with memory and disk storage

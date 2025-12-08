@@ -1,6 +1,6 @@
 //
 //  OnboardingViewModel.swift
-//  Celestia
+//  FitBuddy
 //
 //  Centralized onboarding state management with progressive disclosure
 //  Handles tutorial flow, profile quality, incentives, and A/B testing

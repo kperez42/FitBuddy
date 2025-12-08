@@ -1,6 +1,6 @@
 //
 //  LikeActivityView.swift
-//  Celestia
+//  FitBuddy
 //
 //  Timeline of like activity (received and sent)
 //

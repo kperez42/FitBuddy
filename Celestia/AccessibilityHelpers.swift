@@ -1,6 +1,6 @@
 //
 //  AccessibilityHelpers.swift
-//  Celestia
+//  FitBuddy
 //
 //  Comprehensive accessibility utilities and extensions for WCAG 2.1 Level AA compliance
 //
@@ -354,7 +354,7 @@ enum AccessibilityIdentifier {
     static let nameField = "name_field"
     static let ageField = "age_field"
     static let genderPicker = "gender_picker"
-    static let lookingForPicker = "looking_for_picker"
+    static let workoutPreferencePicker = "looking_for_picker"
     static let locationField = "location_field"
     static let countryField = "country_field"
     static let bioField = "bio_field"

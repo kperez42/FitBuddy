@@ -1,6 +1,6 @@
 //
 //  FilterPresetManager.swift
-//  Celestia
+//  FitBuddy
 //
 //  Manages saved filter presets and search history
 //
@@ -136,9 +136,9 @@ class FilterPresetManager: ObservableObject {
 
         // Preset 3: Long-term Relationship
         var longTerm = SearchFilter()
-        longTerm.relationshipGoals = [.longTerm, .marriage]
+        longTerm.fitnessGoals = [.longTerm, .marriage]
         longTerm.verifiedOnly = true
-        _ = try? savePreset(name: "Looking for Love", filter: longTerm)
+        _ = try? savePreset(name: "Looking for Partners", filter: longTerm)
 
         Logger.shared.info("Default presets created", category: .general)
     }

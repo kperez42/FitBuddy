@@ -1,12 +1,12 @@
 //
 //  LikeActivityViewModelTests.swift
-//  CelestiaTests
+//  FitBuddyTests
 //
 //  Comprehensive tests for LikeActivityViewModel
 //
 
 import Testing
-@testable import Celestia
+@testable import FitBuddy
 
 @Suite("LikeActivityViewModel Tests")
 @MainActor

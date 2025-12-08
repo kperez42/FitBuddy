@@ -1,6 +1,6 @@
 //
 //  CameraView.swift
-//  Celestia
+//  FitBuddy
 //
 //  Camera view for selfie capture with verification
 //
@@ -193,7 +193,7 @@ class CameraManager: NSObject, ObservableObject {
     let session = AVCaptureSession()
     private var photoOutput = AVCapturePhotoOutput()
     private var captureCompletion: ((UIImage?) -> Void)?
-    private let sessionQueue = DispatchQueue(label: "com.celestia.camera.session")
+    private let sessionQueue = DispatchQueue(label: "com.fitbuddy.camera.session")
 
     func requestPermission() async -> Bool {
         let status = AVCaptureDevice.authorizationStatus(for: .video)

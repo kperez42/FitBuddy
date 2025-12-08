@@ -1,6 +1,6 @@
 //
 //  FirebaseManager.swift
-//  Celestia
+//  FitBuddy
 //
 //  Dating app for international connections
 //

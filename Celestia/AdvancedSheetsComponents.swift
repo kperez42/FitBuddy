@@ -1,6 +1,6 @@
 //
 //  AdvancedFiltersSheet.swift
-//  Celestia
+//  FitBuddy
 //
 //  Advanced filtering options for user discovery
 //

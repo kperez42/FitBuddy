@@ -1,6 +1,6 @@
 //
 //  ChatViewModel.swift
-//  Celestia
+//  FitBuddy
 //
 //  Handles chat and messaging functionality
 //
@@ -246,7 +246,7 @@ class ChatViewModel: ObservableObject {
                 // Status tracking is handled by notification observers
                 pendingMessageTexts.remove(text)
 
-            } catch let error as CelestiaError {
+            } catch let error as FitBuddyError {
                 pendingMessageTexts.remove(text)
                 Logger.shared.error("Error sending message", category: .messaging, error: error)
 
@@ -270,7 +270,7 @@ class ChatViewModel: ObservableObject {
                 Logger.shared.error("Error sending message", category: .messaging, error: error)
 
                 // Check if it's a network error
-                let celestiaError = CelestiaError.from(error)
+                let celestiaError = FitBuddyError.from(error)
                 if case .networkError = celestiaError {
                     await showError("You're offline. Message will be sent when connection is restored.")
                 } else if case .noInternetConnection = celestiaError {

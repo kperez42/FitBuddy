@@ -1,6 +1,6 @@
 //
 //  BackgroundCheckManager.swift
-//  Celestia
+//  FitBuddy
 //
 //  Background check integration with third-party services (Checkr, Onfido)
 //  Premium feature for enhanced safety verification
@@ -146,7 +146,7 @@ class BackgroundCheckManager {
         return BackgroundCheckConsent(
             title: "Background Check Authorization",
             description: """
-            By authorizing this background check, you agree to allow Celestia to conduct a comprehensive background check including:
+            By authorizing this background check, you agree to allow FitBuddy to conduct a comprehensive background check including:
 
             • Criminal record search
             • Sex offender registry check

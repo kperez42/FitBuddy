@@ -1,13 +1,13 @@
 //
 //  DiscoverViewModelTests.swift
-//  CelestiaTests
+//  FitBuddyTests
 //
 //  Comprehensive tests for DiscoverViewModel
 //
 
 import Testing
 import FirebaseFirestore
-@testable import Celestia
+@testable import FitBuddy
 
 @Suite("DiscoverViewModel Tests")
 @MainActor
@@ -413,15 +413,15 @@ struct DiscoverViewModelTests {
     func testUserGenderPreferences() async throws {
         let viewModel = DiscoverViewModel()
 
-        let user1 = TestFixtures.createTestUser(gender: "Male", lookingFor: "Female")
-        let user2 = TestFixtures.createTestUser(gender: "Female", lookingFor: "Male")
-        let user3 = TestFixtures.createTestUser(gender: "Non-binary", lookingFor: "Everyone")
+        let user1 = TestFixtures.createTestUser(gender: "Male", workoutPreference: "Female")
+        let user2 = TestFixtures.createTestUser(gender: "Female", workoutPreference: "Male")
+        let user3 = TestFixtures.createTestUser(gender: "Non-binary", workoutPreference: "Everyone")
 
         viewModel.users = [user1, user2, user3]
 
-        #expect(viewModel.users[0].lookingFor == "Female")
-        #expect(viewModel.users[1].lookingFor == "Male")
-        #expect(viewModel.users[2].lookingFor == "Everyone")
+        #expect(viewModel.users[0].workoutPreference == "Female")
+        #expect(viewModel.users[1].workoutPreference == "Male")
+        #expect(viewModel.users[2].workoutPreference == "Everyone")
     }
 
     // MARK: - Premium Features Tests

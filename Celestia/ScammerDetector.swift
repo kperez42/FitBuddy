@@ -1,6 +1,6 @@
 //
 //  ScammerDetector.swift
-//  Celestia
+//  FitBuddy
 //
 //  Automated scammer detection analyzing chat messages for scam patterns
 //  Detects romance scams, financial scams, catfishing, and malicious behavior

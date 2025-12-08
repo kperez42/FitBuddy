@@ -1,6 +1,6 @@
 //
 //  OnboardingView.swift
-//  Celestia
+//  FitBuddy
 //
 //  ELITE ONBOARDING - First Impressions Matter
 //
@@ -45,13 +45,13 @@ struct OnboardingView: View {
     @State private var isUploadingPhotos = false
 
     // Step 4: Preferences
-    @State private var lookingFor = "Everyone"
+    @State private var workoutPreference = "Everyone"
     @State private var selectedInterests: [String] = []
     @State private var selectedLanguages: [String] = []
 
     // Step 6: Additional Details (Optional)
     @State private var height: Int? = nil
-    @State private var relationshipGoal: String = "Prefer not to say"
+    @State private var fitnessGoal: String = "Prefer not to say"
     @State private var ageRangeMin: Int = 18
     @State private var ageRangeMax: Int = 50
     @State private var maxDistance: Int = 50
@@ -74,11 +74,11 @@ struct OnboardingView: View {
     @State private var onboardingStartTime = Date()
     
     let genderOptions = ["Male", "Female", "Non-binary", "Other"]
-    let lookingForOptions = ["Men", "Women", "Everyone"]
+    let workoutPreferenceOptions = ["Men", "Women", "Everyone"]
     let totalSteps = 8
 
     // Step 6 options
-    let relationshipGoalOptions = ["Prefer not to say", "Casual Dating", "Long-term Relationship", "Marriage", "Friendship", "Not Sure Yet"]
+    let fitnessGoalOptions = ["Prefer not to say", "Casual Workouts", "Committed Training Partner", "Competition Partner", "Social Fitness", "Exploring Options"]
     let heightOptions: [Int] = Array(140...220) // cm range
 
     // Step 7 & 8 options (Lifestyle)
@@ -1151,10 +1151,10 @@ struct OnboardingView: View {
                         .fontWeight(.medium)
                         .foregroundColor(.secondary)
                     
-                    ForEach(lookingForOptions, id: \.self) { option in
+                    ForEach(workoutPreferenceOptions, id: \.self) { option in
                         Button {
                             withAnimation(.spring(response: 0.3)) {
-                                lookingFor = option
+                                workoutPreference = option
                                 HapticManager.shared.selection()
                             }
                         } label: {
@@ -1164,7 +1164,7 @@ struct OnboardingView: View {
                                 
                                 Spacer()
                                 
-                                if lookingFor == option {
+                                if workoutPreference == option {
                                     Image(systemName: "checkmark.circle.fill")
                                         .foregroundColor(.purple)
                                 } else {
@@ -1174,7 +1174,7 @@ struct OnboardingView: View {
                             }
                             .padding()
                             .background(
-                                lookingFor == option ?
+                                workoutPreference == option ?
                                 LinearGradient(
                                     colors: [Color.purple.opacity(0.1), Color.pink.opacity(0.05)],
                                     startPoint: .leading,
@@ -1186,7 +1186,7 @@ struct OnboardingView: View {
                             .overlay(
                                 RoundedRectangle(cornerRadius: 12)
                                     .stroke(
-                                        lookingFor == option ? Color.purple.opacity(0.5) : Color.gray.opacity(0.2),
+                                        workoutPreference == option ? Color.purple.opacity(0.5) : Color.gray.opacity(0.2),
                                         lineWidth: 1
                                     )
                             )
@@ -1373,10 +1373,10 @@ struct OnboardingView: View {
                                 .font(.headline)
                         }
 
-                        ForEach(relationshipGoalOptions.filter { $0 != "Prefer not to say" }, id: \.self) { goal in
+                        ForEach(fitnessGoalOptions.filter { $0 != "Prefer not to say" }, id: \.self) { goal in
                             Button {
                                 withAnimation(.spring(response: 0.3)) {
-                                    relationshipGoal = goal
+                                    fitnessGoal = goal
                                     HapticManager.shared.selection()
                                 }
                             } label: {
@@ -1386,7 +1386,7 @@ struct OnboardingView: View {
 
                                     Spacer()
 
-                                    if relationshipGoal == goal {
+                                    if fitnessGoal == goal {
                                         Image(systemName: "checkmark.circle.fill")
                                             .foregroundColor(.pink)
                                     } else {
@@ -1396,7 +1396,7 @@ struct OnboardingView: View {
                                 }
                                 .padding()
                                 .background(
-                                    relationshipGoal == goal ?
+                                    fitnessGoal == goal ?
                                     LinearGradient(
                                         colors: [Color.pink.opacity(0.1), Color.purple.opacity(0.05)],
                                         startPoint: .leading,
@@ -1408,7 +1408,7 @@ struct OnboardingView: View {
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 12)
                                         .stroke(
-                                            relationshipGoal == goal ? Color.pink.opacity(0.5) : Color.gray.opacity(0.2),
+                                            fitnessGoal == goal ? Color.pink.opacity(0.5) : Color.gray.opacity(0.2),
                                             lineWidth: 1
                                         )
                                 )
@@ -2052,7 +2052,7 @@ struct OnboardingView: View {
                 user.bio = bio
                 user.location = location
                 user.country = country
-                user.lookingFor = lookingFor
+                user.workoutPreference = workoutPreference
                 user.photos = photoURLs
                 user.profileImageURL = photoURLs.first ?? ""
                 user.interests = selectedInterests
@@ -2060,7 +2060,7 @@ struct OnboardingView: View {
 
                 // Step 6 optional fields
                 user.height = height
-                user.relationshipGoal = (relationshipGoal == "Prefer not to say") ? nil : relationshipGoal
+                user.fitnessGoal = (fitnessGoal == "Prefer not to say") ? nil : fitnessGoal
                 user.ageRangeMin = ageRangeMin
                 user.ageRangeMax = ageRangeMax
 
@@ -2133,13 +2133,13 @@ struct OnboardingView: View {
             country = user.country ?? ""
 
             // Step 4: Preferences
-            lookingFor = user.lookingFor ?? "Everyone"
+            workoutPreference = user.workoutPreference ?? "Everyone"
             selectedInterests = user.interests ?? []
             selectedLanguages = user.languages ?? []
 
             // Step 6: Better Matches
             height = user.height
-            relationshipGoal = user.relationshipGoal ?? "Prefer not to say"
+            fitnessGoal = user.fitnessGoal ?? "Prefer not to say"
             ageRangeMin = user.ageRangeMin ?? 18
             ageRangeMax = user.ageRangeMax ?? 50
             maxDistance = user.maxDistance ?? 50

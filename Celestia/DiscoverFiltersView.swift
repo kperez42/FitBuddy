@@ -1,8 +1,8 @@
 //
 //  DiscoverFiltersView.swift
-//  Celestia
+//  FitBuddy
 //
-//  Professional filter settings for discovery
+//  Professional filter settings for workout partner discovery
 //
 
 import SwiftUI
@@ -38,9 +38,9 @@ struct DiscoverFiltersView: View {
         "Hindu", "Jewish", "Muslim", "Spiritual", "Other", "Prefer not to say"
     ]
 
-    let relationshipGoalOptions = [
-        "Casual Dating", "Long-term Relationship", "Marriage",
-        "Friendship", "Not Sure Yet"
+    let fitnessGoalOptions = [
+        "Weight Loss", "Muscle Gain", "Endurance Training",
+        "Flexibility", "Social Fitness", "Competition Training"
     ]
 
     let smokingOptions = ["Never", "Socially", "Regularly", "Trying to Quit"]
@@ -94,7 +94,7 @@ struct DiscoverFiltersView: View {
                                     Divider().padding(.horizontal)
                                     religionSection
                                     Divider().padding(.horizontal)
-                                    relationshipGoalsSection
+                                    fitnessGoalsSection
                                 }
                             }
                         )
@@ -513,21 +513,21 @@ struct DiscoverFiltersView: View {
         }
     }
 
-    // MARK: - Relationship Goals Section
+    // MARK: - Fitness Goals Section
 
-    private var relationshipGoalsSection: some View {
+    private var fitnessGoalsSection: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
-                Text("Looking For")
+                Text("Fitness Goals")
                     .font(.subheadline)
                     .fontWeight(.medium)
 
                 Spacer()
 
-                if !filters.relationshipGoals.isEmpty {
+                if !filters.fitnessGoals.isEmpty {
                     Button("Clear") {
                         HapticManager.shared.impact(.light)
-                        filters.relationshipGoals.removeAll()
+                        filters.fitnessGoals.removeAll()
                     }
                     .font(.caption)
                     .foregroundColor(.purple)
@@ -535,12 +535,12 @@ struct DiscoverFiltersView: View {
             }
 
             FlowLayout(spacing: 8) {
-                ForEach(relationshipGoalOptions, id: \.self) { option in
+                ForEach(fitnessGoalOptions, id: \.self) { option in
                     SelectableFilterChip(
                         title: option,
-                        isSelected: filters.relationshipGoals.contains(option)
+                        isSelected: filters.fitnessGoals.contains(option)
                     ) {
-                        toggleRelationshipGoal(option)
+                        toggleFitnessGoal(option)
                     }
                 }
             }
@@ -630,7 +630,7 @@ struct DiscoverFiltersView: View {
         if filters.minHeight != nil { count += 1 }
         if filters.maxHeight != nil { count += 1 }
         count += filters.religions.count
-        count += filters.relationshipGoals.count
+        count += filters.fitnessGoals.count
         count += filters.smokingPreferences.count
         count += filters.drinkingPreferences.count
         count += filters.petPreferences.count
@@ -654,7 +654,7 @@ struct DiscoverFiltersView: View {
             count += filters.educationLevels.count
             if filters.minHeight != nil || filters.maxHeight != nil { count += 1 }
             count += filters.religions.count
-            count += filters.relationshipGoals.count
+            count += filters.fitnessGoals.count
             return count > 0 ? count : nil
         case .lifestyle:
             let count = filters.smokingPreferences.count +
@@ -693,12 +693,12 @@ struct DiscoverFiltersView: View {
         }
     }
 
-    private func toggleRelationshipGoal(_ option: String) {
+    private func toggleFitnessGoal(_ option: String) {
         HapticManager.shared.impact(.light)
-        if filters.relationshipGoals.contains(option) {
-            filters.relationshipGoals.remove(option)
+        if filters.fitnessGoals.contains(option) {
+            filters.fitnessGoals.remove(option)
         } else {
-            filters.relationshipGoals.insert(option)
+            filters.fitnessGoals.insert(option)
         }
     }
 }

@@ -1,6 +1,6 @@
 //
 //  SavedProfilesView.swift
-//  Celestia
+//  FitBuddy
 //
 //  Shows bookmarked/saved profiles for later viewing
 //
@@ -807,7 +807,7 @@ struct SavedProfilesView: View {
                         Logger.shared.info("Liked saved profile", category: .matching)
                     }
                 }
-            } catch let error as CelestiaError {
+            } catch let error as FitBuddyError {
                 Logger.shared.error("Error liking saved profile", category: .matching, error: error)
                 await MainActor.run {
                     HapticManager.shared.notification(.error)

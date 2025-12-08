@@ -1,6 +1,6 @@
 //
 //  SignupScreen.swift
-//  CelestiaUITests
+//  FitBuddyUITests
 //
 //  Page Object for Signup Screen
 //
@@ -31,7 +31,7 @@ class SignupScreen: BaseScreen {
         app.pickers["Gender"]
     }
 
-    private var lookingForPicker: XCUIElement {
+    private var workoutPreferencePicker: XCUIElement {
         app.pickers["Looking For"]
     }
 
@@ -81,9 +81,9 @@ class SignupScreen: BaseScreen {
     }
 
     @discardableResult
-    func selectLookingFor(_ lookingFor: String) -> Self {
-        tap(lookingForPicker)
-        app.pickerWheels.firstMatch.adjust(toPickerWheelValue: lookingFor)
+    func selectLookingFor(_ workoutPreference: String) -> Self {
+        tap(workoutPreferencePicker)
+        app.pickerWheels.firstMatch.adjust(toPickerWheelValue: workoutPreference)
         return self
     }
 
@@ -113,7 +113,7 @@ class SignupScreen: BaseScreen {
         password: String,
         age: String,
         gender: String,
-        lookingFor: String,
+        workoutPreference: String,
         referralCode: String? = nil
     ) {
         enterFullName(name)
@@ -121,7 +121,7 @@ class SignupScreen: BaseScreen {
         enterPassword(password)
         enterAge(age)
         selectGender(gender)
-        selectLookingFor(lookingFor)
+        selectLookingFor(workoutPreference)
 
         if let code = referralCode {
             enterReferralCode(code)

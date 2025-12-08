@@ -1,6 +1,6 @@
 //
 //  MessagesScreen.swift
-//  CelestiaUITests
+//  FitBuddyUITests
 //
 //  Page Object for Messages/Chat Screen
 //

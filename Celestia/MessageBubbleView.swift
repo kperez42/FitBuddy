@@ -1,6 +1,6 @@
 //
 //  MessageBubbleView.swift
-//  Celestia
+//  FitBuddy
 //
 //  Shared message bubble component for chat views
 //

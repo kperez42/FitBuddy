@@ -1,6 +1,6 @@
 //
 //  ValidationHelper.swift
-//  Celestia
+//  FitBuddy
 //
 //  Centralized input validation utility
 //  Eliminates code duplication and ensures consistent validation across the app
@@ -196,7 +196,7 @@ enum ValidationHelper {
     /// Validate age (must be 18+)
     static func validateAge(_ age: Int) -> ValidationResult {
         guard age >= 18 else {
-            return .invalid("You must be at least 18 years old to use Celestia.")
+            return .invalid("You must be at least 18 years old to use FitBuddy.")
         }
 
         guard age <= 120 else {

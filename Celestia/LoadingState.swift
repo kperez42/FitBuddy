@@ -1,6 +1,6 @@
 //
 //  LoadingState.swift
-//  Celestia
+//  FitBuddy
 //
 //  Generic loading state pattern for consistent UX across all views
 //  Prevents blank screens and provides clear user feedback

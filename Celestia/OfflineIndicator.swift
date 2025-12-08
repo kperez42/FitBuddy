@@ -1,6 +1,6 @@
 //
 //  OfflineIndicator.swift
-//  Celestia
+//  FitBuddy
 //
 //  UI components for displaying offline status and pending operations
 //

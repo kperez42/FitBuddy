@@ -1,6 +1,6 @@
 //
 //  ReferralAttribution.swift
-//  Celestia
+//  FitBuddy
 //
 //  Advanced attribution system for referral tracking
 //  Features: Multi-touch attribution, deferred deep linking, cross-platform tracking
@@ -281,7 +281,7 @@ class ReferralAttribution: ObservableObject {
         let link = DeferredDeepLink(
             linkId: linkId,
             referralCode: referralCode,
-            originalURL: "https://celestia.app/join/\(referralCode)",
+            originalURL: "https://fitbuddy.app/join/\(referralCode)",
             source: source,
             medium: medium,
             campaign: campaign,

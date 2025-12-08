@@ -1,6 +1,6 @@
 //
 //  PhotoUploadTests.swift
-//  CelestiaTests
+//  FitBuddyTests
 //
 //  Comprehensive tests for photo upload functionality including:
 //  - Upload success scenarios
@@ -12,7 +12,7 @@
 
 import Testing
 import UIKit
-@testable import Celestia
+@testable import FitBuddy
 
 // MARK: - Mock Services
 
@@ -30,7 +30,7 @@ class MockPhotoUploadService {
 
         if shouldFail {
             failureCount += 1
-            throw CelestiaError.imageUploadFailed
+            throw FitBuddyError.imageUploadFailed
         }
 
         let url = "https://storage.googleapis.com/test/\(userId)/\(UUID().uuidString).jpg"
@@ -58,11 +58,11 @@ class MockAuthService: AuthServiceProtocol {
 
     // Required protocol methods
     func signIn(email: String, password: String) async throws -> User {
-        throw CelestiaError.notImplemented
+        throw FitBuddyError.notImplemented
     }
 
     func signUp(email: String, password: String, name: String, age: Int) async throws -> User {
-        throw CelestiaError.notImplemented
+        throw FitBuddyError.notImplemented
     }
 
     func signOut() async throws {}
@@ -137,7 +137,7 @@ struct PhotoUploadTests {
             _ = try await mockService.uploadPhoto(testImage, userId: "user123", imageType: .gallery)
             #expect(Bool(false), "Expected upload to fail")
         } catch {
-            #expect(error is CelestiaError)
+            #expect(error is FitBuddyError)
             #expect(mockService.failureCount == 1)
             #expect(mockService.uploadedPhotos.count == 0)
         }

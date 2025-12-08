@@ -1,6 +1,6 @@
 //
 //  ImagePicker.swift
-//  Celestia
+//  FitBuddy
 //
 //  Photo picker component for profile pictures
 //

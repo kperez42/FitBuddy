@@ -1,6 +1,6 @@
 //
 //  VerificationService.swift
-//  Celestia
+//  FitBuddy
 //
 //  Core service for managing user verification (ID, background checks)
 //  Coordinates between different verification types and maintains verification status

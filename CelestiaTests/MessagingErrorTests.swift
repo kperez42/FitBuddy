@@ -1,6 +1,6 @@
 //
 //  MessagingErrorTests.swift
-//  CelestiaTests
+//  FitBuddyTests
 //
 //  Comprehensive error tests for the messaging system
 //  Tests all failure scenarios: sending, images, deletion, editing, reactions, offline, etc.
@@ -8,7 +8,7 @@
 
 import Testing
 import Foundation
-@testable import Celestia
+@testable import FitBuddy
 
 // MARK: - Mock Message Repository for Error Testing
 
@@ -18,7 +18,7 @@ class MockErrorMessageRepository: MessageRepository {
     var shouldFailSend = false
     var shouldFailDelete = false
     var shouldFailMarkAsRead = false
-    var errorToThrow: Error = CelestiaError.networkError
+    var errorToThrow: Error = FitBuddyError.networkError
     var mockMessages: [Message] = []
     var fetchDelay: TimeInterval = 0
 
@@ -87,7 +87,7 @@ struct MessageSendingErrorTests {
         let longMessage = String(repeating: "a", count: maxLength + 100)
 
         #expect(longMessage.count > maxLength)
-        // In actual send, this would throw CelestiaError.messageTooLong
+        // In actual send, this would throw FitBuddyError.messageTooLong
     }
 
     @Test("Message at exact max length is accepted")
@@ -162,14 +162,14 @@ struct MessageSendingErrorTests {
     @Test("Rate limit error has time remaining")
     func testRateLimitErrorWithTime() async throws {
         let timeRemaining: TimeInterval = 300 // 5 minutes
-        let error = CelestiaError.rateLimitExceededWithTime(timeRemaining)
+        let error = FitBuddyError.rateLimitExceededWithTime(timeRemaining)
 
         #expect(error.errorDescription?.contains("5m") == true)
     }
 
     @Test("Rate limit error without time")
     func testRateLimitErrorWithoutTime() async throws {
-        let error = CelestiaError.rateLimitExceeded
+        let error = FitBuddyError.rateLimitExceeded
 
         #expect(error.errorDescription?.contains("too often") == true)
     }
@@ -178,25 +178,25 @@ struct MessageSendingErrorTests {
 
     @Test("Network error is properly identified")
     func testNetworkErrorIdentification() async throws {
-        let error = CelestiaError.networkError
+        let error = FitBuddyError.networkError
         #expect(error.errorDescription?.contains("Network") == true)
     }
 
     @Test("No internet connection error")
     func testNoInternetConnectionError() async throws {
-        let error = CelestiaError.noInternetConnection
+        let error = FitBuddyError.noInternetConnection
         #expect(error.errorDescription?.contains("internet") == true)
     }
 
     @Test("Timeout error is handled")
     func testTimeoutError() async throws {
-        let error = CelestiaError.timeout
+        let error = FitBuddyError.timeout
         #expect(error.errorDescription?.contains("timed out") == true)
     }
 
     @Test("Server error is handled")
     func testServerError() async throws {
-        let error = CelestiaError.serverError
+        let error = FitBuddyError.serverError
         #expect(error.errorDescription?.contains("Server") == true)
     }
 
@@ -262,25 +262,25 @@ struct ImageUploadErrorTests {
 
     @Test("Invalid image format error")
     func testInvalidImageFormatError() async throws {
-        let error = CelestiaError.invalidImageFormat
+        let error = FitBuddyError.invalidImageFormat
         #expect(error.errorDescription?.contains("Invalid image format") == true)
     }
 
     @Test("Image too big error")
     func testImageTooBigError() async throws {
-        let error = CelestiaError.imageTooBig
+        let error = FitBuddyError.imageTooBig
         #expect(error.errorDescription?.contains("too large") == true)
     }
 
     @Test("Too many images error")
     func testTooManyImagesError() async throws {
-        let error = CelestiaError.tooManyImages
+        let error = FitBuddyError.tooManyImages
         #expect(error.errorDescription?.contains("maximum") == true)
     }
 
     @Test("Image upload failed error")
     func testImageUploadFailedError() async throws {
-        let error = CelestiaError.imageUploadFailed
+        let error = FitBuddyError.imageUploadFailed
         #expect(error.errorDescription?.contains("Failed to upload") == true)
     }
 
@@ -288,19 +288,19 @@ struct ImageUploadErrorTests {
 
     @Test("Content not allowed error with message")
     func testContentNotAllowedWithMessage() async throws {
-        let error = CelestiaError.contentNotAllowed("Inappropriate content detected")
+        let error = FitBuddyError.contentNotAllowed("Inappropriate content detected")
         #expect(error.errorDescription?.contains("Inappropriate content") == true)
     }
 
     @Test("Content not allowed error with empty message")
     func testContentNotAllowedEmptyMessage() async throws {
-        let error = CelestiaError.contentNotAllowed("")
+        let error = FitBuddyError.contentNotAllowed("")
         #expect(error.errorDescription?.contains("not allowed") == true)
     }
 
     @Test("Storage quota exceeded error")
     func testStorageQuotaExceededError() async throws {
-        let error = CelestiaError.storageQuotaExceeded
+        let error = FitBuddyError.storageQuotaExceeded
         #expect(error.errorDescription?.contains("quota") == true)
     }
 
@@ -398,26 +398,26 @@ struct MessageDeletionErrorTests {
 
     @Test("Delete non-existent message error")
     func testDeleteNonExistentMessage() async throws {
-        let error = CelestiaError.documentNotFound
+        let error = FitBuddyError.documentNotFound
         #expect(error.errorDescription?.contains("not found") == true)
     }
 
     @Test("Unauthorized message deletion error")
     func testUnauthorizedDeletion() async throws {
-        let error = CelestiaError.unauthorized
+        let error = FitBuddyError.unauthorized
         #expect(error.errorDescription?.contains("not authorized") == true)
     }
 
     @Test("Permission denied for deletion")
     func testPermissionDeniedDeletion() async throws {
-        let error = CelestiaError.permissionDenied
+        let error = FitBuddyError.permissionDenied
         #expect(error.errorDescription?.contains("Permission denied") == true)
     }
 
     @Test("Batch operation failed error")
     func testBatchOperationFailed() async throws {
         let underlyingError = NSError(domain: "Test", code: 500, userInfo: nil)
-        let error = CelestiaError.batchOperationFailed(operationId: "delete_all", underlyingError: underlyingError)
+        let error = FitBuddyError.batchOperationFailed(operationId: "delete_all", underlyingError: underlyingError)
 
         #expect(error.errorDescription?.contains("delete_all") == true)
         #expect(error.errorDescription?.contains("failed") == true)
@@ -431,7 +431,7 @@ struct MessageEditingErrorTests {
 
     @Test("Edit time limit exceeded error")
     func testEditTimeLimitExceeded() async throws {
-        let error = CelestiaError.editTimeLimitExceeded
+        let error = FitBuddyError.editTimeLimitExceeded
         #expect(error.errorDescription?.contains("15 minutes") == true)
     }
 
@@ -643,19 +643,19 @@ struct OfflineQueueErrorTests {
 
     @Test("Message queued for delivery status")
     func testMessageQueuedStatus() async throws {
-        let error = CelestiaError.messageQueuedForDelivery
+        let error = FitBuddyError.messageQueuedForDelivery
         #expect(error.errorDescription?.contains("queued") == true)
     }
 
     @Test("Message delivery failed retryable")
     func testMessageDeliveryFailedRetryable() async throws {
-        let error = CelestiaError.messageDeliveryFailed(retryable: true)
+        let error = FitBuddyError.messageDeliveryFailed(retryable: true)
         #expect(error.errorDescription?.contains("retried automatically") == true)
     }
 
     @Test("Message delivery failed non-retryable")
     func testMessageDeliveryFailedNonRetryable() async throws {
-        let error = CelestiaError.messageDeliveryFailed(retryable: false)
+        let error = FitBuddyError.messageDeliveryFailed(retryable: false)
         #expect(error.errorDescription?.contains("could not be delivered") == true)
     }
 
@@ -677,7 +677,7 @@ struct OfflineQueueErrorTests {
 
     @Test("Network error triggers queue")
     func testNetworkErrorTriggersQueue() async throws {
-        let networkError = CelestiaError.noInternetConnection
+        let networkError = FitBuddyError.noInternetConnection
 
         // Network errors should result in queuing
         #expect(networkError == .noInternetConnection)
@@ -790,14 +790,14 @@ struct ContentValidationErrorTests {
 
     @Test("Inappropriate content error")
     func testInappropriateContentError() async throws {
-        let error = CelestiaError.inappropriateContent
+        let error = FitBuddyError.inappropriateContent
         #expect(error.errorDescription?.contains("inappropriate") == true)
     }
 
     @Test("Inappropriate content with reasons")
     func testInappropriateContentWithReasons() async throws {
         let reasons = ["profanity", "harassment"]
-        let error = CelestiaError.inappropriateContentWithReasons(reasons)
+        let error = FitBuddyError.inappropriateContentWithReasons(reasons)
 
         #expect(error.errorDescription?.contains("profanity") == true)
         #expect(error.errorDescription?.contains("harassment") == true)
@@ -805,7 +805,7 @@ struct ContentValidationErrorTests {
 
     @Test("Message not sent error")
     func testMessageNotSentError() async throws {
-        let error = CelestiaError.messageNotSent
+        let error = FitBuddyError.messageNotSent
         #expect(error.errorDescription?.contains("failed to send") == true)
     }
 }
@@ -817,44 +817,44 @@ struct ErrorRecoveryTests {
 
     @Test("Network error has recovery suggestion")
     func testNetworkErrorRecovery() async throws {
-        let error = CelestiaError.networkError
+        let error = FitBuddyError.networkError
         #expect(error.recoverySuggestion != nil)
         #expect(error.recoverySuggestion?.contains("connection") == true)
     }
 
     @Test("Message queued has recovery suggestion")
     func testMessageQueuedRecovery() async throws {
-        let error = CelestiaError.messageQueuedForDelivery
+        let error = FitBuddyError.messageQueuedForDelivery
         #expect(error.recoverySuggestion != nil)
         #expect(error.recoverySuggestion?.contains("back online") == true)
     }
 
     @Test("Rate limit has recovery suggestion")
     func testRateLimitRecovery() async throws {
-        let error = CelestiaError.rateLimitExceeded
+        let error = FitBuddyError.rateLimitExceeded
         #expect(error.recoverySuggestion != nil)
         #expect(error.recoverySuggestion?.contains("wait") == true)
     }
 
     @Test("Message delivery failed has recovery suggestion")
     func testMessageDeliveryFailedRecovery() async throws {
-        let errorRetryable = CelestiaError.messageDeliveryFailed(retryable: true)
+        let errorRetryable = FitBuddyError.messageDeliveryFailed(retryable: true)
         #expect(errorRetryable.recoverySuggestion?.contains("automatically") == true)
 
-        let errorNonRetryable = CelestiaError.messageDeliveryFailed(retryable: false)
+        let errorNonRetryable = FitBuddyError.messageDeliveryFailed(retryable: false)
         #expect(errorNonRetryable.recoverySuggestion?.contains("again") == true)
     }
 
     @Test("Image too big has recovery suggestion")
     func testImageTooBigRecovery() async throws {
-        let error = CelestiaError.imageTooBig
+        let error = FitBuddyError.imageTooBig
         #expect(error.recoverySuggestion != nil)
         #expect(error.recoverySuggestion?.contains("Reduce") == true)
     }
 
     @Test("Content not allowed has recovery suggestion")
     func testContentNotAllowedRecovery() async throws {
-        let error = CelestiaError.contentNotAllowed("Test")
+        let error = FitBuddyError.contentNotAllowed("Test")
         #expect(error.recoverySuggestion != nil)
         #expect(error.recoverySuggestion?.contains("guidelines") == true)
     }
@@ -867,37 +867,37 @@ struct ErrorIconTests {
 
     @Test("Network error has correct icon")
     func testNetworkErrorIcon() async throws {
-        let error = CelestiaError.networkError
+        let error = FitBuddyError.networkError
         #expect(error.icon == "wifi.slash")
     }
 
     @Test("Message error has correct icon")
     func testMessageErrorIcon() async throws {
-        let error = CelestiaError.messageNotSent
+        let error = FitBuddyError.messageNotSent
         #expect(error.icon == "message.badge.exclamationmark")
     }
 
     @Test("Image error has correct icon")
     func testImageErrorIcon() async throws {
-        let error = CelestiaError.imageUploadFailed
+        let error = FitBuddyError.imageUploadFailed
         #expect(error.icon == "photo")
     }
 
     @Test("Rate limit error has correct icon")
     func testRateLimitErrorIcon() async throws {
-        let error = CelestiaError.rateLimitExceeded
+        let error = FitBuddyError.rateLimitExceeded
         #expect(error.icon == "clock.fill")
     }
 
     @Test("Message queued has correct icon")
     func testMessageQueuedIcon() async throws {
-        let error = CelestiaError.messageQueuedForDelivery
+        let error = FitBuddyError.messageQueuedForDelivery
         #expect(error.icon == "clock.arrow.circlepath")
     }
 
     @Test("Content not allowed has correct icon")
     func testContentNotAllowedIcon() async throws {
-        let error = CelestiaError.contentNotAllowed("Test")
+        let error = FitBuddyError.contentNotAllowed("Test")
         #expect(error.icon == "exclamationmark.triangle.fill")
     }
 }
@@ -965,10 +965,10 @@ struct MessageStatusErrorTests {
 @Suite("Error Conversion Tests")
 struct ErrorConversionTests {
 
-    @Test("CelestiaError passes through from() conversion")
-    func testCelestiaErrorPassthrough() async throws {
-        let originalError = CelestiaError.networkError
-        let converted = CelestiaError.from(originalError)
+    @Test("FitBuddyError passes through from() conversion")
+    func testFitBuddyErrorPassthrough() async throws {
+        let originalError = FitBuddyError.networkError
+        let converted = FitBuddyError.from(originalError)
 
         #expect(converted == .networkError)
     }
@@ -981,7 +981,7 @@ struct ErrorConversionTests {
             userInfo: nil
         )
 
-        let converted = CelestiaError.from(nsError)
+        let converted = FitBuddyError.from(nsError)
         #expect(converted == .noInternetConnection)
     }
 
@@ -993,7 +993,7 @@ struct ErrorConversionTests {
             userInfo: nil
         )
 
-        let converted = CelestiaError.from(nsError)
+        let converted = FitBuddyError.from(nsError)
         #expect(converted == .requestTimeout)
     }
 
@@ -1005,7 +1005,7 @@ struct ErrorConversionTests {
             userInfo: [NSLocalizedDescriptionKey: "Unknown error"]
         )
 
-        let converted = CelestiaError.from(unknownError)
+        let converted = FitBuddyError.from(unknownError)
         if case .unknown(let message) = converted {
             #expect(message.contains("Unknown"))
         } else {
@@ -1023,13 +1023,13 @@ struct MockRepositoryErrorTests {
     func testMockRepositoryFetchFailure() async throws {
         let mockRepo = MockErrorMessageRepository()
         mockRepo.shouldFailFetch = true
-        mockRepo.errorToThrow = CelestiaError.networkError
+        mockRepo.errorToThrow = FitBuddyError.networkError
 
         do {
             _ = try await mockRepo.fetchMessages(matchId: "match123", limit: 20, before: nil)
             #expect(Bool(false), "Should have thrown error")
         } catch {
-            #expect(error is CelestiaError)
+            #expect(error is FitBuddyError)
         }
     }
 
@@ -1037,7 +1037,7 @@ struct MockRepositoryErrorTests {
     func testMockRepositorySendFailure() async throws {
         let mockRepo = MockErrorMessageRepository()
         mockRepo.shouldFailSend = true
-        mockRepo.errorToThrow = CelestiaError.messageNotSent
+        mockRepo.errorToThrow = FitBuddyError.messageNotSent
 
         let message = Message(
             matchId: "match123",
@@ -1050,7 +1050,7 @@ struct MockRepositoryErrorTests {
             try await mockRepo.sendMessage(message)
             #expect(Bool(false), "Should have thrown error")
         } catch {
-            #expect(error is CelestiaError)
+            #expect(error is FitBuddyError)
         }
     }
 
@@ -1058,13 +1058,13 @@ struct MockRepositoryErrorTests {
     func testMockRepositoryDeleteFailure() async throws {
         let mockRepo = MockErrorMessageRepository()
         mockRepo.shouldFailDelete = true
-        mockRepo.errorToThrow = CelestiaError.permissionDenied
+        mockRepo.errorToThrow = FitBuddyError.permissionDenied
 
         do {
             try await mockRepo.deleteMessage(messageId: "msg123")
             #expect(Bool(false), "Should have thrown error")
         } catch {
-            #expect(error is CelestiaError)
+            #expect(error is FitBuddyError)
         }
     }
 
@@ -1072,13 +1072,13 @@ struct MockRepositoryErrorTests {
     func testMockRepositoryMarkAsReadFailure() async throws {
         let mockRepo = MockErrorMessageRepository()
         mockRepo.shouldFailMarkAsRead = true
-        mockRepo.errorToThrow = CelestiaError.networkError
+        mockRepo.errorToThrow = FitBuddyError.networkError
 
         do {
             try await mockRepo.markMessagesAsRead(matchId: "match123", userId: "user1")
             #expect(Bool(false), "Should have thrown error")
         } catch {
-            #expect(error is CelestiaError)
+            #expect(error is FitBuddyError)
         }
     }
 

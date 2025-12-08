@@ -1,12 +1,12 @@
 //
 //  TestFixtures.swift
-//  CelestiaTests
+//  FitBuddyTests
 //
 //  Test fixtures and utilities for comprehensive ViewModel testing
 //
 
 import Foundation
-@testable import Celestia
+@testable import FitBuddy
 
 // MARK: - Test User Fixtures
 
@@ -20,7 +20,7 @@ struct TestFixtures {
         fullName: String = "Test User",
         age: Int = 28,
         gender: String = "Female",
-        lookingFor: String = "Male",
+        workoutPreference: String = "Male",
         bio: String = "Test bio",
         location: String = "New York",
         country: String = "USA",
@@ -45,7 +45,7 @@ struct TestFixtures {
             fullName: fullName,
             age: age,
             gender: gender,
-            lookingFor: lookingFor,
+            workoutPreference: workoutPreference,
             bio: bio,
             location: location,
             country: country,

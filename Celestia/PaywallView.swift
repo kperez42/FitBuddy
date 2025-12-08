@@ -1,6 +1,6 @@
 //
 //  PaywallView.swift
-//  Celestia
+//  FitBuddy
 //
 //  Subscription paywall with tiered pricing
 //

@@ -1,6 +1,6 @@
 //
 //  ReferralAnalytics.swift
-//  Celestia
+//  FitBuddy
 //
 //  Advanced analytics for referral ROI tracking
 //  Features: LTV calculation, conversion funnels, cohort analysis, cost metrics

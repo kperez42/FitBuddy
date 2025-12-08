@@ -1,6 +1,6 @@
 //
 //  MessageService.swift
-//  Celestia
+//  FitBuddy
 //
 //  Service for message-related operations
 //
@@ -475,11 +475,11 @@ class MessageService: ObservableObject, MessageServiceProtocol, ListenerLifecycl
         let sanitizedText = InputSanitizer.standard(text)
 
         guard !sanitizedText.isEmpty else {
-            throw CelestiaError.messageNotSent
+            throw FitBuddyError.messageNotSent
         }
 
         guard sanitizedText.count <= AppConstants.Limits.maxMessageLength else {
-            throw CelestiaError.messageTooLong
+            throw FitBuddyError.messageTooLong
         }
 
         // Check if offline - queue for later delivery
@@ -517,9 +517,9 @@ class MessageService: ObservableObject, MessageServiceProtocol, ListenerLifecycl
             // Remove optimistic message since rate limit failed
             await removeOptimisticMessage(localId: localMessageId)
             if let timeRemaining = RateLimiter.shared.timeUntilReset(for: .message) {
-                throw CelestiaError.rateLimitExceededWithTime(timeRemaining)
+                throw FitBuddyError.rateLimitExceededWithTime(timeRemaining)
             }
-            throw CelestiaError.rateLimitExceeded
+            throw FitBuddyError.rateLimitExceeded
         }
 
         guard validationPassed else {
@@ -573,7 +573,7 @@ class MessageService: ObservableObject, MessageServiceProtocol, ListenerLifecycl
 
             guard validationResponse.isAppropriate else {
                 Logger.shared.warning("Content flagged by server: \(validationResponse.violations.joined(separator: ", "))", category: .moderation)
-                throw CelestiaError.inappropriateContentWithReasons(validationResponse.violations)
+                throw FitBuddyError.inappropriateContentWithReasons(validationResponse.violations)
             }
 
             Logger.shared.debug("Content validated server-side ✅", category: .moderation)
@@ -1063,11 +1063,11 @@ class MessageService: ObservableObject, MessageServiceProtocol, ListenerLifecycl
         let sanitizedText = InputSanitizer.standard(newText)
 
         guard !sanitizedText.isEmpty else {
-            throw CelestiaError.messageNotSent
+            throw FitBuddyError.messageNotSent
         }
 
         guard sanitizedText.count <= AppConstants.Limits.maxMessageLength else {
-            throw CelestiaError.messageTooLong
+            throw FitBuddyError.messageTooLong
         }
 
         // Validate content
@@ -1077,7 +1077,7 @@ class MessageService: ObservableObject, MessageServiceProtocol, ListenerLifecycl
                 type: .message
             )
             guard validationResponse.isAppropriate else {
-                throw CelestiaError.inappropriateContentWithReasons(validationResponse.violations)
+                throw FitBuddyError.inappropriateContentWithReasons(validationResponse.violations)
             }
         } catch let error as BackendAPIError {
             // If validation service is unavailable, allow the edit
@@ -1090,7 +1090,7 @@ class MessageService: ObservableObject, MessageServiceProtocol, ListenerLifecycl
         guard let messageData = messageDoc.data(),
               let messageSenderId = messageData["senderId"] as? String,
               messageSenderId == senderId else {
-            throw CelestiaError.unauthorized
+            throw FitBuddyError.unauthorized
         }
 
         // Check if message was sent within the last 15 minutes
@@ -1098,7 +1098,7 @@ class MessageService: ObservableObject, MessageServiceProtocol, ListenerLifecycl
             let messageDate = timestamp.dateValue()
             let minutesSinceSent = Date().timeIntervalSince(messageDate) / 60
             guard minutesSinceSent <= 15 else {
-                throw CelestiaError.editTimeLimitExceeded
+                throw FitBuddyError.editTimeLimitExceeded
             }
         }
 
@@ -1232,11 +1232,11 @@ class MessageService: ObservableObject, MessageServiceProtocol, ListenerLifecycl
         let sanitizedText = InputSanitizer.standard(text)
 
         guard !sanitizedText.isEmpty else {
-            throw CelestiaError.messageNotSent
+            throw FitBuddyError.messageNotSent
         }
 
         guard sanitizedText.count <= AppConstants.Limits.maxMessageLength else {
-            throw CelestiaError.messageTooLong
+            throw FitBuddyError.messageTooLong
         }
 
         // Check network

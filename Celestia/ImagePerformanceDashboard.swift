@@ -1,6 +1,6 @@
 //
 //  ImagePerformanceDashboard.swift
-//  Celestia
+//  FitBuddy
 //
 //  Admin dashboard for monitoring image optimization performance
 //

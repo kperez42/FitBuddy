@@ -1,6 +1,6 @@
 //
 //  UserDetailView.swift
-//  Celestia
+//  FitBuddy
 //
 //  Detailed view of a user's profile
 //
@@ -156,7 +156,7 @@ struct UserDetailView: View {
             promptsSection
             detailsSection
             lifestyleSection
-            lookingForSection
+            workoutPreferenceSection
         }
         .padding(20)
         .padding(.bottom, 80)
@@ -321,8 +321,8 @@ struct UserDetailView: View {
                     if let education = user.educationLevel, education != "Prefer not to say" {
                         DetailRow(icon: "graduationcap.fill", label: "Education", value: education)
                     }
-                    if let goal = user.relationshipGoal, goal != "Prefer not to say" {
-                        DetailRow(icon: "heart.circle", label: "Looking for", value: goal)
+                    if let goal = user.fitnessGoal, goal != "Prefer not to say" {
+                        DetailRow(icon: "heart.circle", label: "Fitness Goal", value: goal)
                     }
                     if let religion = user.religion, religion != "Prefer not to say" {
                         DetailRow(icon: "sparkles", label: "Religion", value: religion)
@@ -366,14 +366,14 @@ struct UserDetailView: View {
 
     // MARK: - Looking For Section
 
-    private var lookingForSection: some View {
+    private var workoutPreferenceSection: some View {
         ProfileSectionCard(
             icon: "heart.fill",
-            title: "Looking for",
+            title: "Fitness Goal",
             iconColors: [.purple, .pink],
             borderColor: .purple
         ) {
-            Text(user.lookingFor)
+            Text(user.workoutPreference)
                 .font(.body)
                 .foregroundColor(.secondary)
         }
@@ -520,7 +520,7 @@ struct UserDetailView: View {
     private var hasAdvancedDetails: Bool {
         user.height != nil ||
         (user.educationLevel != nil && user.educationLevel != "Prefer not to say") ||
-        (user.relationshipGoal != nil && user.relationshipGoal != "Prefer not to say") ||
+        (user.fitnessGoal != nil && user.fitnessGoal != "Prefer not to say") ||
         (user.religion != nil && user.religion != "Prefer not to say")
     }
 
@@ -1193,7 +1193,7 @@ struct ZoomablePhotoView: View {
         fullName: "Sofia",
         age: 25,
         gender: "Female",
-        lookingFor: "Men",
+        workoutPreference: "Men",
         bio: "Love to travel and learn new languages. Looking for someone to explore the world with!",
         location: "Barcelona",
         country: "Spain",

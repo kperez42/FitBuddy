@@ -1,6 +1,6 @@
 //
 //  ShimmerEffect.swift
-//  Celestia
+//  FitBuddy
 //
 //  Beautiful shimmer loading effects for skeleton placeholders
 //

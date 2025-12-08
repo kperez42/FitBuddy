@@ -1,6 +1,6 @@
 //
 //  ServiceProtocols.swift
-//  Celestia
+//  FitBuddy
 //
 //  Protocol definitions for all services to enable dependency injection and testing
 //  These protocols make the codebase testable by allowing mock implementations
@@ -23,7 +23,7 @@ protocol AuthServiceProtocol: ObservableObject {
     var isInitialized: Bool { get set }
 
     func signIn(withEmail email: String, password: String) async throws
-    func createUser(withEmail email: String, password: String, fullName: String, age: Int, gender: String, lookingFor: String, location: String, country: String, referralCode: String, photos: [UIImage]) async throws
+    func createUser(withEmail email: String, password: String, fullName: String, age: Int, gender: String, workoutPreference: String, location: String, country: String, referralCode: String, photos: [UIImage]) async throws
     func signOut()
     func fetchUser() async
     func updateUser(_ user: User) async throws
@@ -44,7 +44,7 @@ protocol UserServiceProtocol: ObservableObject {
     var hasMoreUsers: Bool { get set }
 
     func fetchUser(userId: String) async throws -> User?
-    func fetchUsers(excludingUserId: String, lookingFor: String?, ageRange: ClosedRange<Int>?, country: String?, limit: Int, reset: Bool) async throws
+    func fetchUsers(excludingUserId: String, workoutPreference: String?, ageRange: ClosedRange<Int>?, country: String?, limit: Int, reset: Bool) async throws
     func updateUser(_ user: User) async throws
     func updateUserFields(userId: String, fields: [String: Any]) async throws
     func incrementProfileViews(userId: String) async throws

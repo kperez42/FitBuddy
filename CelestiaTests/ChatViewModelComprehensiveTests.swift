@@ -1,13 +1,13 @@
 //
 //  ChatViewModelComprehensiveTests.swift
-//  CelestiaTests
+//  FitBuddyTests
 //
 //  Comprehensive unit tests for ChatViewModel with mock dependencies
 //
 
 import Testing
 import Foundation
-@testable import Celestia
+@testable import FitBuddy
 
 @Suite("ChatViewModel Comprehensive Tests")
 @MainActor

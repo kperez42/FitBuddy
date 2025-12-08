@@ -1,6 +1,6 @@
 //
 //  ProfileBoostService.swift
-//  Celestia
+//  FitBuddy
 //
 //  Profile Boost functionality - temporarily increases profile visibility
 //

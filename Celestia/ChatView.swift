@@ -1,6 +1,6 @@
 //
 //  ChatView.swift
-//  Celestia
+//  FitBuddy
 //
 //  Chat view with real-time messaging
 //  ACCESSIBILITY: Full VoiceOver support, Dynamic Type, Reduce Motion, and WCAG 2.1 AA compliant
@@ -1227,7 +1227,7 @@ struct ChatView: View {
 
                 // Determine appropriate error message based on error type
                 let errorMessage: String
-                if let celestiaError = error as? CelestiaError {
+                if let celestiaError = error as? FitBuddyError {
                     switch celestiaError {
                     case .networkError, .noInternetConnection:
                         errorMessage = "No internet connection. Check your WiFi and tap retry."
@@ -1571,7 +1571,7 @@ struct ChatView: View {
                 showEditSheet = false
                 editingMessage = nil
                 editText = ""
-            } catch let error as CelestiaError {
+            } catch let error as FitBuddyError {
                 Logger.shared.error("Failed to edit message", category: .messaging, error: error)
                 errorToastMessage = error.errorDescription ?? "Failed to edit message"
                 showErrorToast = true
@@ -1688,7 +1688,7 @@ struct ChatView: View {
                 fullName: "Test User",
                 age: 25,
                 gender: "Female",
-                lookingFor: "Male",
+                workoutPreference: "Male",
                 location: "New York",
                 country: "USA"
             )

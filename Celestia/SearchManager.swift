@@ -1,6 +1,6 @@
 //
 //  SearchManager.swift
-//  Celestia
+//  FitBuddy
 //
 //  Manages user search and filtering functionality
 //  Filter types are defined in FilterModels.swift
@@ -199,9 +199,9 @@ class SearchManager: ObservableObject {
         }
 
         // Relationship goals filter
-        if !filter.relationshipGoals.isEmpty,
-           let profileGoal = profile.relationshipGoal {
-            if !filter.relationshipGoals.contains(profileGoal) {
+        if !filter.fitnessGoals.isEmpty,
+           let profileGoal = profile.fitnessGoal {
+            if !filter.fitnessGoals.contains(profileGoal) {
                 return false
             }
         }
@@ -228,7 +228,7 @@ struct UserProfile: Identifiable, Codable {
     let heightInInches: Int?
     let education: EducationLevel?
     let occupation: String?
-    let relationshipGoal: RelationshipGoal?
+    let fitnessGoal: RelationshipGoal?
     let zodiacSign: ZodiacSign?
     let ethnicity: Ethnicity?
     let religion: Religion?
@@ -265,10 +265,10 @@ struct UserProfile: Identifiable, Codable {
             self.education = nil
         }
 
-        if let goalRaw = data["relationshipGoal"] as? String {
-            self.relationshipGoal = RelationshipGoal(rawValue: goalRaw)
+        if let goalRaw = data["fitnessGoal"] as? String {
+            self.fitnessGoal = RelationshipGoal(rawValue: goalRaw)
         } else {
-            self.relationshipGoal = nil
+            self.fitnessGoal = nil
         }
 
         if let zodiacRaw = data["zodiacSign"] as? String {

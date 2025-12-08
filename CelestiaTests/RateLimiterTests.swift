@@ -1,12 +1,12 @@
 //
 //  RateLimiterTests.swift
-//  CelestiaTests
+//  FitBuddyTests
 //
 //  Tests for rate limiting functionality
 //
 
 import Testing
-@testable import Celestia
+@testable import FitBuddy
 
 @Suite("RateLimiter Tests")
 struct RateLimiterTests {

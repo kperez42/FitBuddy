@@ -1,6 +1,6 @@
 //
 //  MessagePaginationTests.swift
-//  CelestiaTests
+//  FitBuddyTests
 //
 //  Tests for message pagination functionality including:
 //  - Initial message loading with limit
@@ -12,7 +12,7 @@
 import Testing
 import Foundation
 import FirebaseFirestore
-@testable import Celestia
+@testable import FitBuddy
 
 @Suite("Message Pagination Tests")
 struct MessagePaginationTests {

@@ -1,6 +1,6 @@
 //
 //  MessagesView.swift
-//  Celestia
+//  FitBuddy
 //
 //  ELITE MESSAGES VIEW - Premium Chat Experience
 //

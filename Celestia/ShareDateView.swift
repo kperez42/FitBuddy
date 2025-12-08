@@ -1,24 +1,24 @@
 //
-//  ShareDateView.swift
-//  Celestia
+//  ShareWorkoutView.swift
+//  FitBuddy
 //
-//  Share date details with trusted contacts for safety
+//  Share workout session details with trusted contacts for safety
 //
 
 import SwiftUI
 import FirebaseFirestore
 import MapKit
 
-struct ShareDateView: View {
+struct ShareWorkoutView: View {
     @EnvironmentObject var authService: AuthService
-    @StateObject private var viewModel = ShareDateViewModel()
+    @StateObject private var viewModel = ShareWorkoutViewModel()
     @Environment(\.dismiss) var dismiss
-    @State private var selectedMatch: User?
-    @State private var dateTime = Date()
+    @State private var selectedPartner: User?
+    @State private var workoutTime = Date()
     @State private var location = ""
     @State private var additionalNotes = ""
     @State private var selectedContacts: Set<EmergencyContact> = []
-    @State private var showMatchPicker = false
+    @State private var showPartnerPicker = false
 
     var body: some View {
         ScrollView {
@@ -26,8 +26,8 @@ struct ShareDateView: View {
                 // Header
                 headerSection
 
-                // Date Details
-                dateDetailsSection
+                // Workout Details
+                workoutDetailsSection
 
                 // Emergency Contacts
                 contactsSection
@@ -38,16 +38,16 @@ struct ShareDateView: View {
             .padding()
         }
         .background(Color(.systemGroupedBackground))
-        .navigationTitle("Share Your Date")
+        .navigationTitle("Share Your Workout")
         .navigationBarTitleDisplayMode(.inline)
         .task {
             await viewModel.loadEmergencyContacts()
         }
         .sheet(item: $viewModel.shareConfirmation) { confirmation in
-            DateSharedConfirmationView(confirmation: confirmation)
+            WorkoutSharedConfirmationView(confirmation: confirmation)
         }
-        .sheet(isPresented: $showMatchPicker) {
-            MatchPickerView(selectedMatch: $selectedMatch)
+        .sheet(isPresented: $showPartnerPicker) {
+            PartnerPickerView(selectedPartner: $selectedPartner)
         }
     }
 
@@ -55,14 +55,14 @@ struct ShareDateView: View {
 
     private var headerSection: some View {
         VStack(spacing: 12) {
-            Image(systemName: "person.2.badge.gearshape")
+            Image(systemName: "figure.run.circle")
                 .font(.system(size: 50))
-                .foregroundColor(.blue)
+                .foregroundColor(.green)
 
-            Text("Stay Safe on Your Date")
+            Text("Stay Safe During Your Workout")
                 .font(.title2.bold())
 
-            Text("Share your date plans with trusted contacts. They'll receive your details and can check in on you.")
+            Text("Share your workout plans with trusted contacts. They'll receive your details and can check in on you.")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
@@ -73,29 +73,29 @@ struct ShareDateView: View {
         .cornerRadius(16)
     }
 
-    // MARK: - Date Details Section
+    // MARK: - Workout Details Section
 
-    private var dateDetailsSection: some View {
+    private var workoutDetailsSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("Date Details")
+            Text("Workout Details")
                 .font(.headline)
 
             VStack(spacing: 16) {
-                // Match Selection
+                // Partner Selection
                 Button {
-                    showMatchPicker = true
+                    showPartnerPicker = true
                 } label: {
                     HStack {
                         Image(systemName: "person.crop.circle")
                             .font(.title2)
-                            .foregroundColor(.purple)
+                            .foregroundColor(.green)
 
                         VStack(alignment: .leading) {
-                            Text("Who are you meeting?")
+                            Text("Who are you working out with?")
                                 .font(.caption)
                                 .foregroundColor(.secondary)
 
-                            Text(selectedMatch?.fullName ?? "Select match")
+                            Text(selectedPartner?.fullName ?? "Select workout partner")
                                 .font(.body)
                                 .foregroundColor(.primary)
                         }
@@ -111,13 +111,13 @@ struct ShareDateView: View {
                     .cornerRadius(12)
                 }
 
-                // Date & Time
+                // Workout Date & Time
                 VStack(alignment: .leading, spacing: 8) {
-                    Label("Date & Time", systemImage: "calendar.clock")
+                    Label("Workout Time", systemImage: "calendar.clock")
                         .font(.caption)
                         .foregroundColor(.secondary)
 
-                    DatePicker("", selection: $dateTime, in: Date()...)
+                    DatePicker("", selection: $workoutTime, in: Date()...)
                         .datePickerStyle(.graphical)
                         .padding()
                         .background(Color.white)
@@ -130,7 +130,7 @@ struct ShareDateView: View {
                         .font(.caption)
                         .foregroundColor(.secondary)
 
-                    TextField("Restaurant name or address", text: $location)
+                    TextField("Gym name or workout location", text: $location)
                         .textFieldStyle(.plain)
                         .padding()
                         .background(Color.white)
@@ -187,7 +187,7 @@ struct ShareDateView: View {
                         .font(.headline)
                         .foregroundColor(.secondary)
 
-                    Text("Add trusted contacts who can check on you during your date.")
+                    Text("Add trusted contacts who can check on you during your workout.")
                         .font(.caption)
                         .foregroundColor(.secondary)
                         .multilineTextAlignment(.center)
@@ -233,9 +233,9 @@ struct ShareDateView: View {
     private var shareButton: some View {
         Button {
             Task {
-                await viewModel.shareDateDetails(
-                    match: selectedMatch,
-                    dateTime: dateTime,
+                await viewModel.shareWorkoutDetails(
+                    partner: selectedPartner,
+                    workoutTime: workoutTime,
                     location: location,
                     notes: additionalNotes,
                     contacts: Array(selectedContacts)
@@ -244,7 +244,7 @@ struct ShareDateView: View {
         } label: {
             HStack {
                 Image(systemName: "paperplane.fill")
-                Text("Share Date Details")
+                Text("Share Workout Details")
             }
             .font(.headline)
             .foregroundColor(.white)
@@ -252,21 +252,21 @@ struct ShareDateView: View {
             .padding()
             .background(
                 LinearGradient(
-                    colors: [.blue, .purple],
+                    colors: [.green, .blue],
                     startPoint: .leading,
                     endPoint: .trailing
                 )
             )
             .cornerRadius(16)
-            .shadow(color: .blue.opacity(0.3), radius: 10, y: 5)
+            .shadow(color: .green.opacity(0.3), radius: 10, y: 5)
         }
         .disabled(!viewModel.canShare(
-            match: selectedMatch,
+            partner: selectedPartner,
             location: location,
             contacts: selectedContacts
         ))
         .opacity(viewModel.canShare(
-            match: selectedMatch,
+            partner: selectedPartner,
             location: location,
             contacts: selectedContacts
         ) ? 1.0 : 0.5)
@@ -319,10 +319,10 @@ struct ContactSelectionRow: View {
     }
 }
 
-// MARK: - Date Shared Confirmation View
+// MARK: - Workout Shared Confirmation View
 
-struct DateSharedConfirmationView: View {
-    let confirmation: DateShareConfirmation
+struct WorkoutSharedConfirmationView: View {
+    let confirmation: WorkoutShareConfirmation
     @Environment(\.dismiss) var dismiss
 
     var body: some View {
@@ -343,7 +343,7 @@ struct DateSharedConfirmationView: View {
 
                 // Message
                 VStack(spacing: 12) {
-                    Text("Date Details Shared!")
+                    Text("Workout Details Shared!")
                         .font(.title.bold())
 
                     Text("Your trusted contacts have been notified and will receive updates.")
@@ -397,18 +397,18 @@ struct DateSharedConfirmationView: View {
 
 // MARK: - Models
 
-struct DateShareConfirmation: Identifiable {
+struct WorkoutShareConfirmation: Identifiable {
     let id = UUID()
     let sharedWith: [String]
-    let dateTime: Date
+    let workoutTime: Date
 }
 
 // MARK: - View Model
 
 @MainActor
-class ShareDateViewModel: ObservableObject {
+class ShareWorkoutViewModel: ObservableObject {
     @Published var emergencyContacts: [EmergencyContact] = []
-    @Published var shareConfirmation: DateShareConfirmation?
+    @Published var shareConfirmation: WorkoutShareConfirmation?
 
     private let db = Firestore.firestore()
 
@@ -432,25 +432,25 @@ class ShareDateViewModel: ObservableObject {
         }
     }
 
-    func canShare(match: User?, location: String, contacts: Set<EmergencyContact>) -> Bool {
-        match != nil && !location.isEmpty && !contacts.isEmpty
+    func canShare(partner: User?, location: String, contacts: Set<EmergencyContact>) -> Bool {
+        partner != nil && !location.isEmpty && !contacts.isEmpty
     }
 
-    func shareDateDetails(
-        match: User?,
-        dateTime: Date,
+    func shareWorkoutDetails(
+        partner: User?,
+        workoutTime: Date,
         location: String,
         notes: String,
         contacts: [EmergencyContact]
     ) async {
-        guard let match = match, let userId = AuthService.shared.currentUser?.id else { return }
+        guard let partner = partner, let userId = AuthService.shared.currentUser?.id else { return }
 
         do {
-            let dateShare: [String: Any] = [
+            let workoutShare: [String: Any] = [
                 "userId": userId,
-                "matchId": match.id as Any,
-                "matchName": match.fullName,
-                "dateTime": Timestamp(date: dateTime),
+                "partnerId": partner.id as Any,
+                "partnerName": partner.fullName,
+                "workoutTime": Timestamp(date: workoutTime),
                 "location": location,
                 "notes": notes,
                 "sharedWith": contacts.map { $0.id },
@@ -458,36 +458,36 @@ class ShareDateViewModel: ObservableObject {
                 "status": "active"
             ]
 
-            try await db.collection("shared_dates").addDocument(data: dateShare)
+            try await db.collection("shared_workouts").addDocument(data: workoutShare)
 
             // Send notifications to contacts
             for contact in contacts {
-                try await sendDateNotification(to: contact, match: match, dateTime: dateTime, location: location)
+                try await sendWorkoutNotification(to: contact, partner: partner, workoutTime: workoutTime, location: location)
             }
 
-            shareConfirmation = DateShareConfirmation(
+            shareConfirmation = WorkoutShareConfirmation(
                 sharedWith: contacts.map { $0.name },
-                dateTime: dateTime
+                workoutTime: workoutTime
             )
 
             AnalyticsServiceEnhanced.shared.trackEvent(
                 .featureUsed,
                 properties: [
-                    "feature": "share_date",
+                    "feature": "share_workout",
                     "contactsCount": contacts.count
                 ]
             )
 
-            Logger.shared.info("Date details shared with \(contacts.count) contacts", category: .general)
+            Logger.shared.info("Workout details shared with \(contacts.count) contacts", category: .general)
         } catch {
-            Logger.shared.error("Error sharing date details", category: .general, error: error)
+            Logger.shared.error("Error sharing workout details", category: .general, error: error)
         }
     }
 
-    private func sendDateNotification(
+    private func sendWorkoutNotification(
         to contact: EmergencyContact,
-        match: User,
-        dateTime: Date,
+        partner: User,
+        workoutTime: Date,
         location: String
     ) async throws {
         guard let userId = AuthService.shared.currentUser?.id else { return }
@@ -502,12 +502,12 @@ class ShareDateViewModel: ObservableObject {
             "contactEmail": contact.email ?? "",
             "contactPhone": contact.phoneNumber,
             "userId": userId,
-            "matchName": match.fullName,
-            "dateTime": Timestamp(date: dateTime),
+            "partnerName": partner.fullName,
+            "workoutTime": Timestamp(date: workoutTime),
             "location": location,
-            "formattedDateTime": dateFormatter.string(from: dateTime),
+            "formattedDateTime": dateFormatter.string(from: workoutTime),
             "sentAt": Timestamp(date: Date()),
-            "type": "safety_date_alert"
+            "type": "safety_workout_alert"
         ]
 
         // Save notification to Firestore for tracking
@@ -528,11 +528,11 @@ class ShareDateViewModel: ObservableObject {
         // For development/testing, notification is logged and saved to database
 
         let message = """
-        Safety Alert from Celestia:
-        \(AuthService.shared.currentUser?.fullName ?? "A user") has shared their date details with you.
+        Safety Alert from FitBuddy:
+        \(AuthService.shared.currentUser?.fullName ?? "A user") has shared their workout details with you.
 
-        Date: \(dateFormatter.string(from: dateTime))
-        Meeting: \(match.fullName)
+        Workout Time: \(dateFormatter.string(from: workoutTime))
+        Working Out With: \(partner.fullName)
         Location: \(location)
 
         This is an automated safety notification.
@@ -547,10 +547,10 @@ class ShareDateViewModel: ObservableObject {
     }
 }
 
-// MARK: - Match Picker View
+// MARK: - Partner Picker View
 
-struct MatchPickerView: View {
-    @Binding var selectedMatch: User?
+struct PartnerPickerView: View {
+    @Binding var selectedPartner: User?
     @Environment(\.dismiss) var dismiss
     @StateObject private var matchService = MatchService.shared
     @State private var isLoading = false
@@ -561,15 +561,15 @@ struct MatchPickerView: View {
         NavigationStack {
             Group {
                 if isLoading {
-                    ProgressView("Loading matches...")
+                    ProgressView("Loading workout partners...")
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                 } else if matches.isEmpty {
                     emptyStateView
                 } else {
-                    matchList
+                    partnerList
                 }
             }
-            .navigationTitle("Select Match")
+            .navigationTitle("Select Workout Partner")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
@@ -579,7 +579,7 @@ struct MatchPickerView: View {
                 }
             }
             .task {
-                await loadMatches()
+                await loadPartners()
             }
         }
     }
@@ -593,10 +593,10 @@ struct MatchPickerView: View {
                 .foregroundColor(.gray.opacity(0.5))
 
             VStack(spacing: 12) {
-                Text("No Matches Yet")
+                Text("No Workout Partners Yet")
                     .font(.title2.bold())
 
-                Text("You don't have any matches to share your date with yet. Start swiping to find matches!")
+                Text("You don't have any workout partners to share your session with yet. Start connecting to find partners!")
                     .font(.body)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
@@ -606,20 +606,20 @@ struct MatchPickerView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
-    // MARK: - Match List
+    // MARK: - Partner List
 
-    private var matchList: some View {
+    private var partnerList: some View {
         List {
             ForEach(Array(matches.enumerated()), id: \.0) { index, match in
                 if let otherUser = getOtherUser(from: match) {
-                    MatchPickerRow(user: otherUser) {
-                        selectedMatch = otherUser
+                    PartnerPickerRow(user: otherUser) {
+                        selectedPartner = otherUser
                         dismiss()
 
                         // Track analytics
                         AnalyticsManager.shared.logEvent(.matchSelected, parameters: [
                             "match_id": match.id ?? "",
-                            "source": "share_date"
+                            "source": "share_workout"
                         ])
                     }
                 }
@@ -631,7 +631,7 @@ struct MatchPickerView: View {
     // MARK: - Helper Methods
 
     // PERFORMANCE FIX: Use batch queries instead of N+1 queries
-    private func loadMatches() async {
+    private func loadPartners() async {
         guard let currentUserId = AuthService.shared.currentUser?.id else { return }
 
         isLoading = true
@@ -684,9 +684,9 @@ struct MatchPickerView: View {
                 }
             }
 
-            Logger.shared.info("Loaded \(matches.count) matches for date sharing using batch queries", category: .general)
+            Logger.shared.info("Loaded \(matches.count) partners for workout sharing using batch queries", category: .general)
         } catch {
-            Logger.shared.error("Error loading matches for picker", category: .general, error: error)
+            Logger.shared.error("Error loading partners for picker", category: .general, error: error)
         }
     }
 
@@ -696,9 +696,9 @@ struct MatchPickerView: View {
     }
 }
 
-// MARK: - Match Picker Row
+// MARK: - Partner Picker Row
 
-struct MatchPickerRow: View {
+struct PartnerPickerRow: View {
     let user: User
     let onSelect: () -> Void
 
@@ -761,7 +761,7 @@ struct MatchPickerRow: View {
 
 #Preview {
     NavigationStack {
-        ShareDateView()
+        ShareWorkoutView()
             .environmentObject(AuthService.shared)
     }
 }

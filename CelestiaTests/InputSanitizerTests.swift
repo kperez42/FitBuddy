@@ -1,12 +1,12 @@
 //
 //  InputSanitizerTests.swift
-//  CelestiaTests
+//  FitBuddyTests
 //
 //  Tests for InputSanitizer utility - SECURITY CRITICAL
 //
 
 import Testing
-@testable import Celestia
+@testable import FitBuddy
 
 @Suite("InputSanitizer Tests - Security Critical")
 struct InputSanitizerTests {

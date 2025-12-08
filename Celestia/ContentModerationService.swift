@@ -1,6 +1,6 @@
 //
 //  ContentModerationService.swift
-//  Celestia
+//  FitBuddy
 //
 //  Service to check photos for inappropriate content before upload
 //  Uses Google Cloud Vision SafeSearch via Firebase Cloud Functions

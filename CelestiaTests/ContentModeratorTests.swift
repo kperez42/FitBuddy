@@ -1,12 +1,12 @@
 //
 //  ContentModeratorTests.swift
-//  CelestiaTests
+//  FitBuddyTests
 //
 //  Comprehensive unit tests for ContentModerator
 //
 
 import Testing
-@testable import Celestia
+@testable import FitBuddy
 import Foundation
 
 @Suite("ContentModerator Tests")

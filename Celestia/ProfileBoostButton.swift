@@ -1,6 +1,6 @@
 //
 //  ProfileBoostButton.swift
-//  Celestia
+//  FitBuddy
 //
 //  UI component for activating profile boost
 //

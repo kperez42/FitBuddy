@@ -1,6 +1,6 @@
 //
 //  BannedAccountView.swift
-//  Celestia
+//  FitBuddy
 //
 //  Shows ban feedback to users whose accounts have been permanently banned
 //

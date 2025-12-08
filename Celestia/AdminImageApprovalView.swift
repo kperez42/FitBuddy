@@ -1,6 +1,6 @@
 //
 //  AdminImageApprovalView.swift
-//  Celestia
+//  FitBuddy
 //
 //  Admin view for reviewing and approving user profile photos
 //
@@ -475,12 +475,12 @@ class AdminImageApprovalViewModel: ObservableObject {
                     photos: photos,
                     interests: data["interests"] as? [String] ?? [],
                     languages: data["languages"] as? [String] ?? [],
-                    lookingFor: data["lookingFor"] as? String ?? "",
+                    workoutPreference: data["workoutPreference"] as? String ?? "",
                     createdAt: (data["createdAt"] as? Timestamp)?.dateValue() ?? Date(),
                     height: data["height"] as? Int,
                     educationLevel: data["educationLevel"] as? String,
                     religion: data["religion"] as? String,
-                    relationshipGoal: data["relationshipGoal"] as? String,
+                    fitnessGoal: data["fitnessGoal"] as? String,
                     smoking: data["smoking"] as? String,
                     drinking: data["drinking"] as? String,
                     exercise: data["exercise"] as? String,
@@ -551,14 +551,14 @@ struct PendingUserForApproval: Identifiable {
     let photos: [String]
     let interests: [String]
     let languages: [String]
-    let lookingFor: String
+    let workoutPreference: String
     let createdAt: Date
 
     // Lifestyle fields
     let height: Int?
     let educationLevel: String?
     let religion: String?
-    let relationshipGoal: String?
+    let fitnessGoal: String?
     let smoking: String?
     let drinking: String?
     let exercise: String?
@@ -627,7 +627,7 @@ struct AdminPendingUserDetailView: View {
                         }
 
                         // Looking for
-                        lookingForSection
+                        workoutPreferenceSection
                     }
                     .padding(20)
                     .padding(.bottom, 80)
@@ -763,7 +763,7 @@ struct AdminPendingUserDetailView: View {
         user.height != nil ||
         (user.educationLevel != nil && user.educationLevel != "Prefer not to say") ||
         (user.religion != nil && user.religion != "Prefer not to say") ||
-        (user.relationshipGoal != nil && user.relationshipGoal != "Prefer not to say")
+        (user.fitnessGoal != nil && user.fitnessGoal != "Prefer not to say")
     }
 
     private var detailsSection: some View {
@@ -782,8 +782,8 @@ struct AdminPendingUserDetailView: View {
                 if let religion = user.religion, religion != "Prefer not to say", !religion.isEmpty {
                     DetailRowView(icon: "sparkles", label: "Religion", value: religion)
                 }
-                if let goal = user.relationshipGoal, goal != "Prefer not to say", !goal.isEmpty {
-                    DetailRowView(icon: "heart.circle", label: "Looking for", value: goal)
+                if let goal = user.fitnessGoal, goal != "Prefer not to say", !goal.isEmpty {
+                    DetailRowView(icon: "heart.circle", label: "Fitness Goal", value: goal)
                 }
             }
         }
@@ -835,13 +835,13 @@ struct AdminPendingUserDetailView: View {
 
     // MARK: - Looking For Section
 
-    private var lookingForSection: some View {
+    private var workoutPreferenceSection: some View {
         VStack(alignment: .leading, spacing: 8) {
             Label("Interested In", systemImage: "heart.text.square")
                 .font(.headline)
                 .foregroundColor(.orange)
 
-            Text(user.lookingFor.isEmpty ? "Everyone" : user.lookingFor)
+            Text(user.workoutPreference.isEmpty ? "Everyone" : user.workoutPreference)
                 .font(.body)
         }
         .padding()

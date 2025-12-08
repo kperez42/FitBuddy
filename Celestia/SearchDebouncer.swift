@@ -1,6 +1,6 @@
 //
 //  SearchDebouncer.swift
-//  Celestia
+//  FitBuddy
 //
 //  Debounces search input to reduce unnecessary database queries
 //  Waits 300ms after user stops typing before triggering search

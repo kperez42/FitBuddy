@@ -1,6 +1,6 @@
 //
 //  PhoneVerificationService.swift
-//  Celestia
+//  FitBuddy
 //
 //  Phone number verification using Firebase Auth
 //

@@ -1,6 +1,6 @@
 //
 //  EditProfileView.swift
-//  Celestia
+//  FitBuddy
 //
 //  Enhanced profile editing with beautiful UI and better UX
 //
@@ -20,7 +20,7 @@ struct EditProfileView: View {
     @State private var location: String
     @State private var country: String
     @State private var gender: String
-    @State private var lookingFor: String
+    @State private var workoutPreference: String
     @State private var languages: [String]
     @State private var interests: [String]
     @State private var prompts: [ProfilePrompt]
@@ -55,7 +55,7 @@ struct EditProfileView: View {
     @State private var educationLevel: String?
     @State private var height: Int?
     @State private var religion: String?
-    @State private var relationshipGoal: String?
+    @State private var fitnessGoal: String?
     @State private var smoking: String?
     @State private var drinking: String?
     @State private var pets: String?
@@ -68,10 +68,10 @@ struct EditProfileView: View {
     @State private var maxDistance: Int
 
     let genderOptions = ["Male", "Female", "Non-binary", "Other"]
-    let lookingForOptions = ["Men", "Women", "Everyone"]
+    let workoutPreferenceOptions = ["Men", "Women", "Everyone"]
     let educationOptions = ["Prefer not to say", "High School", "Some College", "Associate's", "Bachelor's", "Master's", "Doctorate", "Trade School"]
     let religionOptions = ["Prefer not to say", "Agnostic", "Atheist", "Buddhist", "Catholic", "Christian", "Hindu", "Jewish", "Muslim", "Spiritual", "Other"]
-    let relationshipGoalOptions = ["Prefer not to say", "Casual Dating", "Long-term Relationship", "Marriage", "Friendship", "Not Sure Yet"]
+    let fitnessGoalOptions = ["Prefer not to say", "Casual Workouts", "Committed Training Partner", "Competition Partner", "Social Fitness", "Exploring Options"]
     let smokingOptions = ["Prefer not to say", "Never", "Socially", "Regularly", "Trying to Quit"]
     let drinkingOptions = ["Prefer not to say", "Never", "Rarely", "Socially", "Regularly"]
     let petsOptions = ["Prefer not to say", "No Pets", "Dog", "Cat", "Both", "Other Pets", "Want Pets"]
@@ -146,7 +146,7 @@ struct EditProfileView: View {
         _location = State(initialValue: user?.location ?? "")
         _country = State(initialValue: user?.country ?? "")
         _gender = State(initialValue: user?.gender ?? "Other")
-        _lookingFor = State(initialValue: user?.lookingFor ?? "Everyone")
+        _workoutPreference = State(initialValue: user?.workoutPreference ?? "Everyone")
         _languages = State(initialValue: user?.languages ?? [])
         _interests = State(initialValue: user?.interests ?? [])
         _prompts = State(initialValue: user?.prompts ?? [])
@@ -156,7 +156,7 @@ struct EditProfileView: View {
         _educationLevel = State(initialValue: user?.educationLevel)
         _height = State(initialValue: user?.height)
         _religion = State(initialValue: user?.religion)
-        _relationshipGoal = State(initialValue: user?.relationshipGoal)
+        _fitnessGoal = State(initialValue: user?.fitnessGoal)
         _smoking = State(initialValue: user?.smoking)
         _drinking = State(initialValue: user?.drinking)
         _pets = State(initialValue: user?.pets)
@@ -1223,13 +1223,13 @@ struct EditProfileView: View {
             SectionHeader(icon: "heart.fill", title: "Dating Preferences", color: .pink)
 
             VStack(alignment: .leading, spacing: 8) {
-                Text("Looking for")
+                Text("Fitness Goal")
                     .font(.subheadline)
                     .fontWeight(.semibold)
                     .foregroundColor(.secondary)
 
-                Picker("Looking for", selection: $lookingFor) {
-                    ForEach(lookingForOptions, id: \.self) { option in
+                Picker("Fitness Goal", selection: $workoutPreference) {
+                    ForEach(workoutPreferenceOptions, id: \.self) { option in
                         Text(option).tag(option)
                     }
                 }
@@ -1435,16 +1435,16 @@ struct EditProfileView: View {
                             .foregroundColor(.secondary)
 
                         Menu {
-                            ForEach(relationshipGoalOptions, id: \.self) { option in
+                            ForEach(fitnessGoalOptions, id: \.self) { option in
                                 Button(option) {
-                                    relationshipGoal = option == "Prefer not to say" ? nil : option
+                                    fitnessGoal = option == "Prefer not to say" ? nil : option
                                 }
                             }
                         } label: {
                             HStack {
-                                Text(relationshipGoal ?? "Select")
+                                Text(fitnessGoal ?? "Select")
                                     .font(.subheadline)
-                                    .foregroundColor(relationshipGoal == nil ? .gray : .primary)
+                                    .foregroundColor(fitnessGoal == nil ? .gray : .primary)
                                 Spacer()
                                 Image(systemName: "chevron.down")
                                     .font(.caption)
@@ -1862,10 +1862,10 @@ struct EditProfileView: View {
                     .foregroundColor(.secondary)
 
                 Picker("Relationship Goal", selection: Binding(
-                    get: { relationshipGoal ?? "Prefer not to say" },
-                    set: { relationshipGoal = $0 == "Prefer not to say" ? nil : $0 }
+                    get: { fitnessGoal ?? "Prefer not to say" },
+                    set: { fitnessGoal = $0 == "Prefer not to say" ? nil : $0 }
                 )) {
-                    ForEach(relationshipGoalOptions, id: \.self) { option in
+                    ForEach(fitnessGoalOptions, id: \.self) { option in
                         Text(option).tag(option)
                     }
                 }
@@ -2305,7 +2305,7 @@ struct EditProfileView: View {
                 user.location = InputSanitizer.standard(location)
                 user.country = InputSanitizer.basic(country)
                 user.gender = gender
-                user.lookingFor = lookingFor
+                user.workoutPreference = workoutPreference
                 user.languages = languages
                 user.interests = interests
                 user.prompts = prompts
@@ -2315,7 +2315,7 @@ struct EditProfileView: View {
                 user.educationLevel = educationLevel
                 user.height = height
                 user.religion = religion
-                user.relationshipGoal = relationshipGoal
+                user.fitnessGoal = fitnessGoal
                 user.smoking = smoking
                 user.drinking = drinking
                 user.pets = pets
@@ -2350,7 +2350,7 @@ struct EditProfileView: View {
                         case .uploadTimeout:
                             errorMessage = "Upload timed out. Please check your connection and try again."
                         }
-                    } else if let celestiaError = error as? CelestiaError {
+                    } else if let celestiaError = error as? FitBuddyError {
                         switch celestiaError {
                         case .networkError:
                             errorMessage = "Network error. Please check your connection and try again."

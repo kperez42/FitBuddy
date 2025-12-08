@@ -1,6 +1,6 @@
 //
 //  DeepLinkRouter.swift
-//  Celestia
+//  FitBuddy
 //
 //  Deep link routing system for Universal Links and URL schemes
 //  Handles navigation from external sources (emails, web, referrals)
@@ -131,12 +131,12 @@ class DeepLinkRouter: ObservableObject {
     // MARK: - URL Parsing
 
     private func parseURL(_ url: URL) -> DeepLink? {
-        // Handle Universal Links (https://celestia.app/...)
-        if url.scheme == "https" && (url.host == "celestia.app" || url.host == "www.celestia.app") {
+        // Handle Universal Links (https://fitbuddy.app/...)
+        if url.scheme == "https" && (url.host == "fitbuddy.app" || url.host == "www.fitbuddy.app") {
             return parseUniversalLink(url)
         }
 
-        // Handle URL Scheme (celestia://...)
+        // Handle URL Scheme (fitbuddy://...)
         if url.scheme == "celestia" {
             return parseURLScheme(url)
         }
@@ -154,49 +154,49 @@ class DeepLinkRouter: ObservableObject {
 
         switch components[0] {
         case "join":
-            // celestia.app/join/REFERRAL_CODE
+            // fitbuddy.app/join/REFERRAL_CODE
             guard components.count > 1 else { return .home }
             return .referral(code: components[1])
 
         case "profile":
-            // celestia.app/profile/USER_ID
+            // fitbuddy.app/profile/USER_ID
             guard components.count > 1 else { return .home }
             return .profile(userId: components[1])
 
         case "match":
-            // celestia.app/match/MATCH_ID
+            // fitbuddy.app/match/MATCH_ID
             guard components.count > 1 else { return .home }
             return .match(matchId: components[1])
 
         case "message":
-            // celestia.app/message/MATCH_ID
+            // fitbuddy.app/message/MATCH_ID
             guard components.count > 1 else { return .home }
             return .message(matchId: components[1])
 
         case "verify-email":
-            // celestia.app/verify-email?token=TOKEN
+            // fitbuddy.app/verify-email?token=TOKEN
             if let token = extractQueryParameter(from: url, parameter: "token") {
                 return .emailVerification(token: token)
             }
             return .home
 
         case "reset-password":
-            // celestia.app/reset-password?token=TOKEN
+            // fitbuddy.app/reset-password?token=TOKEN
             if let token = extractQueryParameter(from: url, parameter: "token") {
                 return .resetPassword(token: token)
             }
             return .home
 
         case "upgrade":
-            // celestia.app/upgrade
+            // fitbuddy.app/upgrade
             return .upgrade
 
         case "settings":
-            // celestia.app/settings
+            // fitbuddy.app/settings
             return .settings
 
         case "notifications":
-            // celestia.app/notifications
+            // fitbuddy.app/notifications
             return .notifications
 
         default:
@@ -212,28 +212,28 @@ class DeepLinkRouter: ObservableObject {
             return .home
 
         case "join":
-            // celestia://join?code=REFERRAL_CODE
+            // fitbuddy://join?code=REFERRAL_CODE
             if let code = extractQueryParameter(from: url, parameter: "code") {
                 return .referral(code: code)
             }
             return .home
 
         case "profile":
-            // celestia://profile?id=USER_ID
+            // fitbuddy://profile?id=USER_ID
             if let userId = extractQueryParameter(from: url, parameter: "id") {
                 return .profile(userId: userId)
             }
             return .home
 
         case "match":
-            // celestia://match?id=MATCH_ID
+            // fitbuddy://match?id=MATCH_ID
             if let matchId = extractQueryParameter(from: url, parameter: "id") {
                 return .match(matchId: matchId)
             }
             return .home
 
         case "message":
-            // celestia://message?id=MATCH_ID
+            // fitbuddy://message?id=MATCH_ID
             if let matchId = extractQueryParameter(from: url, parameter: "id") {
                 return .message(matchId: matchId)
             }
@@ -371,7 +371,7 @@ class DeepLinkRouter: ObservableObject {
     func generateReferralLink(code: String) -> URL? {
         var components = URLComponents()
         components.scheme = "https"
-        components.host = "celestia.app"
+        components.host = "fitbuddy.app"
         components.path = "/join/\(code)"
 
         return components.url
@@ -381,7 +381,7 @@ class DeepLinkRouter: ObservableObject {
     func generateProfileLink(userId: String) -> URL? {
         var components = URLComponents()
         components.scheme = "https"
-        components.host = "celestia.app"
+        components.host = "fitbuddy.app"
         components.path = "/profile/\(userId)"
 
         return components.url
@@ -391,7 +391,7 @@ class DeepLinkRouter: ObservableObject {
     func generateEmailVerificationLink(token: String) -> URL? {
         var components = URLComponents()
         components.scheme = "https"
-        components.host = "celestia.app"
+        components.host = "fitbuddy.app"
         components.path = "/verify-email"
         components.queryItems = [URLQueryItem(name: "token", value: token)]
 
@@ -402,7 +402,7 @@ class DeepLinkRouter: ObservableObject {
     func generatePasswordResetLink(token: String) -> URL? {
         var components = URLComponents()
         components.scheme = "https"
-        components.host = "celestia.app"
+        components.host = "fitbuddy.app"
         components.path = "/reset-password"
         components.queryItems = [URLQueryItem(name: "token", value: token)]
 

@@ -1,6 +1,6 @@
 //
 //  AnalyticsDashboardView.swift
-//  Celestia
+//  FitBuddy
 //
 //  Comprehensive analytics dashboard showing profile insights,
 //  match quality, trends, and personalized recommendations

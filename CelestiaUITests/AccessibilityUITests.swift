@@ -1,6 +1,6 @@
 //
 //  AccessibilityUITests.swift
-//  CelestiaUITests
+//  FitBuddyUITests
 //
 //  Comprehensive accessibility testing for WCAG 2.1 Level AA compliance
 //  Tests: VoiceOver labels, Dynamic Type, minimum tap targets, keyboard navigation

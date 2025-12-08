@@ -1,6 +1,6 @@
 //
 //  BlockReportService.swift
-//  Celestia
+//  FitBuddy
 //
 //  Service for managing blocked and reported users
 //

@@ -1,6 +1,6 @@
 //
 //  FeedDiscoverView.swift
-//  Celestia
+//  FitBuddy
 //
 //  Feed-style discovery view with vertical scrolling and pagination
 //
@@ -111,7 +111,7 @@ struct FeedDiscoverView: View {
                     PhotoGalleryView(user: user)
                 }
                 .onAppear {
-                    Logger.shared.debug("FeedDiscoverView appeared - users.count: \(users.count), currentUser.lookingFor: \(authService.currentUser?.lookingFor ?? "nil")", category: .general)
+                    Logger.shared.debug("FeedDiscoverView appeared - users.count: \(users.count), currentUser.workoutPreference: \(authService.currentUser?.workoutPreference ?? "nil")", category: .general)
 
                     // BUGFIX: Always sync favorites when view appears
                     // This ensures save state is correct after navigating from other tabs
@@ -132,8 +132,8 @@ struct FeedDiscoverView: View {
                         await reloadWithFilters()
                     }
                 }
-                .onChange(of: authService.currentUser?.lookingFor) { oldValue, newValue in
-                    Logger.shared.debug("lookingFor changed from \(oldValue ?? "nil") to \(newValue ?? "nil") - reloading users", category: .general)
+                .onChange(of: authService.currentUser?.workoutPreference) { oldValue, newValue in
+                    Logger.shared.debug("workoutPreference changed from \(oldValue ?? "nil") to \(newValue ?? "nil") - reloading users", category: .general)
                     Task {
                         await reloadWithFilters()
                     }
@@ -621,7 +621,7 @@ struct FeedDiscoverView: View {
                         )
                     )
 
-                Text("Welcome to Celestia!")
+                Text("Welcome to FitBuddy!")
                     .font(.title2)
                     .fontWeight(.bold)
 
@@ -722,7 +722,7 @@ struct FeedDiscoverView: View {
                     )
 
                 VStack(spacing: 12) {
-                    Text("Welcome to Celestia!")
+                    Text("Welcome to FitBuddy!")
                         .font(.title2)
                         .fontWeight(.bold)
 
@@ -909,13 +909,13 @@ struct FeedDiscoverView: View {
                 return nil
             }()
 
-            let lookingForValue = authService.currentUser?.lookingFor
-            Logger.shared.info("FeedDiscoverView: Loading users with filters - lookingFor: \(lookingForValue ?? "nil"), ageRange: \(ageRange?.description ?? "nil")", category: .database)
+            let workoutPreferenceValue = authService.currentUser?.workoutPreference
+            Logger.shared.info("FeedDiscoverView: Loading users with filters - workoutPreference: \(workoutPreferenceValue ?? "nil"), ageRange: \(ageRange?.description ?? "nil")", category: .database)
 
             // Fetch users from Firestore using UserService
             try await UserService.shared.fetchUsers(
                 excludingUserId: currentUserId,
-                lookingFor: lookingForValue,
+                workoutPreference: workoutPreferenceValue,
                 ageRange: ageRange ?? 18...99,
                 limit: 50,
                 reset: true
@@ -931,7 +931,7 @@ struct FeedDiscoverView: View {
 
                 try await UserService.shared.fetchUsers(
                     excludingUserId: currentUserId,
-                    lookingFor: lookingForValue,
+                    workoutPreference: workoutPreferenceValue,
                     ageRange: expandedMin...expandedMax,
                     limit: 50,
                     reset: true
@@ -943,7 +943,7 @@ struct FeedDiscoverView: View {
                     // Last resort: try without any age filter
                     try await UserService.shared.fetchUsers(
                         excludingUserId: currentUserId,
-                        lookingFor: lookingForValue,
+                        workoutPreference: workoutPreferenceValue,
                         ageRange: nil,
                         limit: 50,
                         reset: true

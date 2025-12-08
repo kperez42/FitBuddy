@@ -1,6 +1,6 @@
 //
 //  CurrentUserProfileCard.swift
-//  Celestia
+//  FitBuddy
 //
 //  Current user's profile card for display at top of discover feed
 //  Tappable to navigate to full ProfileView for viewing and editing
@@ -100,7 +100,7 @@ struct CurrentUserProfileCard: View {
                         .font(.caption)
                         .foregroundColor(.pink)
 
-                    Text("Seeking \(user.lookingFor), \(user.ageRangeMin)-\(user.ageRangeMax)")
+                    Text("Seeking \(user.workoutPreference), \(user.ageRangeMin)-\(user.ageRangeMax)")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
 
@@ -198,7 +198,7 @@ struct CurrentUserProfileCard: View {
                 fullName: "John Doe",
                 age: 30,
                 gender: "Male",
-                lookingFor: "Women",
+                workoutPreference: "Women",
                 bio: "Tech enthusiast and coffee lover",
                 location: "Los Angeles",
                 country: "USA",

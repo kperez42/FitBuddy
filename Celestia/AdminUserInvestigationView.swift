@@ -1,6 +1,6 @@
 //
 //  AdminUserInvestigationView.swift
-//  Celestia
+//  FitBuddy
 //
 //  Admin tool for investigating user profiles
 //

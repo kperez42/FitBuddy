@@ -1,6 +1,6 @@
 //
 //  SignInView.swift
-//  Celestia
+//  FitBuddy
 //
 //  Sign in screen
 //

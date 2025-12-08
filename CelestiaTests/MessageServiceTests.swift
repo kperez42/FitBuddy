@@ -1,13 +1,13 @@
 //
 //  MessageServiceTests.swift
-//  CelestiaTests
+//  FitBuddyTests
 //
 //  Comprehensive tests for MessageService
 //
 
 import Testing
 import FirebaseFirestore
-@testable import Celestia
+@testable import FitBuddy
 
 @Suite("MessageService Tests")
 struct MessageServiceTests {
@@ -220,7 +220,7 @@ struct MessageServiceTests {
         // This would test error handling
         // For now, verify error types exist
 
-        #expect(CelestiaError.messageNotSent != nil)
+        #expect(FitBuddyError.messageNotSent != nil)
     }
 
     @Test("Invalid match ID handled")

@@ -1,6 +1,6 @@
 //
 //  AnimationHelpers.swift
-//  Celestia
+//  FitBuddy
 //
 //  Created by Claude
 //  Reusable animations and transitions for smooth UX

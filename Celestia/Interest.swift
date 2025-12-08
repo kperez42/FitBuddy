@@ -1,6 +1,6 @@
 //
 //  Interest.swift
-//  Celestia
+//  FitBuddy
 //
 //  Model for user interests/likes
 //

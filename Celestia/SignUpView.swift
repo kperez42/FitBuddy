@@ -1,8 +1,8 @@
 //
 //  SignUpView.swift
-//  Celestia
+//  FitBuddy
 //
-//  Multi-step sign up flow
+//  Multi-step sign up flow for fitness partner matching
 //
 
 import SwiftUI
@@ -30,7 +30,7 @@ struct SignUpView: View {
     @State private var name = ""
     @State private var age = ""
     @State private var gender = "Male"
-    @State private var lookingFor = "Everyone"
+    @State private var workoutPartnerPreference = "Everyone"
 
     // Step 3: Location
     @State private var location = ""
@@ -68,7 +68,7 @@ struct SignUpView: View {
 
     // Step 7: Lifestyle & Details
     @State private var height = ""
-    @State private var relationshipGoal = ""
+    @State private var fitnessGoalSelection = ""
     @State private var educationLevel = ""
     @State private var smoking = ""
     @State private var drinking = ""
@@ -81,7 +81,7 @@ struct SignUpView: View {
     @State private var ageRangeMin: Int = 18
     @State private var ageRangeMax: Int = 35
 
-    let relationshipGoalOptions = ["Long-term relationship", "Casual dating", "New friends", "Not sure yet"]
+    let fitnessGoalOptions = ["Committed training partner", "Casual workout buddy", "Social fitness groups", "Exploring options"]
     let educationLevelOptions = ["High school", "Some college", "Bachelor's degree", "Master's degree", "Doctorate", "Trade school", "Prefer not to say"]
     let smokingOptions = ["Never", "Sometimes", "Regularly", "Prefer not to say"]
     let drinkingOptions = ["Never", "Socially", "Regularly", "Prefer not to say"]
@@ -97,7 +97,7 @@ struct SignUpView: View {
     ]
 
     let genderOptions = ["Male", "Female", "Non-binary", "Other"]
-    let lookingForOptions = ["Men", "Women", "Everyone"]
+    let workoutPartnerOptions = ["Men", "Women", "Everyone"]
     let availableCountries = [
         "United States", "Canada", "Mexico", "United Kingdom", "Australia",
         "Germany", "France", "Spain", "Italy", "Brazil", "Argentina",
@@ -548,20 +548,20 @@ struct SignUpView: View {
             }
             
             VStack(alignment: .leading, spacing: 8) {
-                Text("Looking for")
+                Text("Workout Partner Preference")
                     .font(.subheadline)
                     .foregroundColor(.secondary)
-                
-                Picker("Looking for", selection: $lookingFor) {
-                    ForEach(lookingForOptions, id: \.self) { option in
+
+                Picker("Workout Partner Preference", selection: $workoutPartnerPreference) {
+                    ForEach(workoutPartnerOptions, id: \.self) { option in
                         Text(option).tag(option)
                     }
                 }
                 .pickerStyle(.segmented)
-                .accessibilityLabel("Looking for")
-                .accessibilityHint("Select who you're interested in meeting")
-                .accessibilityValue(lookingFor)
-                .accessibilityIdentifier(AccessibilityIdentifier.lookingForPicker)
+                .accessibilityLabel("Workout Partner Preference")
+                .accessibilityHint("Select who you'd like to workout with")
+                .accessibilityValue(workoutPartnerPreference)
+                .accessibilityIdentifier(AccessibilityIdentifier.workoutPreferencePicker)
             }
 
             // Validation feedback for step 2
@@ -581,7 +581,7 @@ struct SignUpView: View {
                             HStack(spacing: 6) {
                                 Image(systemName: "exclamationmark.circle.fill")
                                     .foregroundColor(.red)
-                                Text("You must be 18 or older to use Celestia")
+                                Text("You must be 18 or older to use FitBuddy")
                                     .font(.caption)
                                     .foregroundColor(.red)
                             }
@@ -731,7 +731,7 @@ struct SignUpView: View {
             }
             .padding(.top, 8)
 
-            Text("Your location helps connect you with people nearby and around the world")
+            Text("Your location helps connect you with workout partners nearby")
                 .font(.caption)
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
@@ -760,7 +760,7 @@ struct SignUpView: View {
                         .font(.headline)
                         .foregroundColor(.primary)
 
-                    Text("Great photos get 10x more matches")
+                    Text("Great photos get 10x more workout buddy requests")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                 }
@@ -1343,10 +1343,10 @@ struct SignUpView: View {
                 )
 
                 detailsDropdown(
-                    label: "Looking for",
-                    selection: relationshipGoal.isEmpty ? "Select" : relationshipGoal,
-                    options: relationshipGoalOptions,
-                    onSelect: { relationshipGoal = $0 }
+                    label: "Fitness Goal",
+                    selection: fitnessGoalSelection.isEmpty ? "Select" : fitnessGoalSelection,
+                    options: fitnessGoalOptions,
+                    onSelect: { fitnessGoalSelection = $0 }
                 )
             }
 
@@ -1551,7 +1551,7 @@ struct SignUpView: View {
                             .font(.headline)
                             .foregroundColor(.primary)
 
-                        Text("Who would you like to meet?")
+                        Text("Preferred workout partner age range")
                             .font(.subheadline)
                             .foregroundColor(.secondary)
                     }
@@ -1780,11 +1780,11 @@ struct SignUpView: View {
     var stepSubtitle: String {
         switch currentStep {
         case 0: return "Let's get started with your account"
-        case 1: return "This helps us find your perfect match"
-        case 2: return "Connect with people near and far"
-        case 3: return "Photos help you make meaningful connections"
-        case 4: return "Let others know what makes you unique"
-        case 5: return "Help us find people with similar vibes"
+        case 1: return "This helps us find your perfect workout partner"
+        case 2: return "Connect with fitness enthusiasts nearby"
+        case 3: return "Photos help you find great workout buddies"
+        case 4: return "Let others know about your fitness journey"
+        case 5: return "Help us find partners with similar interests"
         case 6: return "Optional info to complete your profile"
         default: return ""
         }
@@ -1831,7 +1831,7 @@ struct SignUpView: View {
         } else if photoImages.count == 1 {
             return "Add 1 more photo to continue"
         } else if photoImages.count < 4 {
-            return "More photos = more matches"
+            return "More photos = more workout buddies"
         } else {
             return "Your profile will stand out"
         }
@@ -1867,7 +1867,7 @@ struct SignUpView: View {
         name = user.fullName
         age = String(user.age)
         gender = user.gender
-        lookingFor = user.lookingFor
+        workoutPartnerPreference = user.fitnessGoal
 
         // Location
         location = user.location
@@ -1883,7 +1883,7 @@ struct SignUpView: View {
         if let userHeight = user.height {
             height = formatHeightForDisplay(userHeight)
         }
-        relationshipGoal = user.relationshipGoal ?? ""
+        fitnessGoalSelection = user.fitnessGoal
         educationLevel = user.educationLevel ?? ""
         smoking = user.smoking ?? ""
         drinking = user.drinking ?? ""
@@ -2007,7 +2007,7 @@ struct SignUpView: View {
             user.fullName = InputSanitizer.strict(name)
             user.age = Int(age) ?? user.age
             user.gender = gender
-            user.lookingFor = lookingFor
+            user.fitnessGoal = workoutPartnerPreference
 
             // Update location
             user.location = InputSanitizer.standard(location)
@@ -2023,7 +2023,7 @@ struct SignUpView: View {
             }
 
             // Update lifestyle details
-            user.relationshipGoal = relationshipGoal.isEmpty ? nil : relationshipGoal
+            // fitnessGoalSelection is handled separately
             user.educationLevel = educationLevel.isEmpty ? nil : educationLevel
             user.smoking = smoking.isEmpty ? nil : smoking
             user.drinking = drinking.isEmpty ? nil : drinking
@@ -2073,7 +2073,7 @@ struct SignUpView: View {
                     fullName: InputSanitizer.strict(name),
                     age: ageInt,
                     gender: gender,
-                    lookingFor: lookingFor,
+                    fitnessGoal: workoutPartnerPreference,
                     location: InputSanitizer.standard(location),
                     country: InputSanitizer.basic(country),
                     referralCode: InputSanitizer.referralCode(referralCode),
@@ -2101,9 +2101,9 @@ struct SignUpView: View {
                     Logger.shared.info("Setting height: \(height) -> \(parsedHeight) cm", category: .authentication)
                 }
 
-                // Add optional lifestyle details
-                if !relationshipGoal.isEmpty {
-                    profileData["relationshipGoal"] = relationshipGoal
+                // Add optional fitness details
+                if !fitnessGoalSelection.isEmpty {
+                    profileData["fitnessGoal"] = fitnessGoalSelection
                 }
                 if !educationLevel.isEmpty {
                     profileData["educationLevel"] = educationLevel
@@ -2144,8 +2144,8 @@ struct SignUpView: View {
                         if !height.isEmpty {
                             user.height = parseHeight(height)
                         }
-                        if !relationshipGoal.isEmpty {
-                            user.relationshipGoal = relationshipGoal
+                        if !fitnessGoalSelection.isEmpty {
+                            user.fitnessGoal = fitnessGoalSelection
                         }
                         if !educationLevel.isEmpty {
                             user.educationLevel = educationLevel

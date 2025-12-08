@@ -1,6 +1,6 @@
 //
 //  MatchService.swift
-//  Celestia
+//  FitBuddy
 //
 //  Service for match-related operations
 //

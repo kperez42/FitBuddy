@@ -1,6 +1,6 @@
 //
 //  QueryCache.swift
-//  Celestia
+//  FitBuddy
 //
 //  Thread-safe in-memory cache with TTL for reducing database queries
 //  Use this to cache frequently-accessed data like user profiles, stats, etc.

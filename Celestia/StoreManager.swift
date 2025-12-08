@@ -1,6 +1,6 @@
 //
 //  StoreManager.swift
-//  Celestia
+//  FitBuddy
 //
 //  StoreKit 2 manager for In-App Purchases
 //

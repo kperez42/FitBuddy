@@ -1,6 +1,6 @@
 //
 //  RetryManager.swift
-//  Celestia
+//  FitBuddy
 //
 //  Retry logic with exponential backoff for failed operations
 //
@@ -94,7 +94,7 @@ class RetryManager {
             }
         }
 
-        throw lastError ?? CelestiaError.unknown("All retry attempts failed")
+        throw lastError ?? FitBuddyError.unknown("All retry attempts failed")
     }
 
     /// Retry with a completion handler

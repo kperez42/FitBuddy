@@ -1,6 +1,6 @@
 //
 //  AdminMigrationView.swift
-//  Celestia
+//  FitBuddy
 //
 //  Admin interface for migrating images to CDN
 //

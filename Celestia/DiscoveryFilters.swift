@@ -32,6 +32,12 @@ class DiscoveryFilters: ObservableObject {
     @Published var maxHeight: Int? = nil // cm
     @Published var religions: Set<String> = []
 
+    // Lifestyle Preferences
+    @Published var smokingPreferences: Set<String> = []
+    @Published var drinkingPreferences: Set<String> = []
+    @Published var petPreferences: Set<String> = []
+    @Published var exercisePreferences: Set<String> = []
+
     private init() {
         loadFromUserDefaults()
     }
@@ -111,12 +117,10 @@ class DiscoveryFilters: ObservableObject {
             }
         }
 
-        // Relationship goal filter
-        if !relationshipGoals.isEmpty {
-            guard let userGoal = user.relationshipGoal else {
-                return false
-            }
-            if !relationshipGoals.contains(userGoal) {
+        // Fitness goal filter
+        if !fitnessGoals.isEmpty {
+            let userGoal = user.fitnessGoal
+            if !fitnessGoals.contains(userGoal) {
                 return false
             }
         }
@@ -228,7 +232,7 @@ class DiscoveryFilters: ObservableObject {
         UserDefaults.standard.set(minHeight, forKey: "minHeight")
         UserDefaults.standard.set(maxHeight, forKey: "maxHeight")
         UserDefaults.standard.set(Array(religions), forKey: "religions")
-        UserDefaults.standard.set(Array(relationshipGoals), forKey: "relationshipGoals")
+        UserDefaults.standard.set(Array(fitnessGoals), forKey: "fitnessGoals")
         UserDefaults.standard.set(Array(smokingPreferences), forKey: "smokingPreferences")
         UserDefaults.standard.set(Array(drinkingPreferences), forKey: "drinkingPreferences")
         UserDefaults.standard.set(Array(petPreferences), forKey: "petPreferences")
@@ -260,8 +264,8 @@ class DiscoveryFilters: ObservableObject {
         if let religionArray = UserDefaults.standard.array(forKey: "religions") as? [String] {
             religions = Set(religionArray)
         }
-        if let goals = UserDefaults.standard.array(forKey: "relationshipGoals") as? [String] {
-            relationshipGoals = Set(goals)
+        if let goals = UserDefaults.standard.array(forKey: "fitnessGoals") as? [String] {
+            fitnessGoals = Set(goals)
         }
         if let smoking = UserDefaults.standard.array(forKey: "smokingPreferences") as? [String] {
             smokingPreferences = Set(smoking)

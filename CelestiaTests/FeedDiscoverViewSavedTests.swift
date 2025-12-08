@@ -1,13 +1,13 @@
 //
 //  FeedDiscoverViewSavedTests.swift
-//  CelestiaTests
+//  FitBuddyTests
 //
 //  Comprehensive tests for saved/favorite functionality in FeedDiscoverView
 //
 
 import Testing
 import SwiftUI
-@testable import Celestia
+@testable import FitBuddy
 
 @Suite("FeedDiscoverView Saved Functionality Tests")
 @MainActor

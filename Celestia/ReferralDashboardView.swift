@@ -1,6 +1,6 @@
 //
 //  ReferralDashboardView.swift
-//  Celestia
+//  FitBuddy
 //
 //  Referral program dashboard with stats and sharing
 //

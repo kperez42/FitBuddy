@@ -1,6 +1,6 @@
 //
 //  Message.swift
-//  Celestia
+//  FitBuddy
 //
 //  Message model for chat functionality
 //

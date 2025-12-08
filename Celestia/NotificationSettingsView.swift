@@ -1,6 +1,6 @@
 //
 //  NotificationSettingsView.swift
-//  Celestia
+//  FitBuddy
 //
 //  Notification preferences and settings
 //
@@ -248,7 +248,7 @@ struct NotificationSettingsView: View {
         guard let user = AuthService.shared.currentUser else { return false }
         if user.isAdmin { return true }
         // Fallback to email whitelist
-        let adminEmails = ["perezkevin640@gmail.com", "admin@celestia.app"]
+        let adminEmails = ["perezkevin640@gmail.com", "admin@fitbuddy.app"]
         return adminEmails.contains(user.email.lowercased())
     }
 }

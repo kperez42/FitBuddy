@@ -1,13 +1,13 @@
 //
 //  ProfileFeedCardTests.swift
-//  CelestiaTests
+//  FitBuddyTests
 //
 //  Comprehensive tests for ProfileFeedCard component
 //
 
 import Testing
 import SwiftUI
-@testable import Celestia
+@testable import FitBuddy
 
 @Suite("ProfileFeedCard Component Tests")
 @MainActor
@@ -279,9 +279,9 @@ struct ProfileFeedCardTests {
 
     @Test("User seeking preferences are displayed")
     func testUserSeekingDisplay() async throws {
-        let user = TestFixtures.createTestUser(lookingFor: "Women", ageRangeMin: 25, ageRangeMax: 35)
+        let user = TestFixtures.createTestUser(workoutPreference: "Women", ageRangeMin: 25, ageRangeMax: 35)
 
-        #expect(user.lookingFor == "Women")
+        #expect(user.workoutPreference == "Women")
         #expect(user.ageRangeMin == 25)
         #expect(user.ageRangeMax == 35)
     }

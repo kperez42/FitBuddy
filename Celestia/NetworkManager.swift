@@ -1,6 +1,6 @@
 //
 //  NetworkManager.swift
-//  Celestia
+//  FitBuddy
 //
 //  Centralized networking layer with retry logic, interceptors, and monitoring
 //  Provides robust network communication with automatic error handling
@@ -100,7 +100,7 @@ class NetworkManager: NSObject {
 
     private var session: URLSession!
     private let monitor: NWPathMonitor
-    private let monitorQueue = DispatchQueue(label: "com.celestia.network.monitor")
+    private let monitorQueue = DispatchQueue(label: "com.fitbuddy.network.monitor")
 
     @Published private(set) var isNetworkAvailable = true
     @Published private(set) var connectionType: NWInterface.InterfaceType?
@@ -117,7 +117,7 @@ class NetworkManager: NSObject {
     //
     // How to get certificate hash:
     // 1. Get your server's public key hash:
-    //    openssl s_client -connect api.celestia.app:443 | openssl x509 -pubkey -noout | openssl pkey -pubin -outform der | openssl dgst -sha256 -binary | openssl enc -base64
+    //    openssl s_client -connect api.fitbuddy.app:443 | openssl x509 -pubkey -noout | openssl pkey -pubin -outform der | openssl dgst -sha256 -binary | openssl enc -base64
     //
     // 2. Add the hash string to the array below
     //
@@ -374,7 +374,7 @@ class NetworkManager: NSObject {
 
         // Record error
         CrashlyticsManager.shared.recordError(
-            domain: "com.celestia.network",
+            domain: "com.fitbuddy.network",
             code: 1000,
             message: "Network request failed",
             userInfo: [

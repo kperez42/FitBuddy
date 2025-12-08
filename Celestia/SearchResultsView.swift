@@ -1,6 +1,6 @@
 //
 //  SearchResultsView.swift
-//  Celestia
+//  FitBuddy
 //
 //  Search results display with profile cards
 //
@@ -245,7 +245,7 @@ struct ProfileCard: View {
                     SearchTagView(text: occupation, icon: "briefcase")
                 }
 
-                if let goal = profile.relationshipGoal {
+                if let goal = profile.fitnessGoal {
                     SearchTagView(text: goal.displayName, icon: goal.icon)
                 }
             }

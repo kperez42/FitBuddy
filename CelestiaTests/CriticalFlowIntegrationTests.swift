@@ -1,6 +1,6 @@
 //
 //  CriticalFlowIntegrationTests.swift
-//  CelestiaTests
+//  FitBuddyTests
 //
 //  Integration tests for critical user flows: signup → match → message
 //  Tests complete end-to-end scenarios using mock services
@@ -8,7 +8,7 @@
 
 import Testing
 import Foundation
-@testable import Celestia
+@testable import FitBuddy
 
 @Suite("Critical Flow Integration Tests")
 @MainActor
@@ -35,7 +35,7 @@ struct CriticalFlowIntegrationTests {
             fullName: fullName,
             age: 28,
             gender: "Female",
-            lookingFor: "Male",
+            workoutPreference: "Male",
             location: "New York",
             country: "USA"
         )
@@ -51,7 +51,7 @@ struct CriticalFlowIntegrationTests {
 
         try await userService.fetchUsers(
             excludingUserId: currentUser.id!,
-            lookingFor: currentUser.lookingFor,
+            workoutPreference: currentUser.workoutPreference,
             ageRange: currentUser.ageRangeMin...currentUser.ageRangeMax,
             country: nil,
             limit: 20,
@@ -95,7 +95,7 @@ struct CriticalFlowIntegrationTests {
             fullName: "Referred User",
             age: 25,
             gender: "Male",
-            lookingFor: "Female",
+            workoutPreference: "Female",
             location: "Los Angeles",
             country: "USA",
             referralCode: referralCode
@@ -366,13 +366,13 @@ struct CriticalFlowIntegrationTests {
     func testRepositoryErrorHandling() async throws {
         let userRepo = MockUserRepository()
         userRepo.shouldFail = true
-        userRepo.failureError = CelestiaError.networkError
+        userRepo.failureError = FitBuddyError.networkError
 
         do {
             _ = try await userRepo.fetchUser(id: "nonexistent")
             #expect(Bool(false), "Should have thrown error")
         } catch {
-            #expect(error is CelestiaError)
+            #expect(error is FitBuddyError)
         }
     }
 

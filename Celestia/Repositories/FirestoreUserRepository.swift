@@ -1,6 +1,6 @@
 //
 //  FirestoreUserRepository.swift
-//  Celestia
+//  FitBuddy
 //
 //  Concrete implementation of UserRepository using Firestore
 //  Separates data access logic from business logic

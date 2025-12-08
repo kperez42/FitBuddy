@@ -1,6 +1,6 @@
 //
 //  PrivacySettingsView.swift
-//  Celestia
+//  FitBuddy
 //
 //  Privacy controls for user safety
 //

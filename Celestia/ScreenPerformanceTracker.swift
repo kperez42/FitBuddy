@@ -1,6 +1,6 @@
 //
 //  ScreenPerformanceTracker.swift
-//  Celestia
+//  FitBuddy
 //
 //  Automatic screen load time tracking for all views
 //  Integrates with Firebase Performance and PerformanceMonitor

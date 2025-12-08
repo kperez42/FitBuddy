@@ -1,6 +1,6 @@
 //
 //  SafetyManager.swift
-//  Celestia
+//  FitBuddy
 //
 //  Main coordinator for all safety features
 //  Integrates verification, detection, reporting, and check-in systems

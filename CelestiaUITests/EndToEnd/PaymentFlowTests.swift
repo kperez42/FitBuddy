@@ -1,6 +1,6 @@
 //
 //  PaymentFlowTests.swift
-//  CelestiaUITests
+//  FitBuddyUITests
 //
 //  End-to-end payment and subscription flow testing
 //  Tests: Premium upgrade → Receipt validation → Feature access → Subscription management

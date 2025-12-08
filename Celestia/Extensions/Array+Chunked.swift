@@ -1,6 +1,6 @@
 //
 //  Array+Chunked.swift
-//  Celestia
+//  FitBuddy
 //
 //  Array extension for splitting into chunks
 //  Used for batch Firestore queries which have a limit of 10 items per 'in' query

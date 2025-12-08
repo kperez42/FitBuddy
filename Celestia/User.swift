@@ -63,7 +63,7 @@ struct User: Identifiable, Codable, Equatable {
     var fullName: String
     var age: Int
     var gender: String
-    var fitnessGoal: String  // Primary fitness goal (renamed from lookingFor)
+    var fitnessGoal: String  // Primary fitness goal (renamed from workoutPreference)
     var bio: String
 
     // Fitness Profile
@@ -300,7 +300,7 @@ struct User: Identifiable, Codable, Equatable {
         self.fullName = dictionary["fullName"] as? String ?? dictionary["name"] as? String ?? ""
         self.age = dictionary["age"] as? Int ?? 18
         self.gender = dictionary["gender"] as? String ?? ""
-        self.fitnessGoal = dictionary["fitnessGoal"] as? String ?? dictionary["lookingFor"] as? String ?? "General Fitness"
+        self.fitnessGoal = dictionary["fitnessGoal"] as? String ?? dictionary["workoutPreference"] as? String ?? "General Fitness"
         self.bio = dictionary["bio"] as? String ?? ""
         self.fitnessLevel = dictionary["fitnessLevel"] as? String
         self.workoutTypes = dictionary["workoutTypes"] as? [String] ?? []
@@ -516,7 +516,7 @@ extension User {
             fullName: fullName,
             age: age,
             gender: gender,
-            fitnessGoal: data["fitnessGoal"] as? String ?? data["lookingFor"] as? String ?? "General Fitness",
+            fitnessGoal: data["fitnessGoal"] as? String ?? data["workoutPreference"] as? String ?? "General Fitness",
             location: data["location"] as? String ?? "",
             country: data["country"] as? String ?? ""
         )
@@ -541,7 +541,7 @@ extension User {
             throw UserCreationError.missingRequiredField("gender")
         }
 
-        let fitnessGoal = data["fitnessGoal"] as? String ?? data["lookingFor"] as? String ?? "General Fitness"
+        let fitnessGoal = data["fitnessGoal"] as? String ?? data["workoutPreference"] as? String ?? "General Fitness"
 
         // Create with validated data
         return User(

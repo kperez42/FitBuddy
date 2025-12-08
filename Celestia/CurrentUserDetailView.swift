@@ -1,6 +1,6 @@
 //
 //  CurrentUserDetailView.swift
-//  Celestia
+//  FitBuddy
 //
 //  Detail view for viewing own profile (similar to how other users see you)
 //
@@ -190,8 +190,8 @@ struct CurrentUserDetailView: View {
                                 if let education = user.educationLevel, education != "Prefer not to say" {
                                     DetailRow(icon: "graduationcap.fill", label: "Education", value: education)
                                 }
-                                if let goal = user.relationshipGoal, goal != "Prefer not to say" {
-                                    DetailRow(icon: "heart.circle", label: "Looking for", value: goal)
+                                if let goal = user.fitnessGoal, goal != "Prefer not to say" {
+                                    DetailRow(icon: "heart.circle", label: "Fitness Goal", value: goal)
                                 }
                                 if let religion = user.religion, religion != "Prefer not to say" {
                                     DetailRow(icon: "sparkles", label: "Religion", value: religion)
@@ -231,11 +231,11 @@ struct CurrentUserDetailView: View {
                     // Looking for section
                     ProfileSectionCard(
                         icon: "heart.fill",
-                        title: "Looking for",
+                        title: "Fitness Goal",
                         iconColors: [.purple, .pink],
                         borderColor: .purple
                     ) {
-                        Text("\(user.lookingFor), ages \(user.ageRangeMin)-\(user.ageRangeMax)")
+                        Text("\(user.workoutPreference), ages \(user.ageRangeMin)-\(user.ageRangeMax)")
                             .font(.body)
                             .foregroundColor(.secondary)
                     }
@@ -306,7 +306,7 @@ struct CurrentUserDetailView: View {
     private var hasAdvancedDetails: Bool {
         user.height != nil ||
         (user.educationLevel != nil && user.educationLevel != "Prefer not to say") ||
-        (user.relationshipGoal != nil && user.relationshipGoal != "Prefer not to say") ||
+        (user.fitnessGoal != nil && user.fitnessGoal != "Prefer not to say") ||
         (user.religion != nil && user.religion != "Prefer not to say")
     }
 
@@ -335,7 +335,7 @@ struct CurrentUserDetailView: View {
             fullName: "John Doe",
             age: 28,
             gender: "Male",
-            lookingFor: "Women",
+            workoutPreference: "Women",
             bio: "Love hiking and coffee. Looking for someone to explore the city with!",
             location: "San Francisco",
             country: "USA",

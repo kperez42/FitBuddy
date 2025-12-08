@@ -1,6 +1,6 @@
 //
 //  SkeletonViews.swift
-//  Celestia
+//  FitBuddy
 //
 //  Created by Claude
 //  Reusable skeleton loading components for better UX

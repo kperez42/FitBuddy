@@ -1,6 +1,6 @@
 //
 //  SaveSystemErrorTests.swift
-//  CelestiaTests
+//  FitBuddyTests
 //
 //  Comprehensive tests for save system error scenarios:
 //  1. Save failures (network errors, timeouts, permission denied)
@@ -13,7 +13,7 @@
 
 import Testing
 import Foundation
-@testable import Celestia
+@testable import FitBuddy
 
 // MARK: - Mock Firestore Service for Error Simulation
 
@@ -276,7 +276,7 @@ class MockSaveService {
             fullName: "Test User \(id.prefix(4))",
             age: 25,
             gender: "Other",
-            lookingFor: "Everyone",
+            workoutPreference: "Everyone",
             bio: "Test bio",
             location: "Test City",
             country: "Test Country",

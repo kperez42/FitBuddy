@@ -1,6 +1,6 @@
 //
 //  SharedUIComponents.swift
-//  Celestia
+//  FitBuddy
 //
 //  Shared UI components used across the app
 //

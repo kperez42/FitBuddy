@@ -1,6 +1,6 @@
 //
 //  EmergencyContactsView.swift
-//  Celestia
+//  FitBuddy
 //
 //  Manage emergency contacts for date safety
 //

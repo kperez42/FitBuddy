@@ -1,6 +1,6 @@
 //
 //  AccessibilityAuditor.swift
-//  Celestia
+//  FitBuddy
 //
 //  Automated accessibility auditing and testing utilities
 //  Ensures WCAG 2.1 Level AA compliance across the app

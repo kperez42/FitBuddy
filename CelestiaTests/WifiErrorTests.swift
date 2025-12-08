@@ -1,6 +1,6 @@
 //
 //  WifiErrorTests.swift
-//  CelestiaTests
+//  FitBuddyTests
 //
 //  Comprehensive tests for WiFi/network error scenarios:
 //  1. WiFi upload failures - when image/data upload fails due to WiFi issues
@@ -14,7 +14,7 @@
 import Testing
 import Foundation
 import UIKit
-@testable import Celestia
+@testable import FitBuddy
 
 // MARK: - WiFi Error Types
 
@@ -183,7 +183,7 @@ class MockWifiImageUploadService {
         while retryCount < maxRetries {
             do {
                 guard let imageData = image.jpegData(compressionQuality: 0.8) else {
-                    throw CelestiaError.invalidImageFormat
+                    throw FitBuddyError.invalidImageFormat
                 }
 
                 let documentId = try await networkService.upload(data: imageData, path: path)
@@ -387,7 +387,7 @@ class MockWifiSaveService {
             fullName: "Test User \(id.prefix(4))",
             age: 25,
             gender: "Other",
-            lookingFor: "Everyone",
+            workoutPreference: "Everyone",
             bio: "Test bio",
             location: "Test City",
             country: "Test Country",

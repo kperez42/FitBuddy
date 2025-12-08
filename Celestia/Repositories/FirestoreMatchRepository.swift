@@ -1,6 +1,6 @@
 //
 //  FirestoreMatchRepository.swift
-//  Celestia
+//  FitBuddy
 //
 //  Concrete implementation of MatchRepository using Firestore
 //  Separates data access logic from business logic
