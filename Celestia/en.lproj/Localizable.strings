@@ -1,0 +1,159 @@
+/*
+ * FitBuddy Localization - English
+ * Language: English (en)
+ */
+
+// MARK: - Common
+
+"common.ok" = "OK";
+"common.cancel" = "Cancel";
+"common.save" = "Save";
+"common.delete" = "Delete";
+"common.edit" = "Edit";
+"common.done" = "Done";
+"common.next" = "Next";
+"common.back" = "Back";
+"common.yes" = "Yes";
+"common.no" = "No";
+"common.loading" = "Loading...";
+"common.error" = "Error";
+"common.success" = "Success";
+
+// MARK: - Authentication
+
+"auth.sign_in" = "Sign In";
+"auth.sign_up" = "Sign Up";
+"auth.sign_out" = "Sign Out";
+"auth.email" = "Email";
+"auth.password" = "Password";
+"auth.full_name" = "Full Name";
+"auth.age" = "Age";
+"auth.forgot_password" = "Forgot Password?";
+"auth.reset_password" = "Reset Password";
+"auth.create_account" = "Create Account";
+"auth.already_have_account" = "Already have an account? Sign In";
+"auth.dont_have_account" = "Don't have an account? Sign Up";
+"auth.verify_email" = "Please verify your email";
+"auth.email_verified" = "Email verified successfully!";
+"auth.resend_verification" = "Resend Verification Email";
+
+// MARK: - Profile
+
+"profile.profile" = "Profile";
+"profile.edit_profile" = "Edit Profile";
+"profile.bio" = "About Me";
+"profile.photos" = "Photos";
+"profile.add_photo" = "Add Photo";
+"profile.settings" = "Settings";
+"profile.age" = "Age";
+"profile.location" = "Location";
+"profile.gender" = "Gender";
+"profile.looking_for" = "Fitness Goals";
+"profile.male" = "Male";
+"profile.female" = "Female";
+"profile.non_binary" = "Non-Binary";
+"profile.fitness_level" = "Fitness Level";
+"profile.workout_types" = "Workout Types";
+"profile.preferred_times" = "Preferred Workout Times";
+"profile.gym_location" = "Gym Location";
+
+// MARK: - Discovery
+
+"swipe.discover" = "Find Partners";
+"swipe.like" = "Interested";
+"swipe.dislike" = "Skip";
+"swipe.super_like" = "Very Interested";
+"swipe.its_a_match" = "New Workout Partner!";
+"swipe.send_message" = "Send Message";
+"swipe.keep_swiping" = "Keep Browsing";
+"swipe.no_more_profiles" = "No more workout partners available";
+
+// MARK: - Workout Partners
+
+"matches.matches" = "Workout Partners";
+"matches.new_match" = "New Partner!";
+"matches.no_matches" = "No workout partners yet";
+"matches.unmatch" = "Remove Partner";
+"matches.unmatch_confirm" = "Are you sure you want to remove this workout partner?";
+"matches.matched_with" = "Partnered with %@";
+
+// MARK: - Messages
+
+"messages.messages" = "Messages";
+"messages.type_message" = "Type a message...";
+"messages.send" = "Send";
+"messages.no_messages" = "No messages yet";
+"messages.delivered" = "Delivered";
+"messages.read" = "Read";
+"messages.typing" = "typing...";
+
+// MARK: - Premium
+
+"premium.premium" = "Premium";
+"premium.upgrade_to_premium" = "Upgrade to Premium";
+"premium.monthly_plan" = "Monthly Plan";
+"premium.yearly_plan" = "Yearly Plan";
+"premium.subscribe" = "Subscribe";
+"premium.restore_purchases" = "Restore Purchases";
+"premium.features" = "Premium Features";
+"premium.unlimited_likes" = "Unlimited Interest";
+"premium.see_who_likes_you" = "See Who's Interested";
+"premium.rewind" = "Rewind Last Swipe";
+"premium.boost_profile" = "Boost Your Profile";
+
+// MARK: - Settings
+
+"settings.settings" = "Settings";
+"settings.account" = "Account";
+"settings.notifications" = "Notifications";
+"settings.privacy" = "Privacy";
+"settings.language" = "Language";
+"settings.help" = "Help & Support";
+"settings.about" = "About";
+"settings.terms_of_service" = "Terms of Service";
+"settings.privacy_policy" = "Privacy Policy";
+
+// MARK: - Errors
+
+"error.generic" = "Something went wrong. Please try again.";
+"error.network" = "Network error. Please check your connection.";
+"error.invalid_email" = "Please enter a valid email address.";
+"error.invalid_password" = "Password must be at least 6 characters.";
+"error.email_already_in_use" = "This email is already registered.";
+"error.weak_password" = "Password is too weak. Please use a stronger password.";
+"error.user_not_found" = "No account found with this email.";
+"error.wrong_password" = "Incorrect password. Please try again.";
+
+// MARK: - Onboarding
+
+"onboarding.welcome" = "Welcome to FitBuddy";
+"onboarding.find_your_match" = "Find your perfect workout partner";
+"onboarding.get_started" = "Get Started";
+
+// MARK: - Fitness
+
+"fitness.beginner" = "Beginner";
+"fitness.intermediate" = "Intermediate";
+"fitness.advanced" = "Advanced";
+"fitness.elite" = "Elite";
+"fitness.gym" = "Gym";
+"fitness.running" = "Running";
+"fitness.yoga" = "Yoga";
+"fitness.crossfit" = "CrossFit";
+"fitness.hiking" = "Hiking";
+"fitness.cycling" = "Cycling";
+"fitness.climbing" = "Climbing";
+"fitness.swimming" = "Swimming";
+"fitness.weight_loss" = "Weight Loss";
+"fitness.muscle_gain" = "Muscle Gain";
+"fitness.endurance" = "Endurance";
+"fitness.flexibility" = "Flexibility";
+"fitness.general_fitness" = "General Fitness";
+"fitness.marathon_training" = "Marathon Training";
+
+// MARK: - Referrals
+
+"referral.invite_friends" = "Invite Friends";
+"referral.share_code" = "Share your referral code";
+"referral.your_code" = "Your Code";
+"referral.enter_code" = "Enter Referral Code (Optional)";

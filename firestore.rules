@@ -1,0 +1,922 @@
+rules_version = '2';
+// Celestia Firestore Security Rules - Updated 2024-11-30
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isEmailVerified() {
+      return request.auth != null && request.auth.token.email_verified == true;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // Global admin check - used across multiple collections
+    function isAdmin() {
+      return request.auth != null &&
+        (request.auth.token.email == 'perezkevin640@gmail.com' ||
+         request.auth.token.email == 'Perezkevin640@gmail.com' ||
+         request.auth.token.email == 'admin@celestia.app');
+    }
+
+    function isValidString(text, minLength, maxLength) {
+      return text is string && text.size() >= minLength && text.size() <= maxLength;
+    }
+
+    function isValidAge(age) {
+      return age is int && age >= 18 && age <= 100;
+    }
+
+    // Users Collection
+    match /users/{userId} {
+      // Allow authenticated users to read any profile for discovery
+      // Profile visibility is controlled by showMeInSearch field and client-side filtering
+      // This is safe because profile data is meant to be public within the app
+      allow read: if isAuthenticated();
+
+      // Users can only create their own profile
+      allow create: if isOwner(userId)
+        && isValidString(request.resource.data.fullName, 1, 50)
+        && isValidAge(request.resource.data.age)
+        && isValidString(request.resource.data.email, 5, 100)
+        && request.resource.data.email == request.auth.token.email;
+
+      // Users can only update their own profile
+      // Admin can update any profile (for ban/suspend/warn actions)
+      // Note: Users can update their own profile even without email verification
+      allow update: if (isOwner(userId)
+        // Prevent changing critical fields
+        && request.resource.data.id == resource.data.id
+        && request.resource.data.email == resource.data.email)
+        || isAdmin();
+
+      // Users can delete their own profile
+      allow delete: if isOwner(userId);
+    }
+
+    // Matches Collection
+    match /matches/{matchId} {
+      // Users can read matches they're part of
+      // Also allow read if document doesn't exist (for transaction checks)
+      allow read: if isAuthenticated();
+
+      // Users can create matches
+      allow create: if isAuthenticated()
+        && (request.resource.data.user1Id == request.auth.uid || request.resource.data.user2Id == request.auth.uid)
+        && request.resource.data.user1Id != request.resource.data.user2Id;
+
+      // Users can update matches they're part of (for unmatch, etc.)
+      allow update: if isAuthenticated()
+        && (resource.data.user1Id == request.auth.uid || resource.data.user2Id == request.auth.uid);
+
+      // Allow participants to delete matches (for account deletion cleanup)
+      allow delete: if isAuthenticated()
+        && (resource.data.user1Id == request.auth.uid || resource.data.user2Id == request.auth.uid);
+    }
+
+    // Messages Collection
+    // Messages have a matchId field with format: {userId1}_{userId2} (sorted)
+    match /messages/{messageId} {
+      // Users can read messages in their matches
+      // FIX: Use matchId pattern matching to work with matchId-based queries
+      // Since matchId = sortedUserIds joined by _, user's ID must be in the matchId
+      allow read: if isAuthenticated()
+        && (resource.data.matchId.matches('.*' + request.auth.uid + '.*')
+            || resource.data.senderId == request.auth.uid
+            || resource.data.receiverId == request.auth.uid);
+
+      // Users can send messages they authored (email verification removed)
+      allow create: if isAuthenticated()
+        && request.resource.data.senderId == request.auth.uid;
+
+      // Users can update messages they sent or received (for marking read, editing)
+      allow update: if isAuthenticated()
+        && (resource.data.senderId == request.auth.uid || resource.data.receiverId == request.auth.uid);
+
+      // Users can delete messages they sent OR received (for account deletion cleanup)
+      allow delete: if isAuthenticated()
+        && (resource.data.senderId == request.auth.uid || resource.data.receiverId == request.auth.uid);
+    }
+
+    // Batch Operation Logs Collection (for message read tracking)
+    match /batch_operation_logs/{logId} {
+      // Users can read/write their own batch operation logs
+      allow read, write: if isAuthenticated()
+        && isEmailVerified();
+
+      // Allow delete for account cleanup without email verification
+      allow delete: if isAuthenticated();
+    }
+
+    // Interests (Likes) Collection
+    match /interests/{interestId} {
+      // Users can read interests sent to them
+      // Note: Using document ID pattern matching to support reading non-existent documents
+      // (needed for mutual interest checks where the reverse document may not exist yet)
+      // Email verification NOT required for reads to allow cascade delete queries
+      allow read: if isAuthenticated()
+        && (interestId.matches('.*' + request.auth.uid + '.*')
+            || (resource != null && (resource.data.toUserId == request.auth.uid || resource.data.fromUserId == request.auth.uid)));
+
+      // Users can send interests
+      allow create: if isAuthenticated()
+        && isEmailVerified()
+        && request.resource.data.fromUserId == request.auth.uid
+        && request.resource.data.fromUserId != request.resource.data.toUserId;
+
+      // Users can update interests they sent or received
+      allow update: if isAuthenticated()
+        && isEmailVerified()
+        && (resource.data.toUserId == request.auth.uid || resource.data.fromUserId == request.auth.uid);
+
+      // Users can delete interests they sent OR received (for account deletion cleanup)
+      allow delete: if isAuthenticated()
+        && (resource.data.fromUserId == request.auth.uid || resource.data.toUserId == request.auth.uid);
+    }
+
+    // Blocks Collection (legacy - keeping for backwards compatibility)
+    match /blocks/{blockId} {
+      // Users can read blocks they created or where they are blocked
+      // Note: Email verification NOT required for reads to allow cascade delete queries
+      allow read: if isAuthenticated()
+        && (resource.data.blockerId == request.auth.uid || resource.data.blockedId == request.auth.uid);
+
+      // Users can create blocks
+      allow create: if isAuthenticated()
+        && isEmailVerified()
+        && request.resource.data.blockerId == request.auth.uid
+        && request.resource.data.blockerId != request.resource.data.blockedId;
+
+      // Users can unblock OR blocked users can delete during account cleanup
+      allow delete: if isAuthenticated()
+        && (resource.data.blockerId == request.auth.uid || resource.data.blockedId == request.auth.uid);
+
+      // Don't allow updating blocks
+      allow update: if false;
+    }
+
+    // Blocked Users Collection (active - used by BlockReportService)
+    match /blockedUsers/{blockId} {
+      // Users can read blocks they created or where they are blocked
+      // Note: Email verification NOT required for reads to allow cascade delete queries
+      allow read: if isAuthenticated()
+        && (resource.data.blockerId == request.auth.uid || resource.data.blockedUserId == request.auth.uid);
+
+      // Users can create blocks
+      allow create: if isAuthenticated()
+        && isEmailVerified()
+        && request.resource.data.blockerId == request.auth.uid
+        && request.resource.data.blockerId != request.resource.data.blockedUserId;
+
+      // Users can unblock OR blocked users can delete during account cleanup
+      allow delete: if isAuthenticated()
+        && (resource.data.blockerId == request.auth.uid || resource.data.blockedUserId == request.auth.uid);
+
+      // Don't allow updating blocks
+      allow update: if false;
+    }
+
+    // Reports Collection
+    match /reports/{reportId} {
+      // Admin can read all reports, regular users can read their own
+      allow read: if isAdmin() ||
+        (isAuthenticated() && isEmailVerified() && resource.data.reporterId == request.auth.uid);
+
+      // Users can create reports
+      allow create: if isAuthenticated()
+        && isEmailVerified()
+        && request.resource.data.reporterId == request.auth.uid
+        && isValidString(request.resource.data.reason, 1, 500);
+
+      // Admin can update reports (to resolve them)
+      allow update: if isAdmin();
+
+      // Don't allow deleting reports
+      allow delete: if false;
+    }
+
+    // Admin Alerts Collection (for in-app admin notifications)
+    match /admin_alerts/{alertId} {
+      // Only admins can read alerts
+      allow read: if isAdmin();
+
+      // Only Cloud Functions can create alerts (no client creates)
+      allow create: if false;
+
+      // Admins can update (mark as read)
+      allow update: if isAdmin();
+
+      // Admins can delete old alerts
+      allow delete: if isAdmin();
+    }
+
+    // Appeals Collection - Users can appeal moderation decisions
+    match /appeals/{appealId} {
+      // Admins can read all appeals
+      allow read: if isAdmin();
+
+      // Users can read their own appeals
+      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
+
+      // Users can create appeals for themselves
+      allow create: if isAuthenticated()
+        && request.resource.data.userId == request.auth.uid
+        && request.resource.data.keys().hasAll(['userId', 'appealMessage', 'type', 'status'])
+        && request.resource.data.status == 'pending';
+
+      // Admins can update appeals (approve/reject)
+      allow update: if isAdmin();
+
+      // No deletes
+      allow delete: if false;
+    }
+
+    // Notifications Collection
+    match /notifications/{notificationId} {
+      // Users can read their own notifications
+      // Note: Email verification NOT required for reads to allow cascade delete queries
+      allow read: if isAuthenticated()
+        && resource.data.userId == request.auth.uid;
+
+      // System creates notifications (ideally via Cloud Functions)
+      // For now, allow creating if notification is for the authenticated user
+      allow create: if isAuthenticated()
+        && isEmailVerified()
+        && request.resource.data.userId == request.auth.uid;
+
+      // Users can update their own notifications (mark as read)
+      allow update: if isAuthenticated()
+        && isEmailVerified()
+        && resource.data.userId == request.auth.uid;
+
+      // Users can delete their own notifications
+      allow delete: if isAuthenticated()
+        && resource.data.userId == request.auth.uid;
+    }
+
+    // Analytics Collection (for tracking - legacy)
+    match /analytics/{analyticsId} {
+      // No read access to analytics
+      allow read: if false;
+
+      // Allow creating analytics events for authenticated users
+      allow create: if isAuthenticated() && isEmailVerified();
+
+      // No update or delete
+      allow update, delete: if false;
+    }
+
+    // Analytics Events Collection (for enhanced analytics tracking)
+    match /analytics_events/{eventId} {
+      // No read access to analytics events
+      allow read: if false;
+
+      // Allow creating analytics events for authenticated users
+      allow create: if isAuthenticated();
+
+      // No update or delete (analytics are immutable)
+      allow update, delete: if false;
+    }
+
+    // Experiments Collection (A/B testing)
+    match /experiments/{experimentId} {
+      // Authenticated users can read active experiments
+      allow read: if isAuthenticated();
+
+      // Only admin can create/update/delete experiments
+      allow create, update, delete: if isAdmin();
+    }
+
+    // Experiment Assignments Collection (user variant assignments)
+    match /experimentAssignments/{assignmentId} {
+      // Users can read their own assignments
+      allow read: if isAuthenticated();
+
+      // Users can create assignments for themselves
+      allow create: if isAuthenticated();
+
+      // No updates or deletes
+      allow update, delete: if false;
+    }
+
+    // Referrals Collection
+    match /referrals/{referralId} {
+      // Users can read referrals they created or were referred by
+      // Note: Field is referrerUserId, not referrerId
+      allow read: if isAuthenticated()
+        && (resource.data.referrerUserId == request.auth.uid || resource.data.referredUserId == request.auth.uid);
+
+      // System creates referrals
+      allow create: if isAuthenticated();
+
+      // System updates referral status
+      allow update: if isAuthenticated()
+        && (resource.data.referrerUserId == request.auth.uid || resource.data.referredUserId == request.auth.uid);
+
+      // Don't allow deleting referrals
+      allow delete: if false;
+    }
+
+    // Referral Experiments Collection (A/B testing)
+    match /referralExperiments/{experimentId} {
+      // Authenticated users can read active experiments
+      allow read: if isAuthenticated();
+
+      // Only admin can create/update/delete experiments
+      allow create, update, delete: if false;
+    }
+
+    // Referral Segments Collection (user segmentation)
+    match /referralSegments/{segmentId} {
+      // Authenticated users can read segments
+      allow read: if isAuthenticated();
+
+      // Only admin can create/update/delete segments
+      allow create, update, delete: if false;
+    }
+
+    // Referral Shares Collection (tracking share events)
+    match /referralShares/{shareId} {
+      // Users can read their own share history
+      allow read: if isAuthenticated()
+        && resource.data.userId == request.auth.uid;
+
+      // Users can create share events for themselves
+      allow create: if isAuthenticated()
+        && request.resource.data.userId == request.auth.uid;
+
+      // No updates or deletes
+      allow update, delete: if false;
+    }
+
+    // Referral Milestones Collection
+    match /referralMilestones/{milestoneId} {
+      // Users can read their own milestones
+      allow read: if isAuthenticated()
+        && resource.data.userId == request.auth.uid;
+
+      // System creates milestones
+      allow create: if isAuthenticated()
+        && request.resource.data.userId == request.auth.uid;
+
+      // No updates or deletes
+      allow update, delete: if false;
+    }
+
+    // Referral Codes Collection
+    match /referralCodes/{codeId} {
+      // Users can read referral codes (needed for code validation and uniqueness checking)
+      allow read: if isAuthenticated();
+
+      // Users can create codes for themselves
+      allow create: if isAuthenticated()
+        && request.resource.data.userId == request.auth.uid;
+
+      // No updates, but allow delete for account cleanup
+      allow update: if false;
+      allow delete: if isAuthenticated()
+        && resource.data.userId == request.auth.uid;
+    }
+
+    // Referral Rewards Collection
+    match /referralRewards/{rewardId} {
+      // Users can read their own rewards
+      allow read: if isAuthenticated()
+        && resource.data.userId == request.auth.uid;
+
+      // System creates rewards
+      allow create: if isAuthenticated();
+
+      // No updates or deletes
+      allow update, delete: if false;
+    }
+
+    // Attribution Touchpoints Collection (referral tracking)
+    match /attributionTouchpoints/{touchpointId} {
+      // Users can read their own touchpoints
+      allow read: if isAuthenticated();
+
+      // Users can create touchpoints
+      allow create: if isAuthenticated();
+
+      // No updates or deletes
+      allow update, delete: if false;
+    }
+
+    // Likes Collection
+    // Document ID format: {fromUserId}_{toUserId}
+    match /likes/{likeId} {
+      // Users can read likes they sent or received
+      // Note: Using document ID pattern matching to support reading non-existent documents
+      // (needed for mutual like checks where the reverse document may not exist yet)
+      // This also enables cascade delete queries during account deletion
+      allow read: if isAuthenticated()
+        && (likeId.matches('.*' + request.auth.uid + '.*')
+            || (resource != null && (resource.data.fromUserId == request.auth.uid || resource.data.toUserId == request.auth.uid)));
+
+      // Users can create likes they send
+      allow create: if isAuthenticated()
+        && request.resource.data.fromUserId == request.auth.uid
+        && request.resource.data.fromUserId != request.resource.data.toUserId;
+
+      // Users can update likes they sent (for unlike/reactivate)
+      allow update: if isAuthenticated()
+        && resource.data.fromUserId == request.auth.uid;
+
+      // Users can delete likes they sent OR received (for account deletion cleanup)
+      allow delete: if isAuthenticated()
+        && (resource.data.fromUserId == request.auth.uid || resource.data.toUserId == request.auth.uid);
+    }
+
+    // Passes Collection
+    // Document ID format: {fromUserId}_{toUserId}
+    match /passes/{passId} {
+      // Users can read passes they created
+      // Note: Using field-based matching to support both single document reads and list queries
+      // This enables cascade delete queries during account deletion
+      allow read: if isAuthenticated()
+        && resource.data.fromUserId == request.auth.uid;
+
+      // Users can create passes
+      allow create: if isAuthenticated()
+        && request.resource.data.fromUserId == request.auth.uid;
+
+      // Users can update their own passes
+      allow update: if isAuthenticated()
+        && resource.data.fromUserId == request.auth.uid;
+
+      // Users can delete their own passes
+      allow delete: if isAuthenticated()
+        && resource.data.fromUserId == request.auth.uid;
+    }
+
+    // Saved Profiles Collection
+    match /saved_profiles/{savedId} {
+      // Users can read their own saved profiles OR see who saved them
+      allow read: if isAuthenticated()
+        && (resource.data.userId == request.auth.uid || resource.data.savedUserId == request.auth.uid);
+
+      // Users can save profiles
+      allow create: if isAuthenticated()
+        && request.resource.data.userId == request.auth.uid;
+
+      // Users can update their saved profiles (notes, etc.)
+      allow update: if isAuthenticated()
+        && resource.data.userId == request.auth.uid;
+
+      // Users can remove saved profiles they created OR where they are the saved user (for account deletion cleanup)
+      allow delete: if isAuthenticated()
+        && (resource.data.userId == request.auth.uid || resource.data.savedUserId == request.auth.uid);
+    }
+
+    // Profile Views Collection
+    match /profileViews/{viewId} {
+      // Users can read views of their own profile or views they made
+      allow read: if isAuthenticated()
+        && (resource.data.viewedUserId == request.auth.uid || resource.data.viewerUserId == request.auth.uid);
+
+      // Users can create profile views when they view someone
+      allow create: if isAuthenticated()
+        && request.resource.data.viewerUserId == request.auth.uid;
+
+      // Allow updates for merge operations (timestamp updates on re-views)
+      allow update: if isAuthenticated()
+        && resource.data.viewerUserId == request.auth.uid;
+
+      // Allow users to delete views they made OR views of their profile (for account deletion cleanup)
+      allow delete: if isAuthenticated()
+        && (resource.data.viewerUserId == request.auth.uid || resource.data.viewedUserId == request.auth.uid);
+    }
+
+    // Pending Verifications Collection (ID verification submissions)
+    match /pendingVerifications/{verificationId} {
+      // Admin helper function
+      function isAdmin() {
+        return request.auth.token.email in ['perezkevin640@gmail.com', 'admin@celestia.app'];
+      }
+
+      // Users can read their own verification status, admin can read all
+      // Note: Email verification NOT required for reads to allow cascade delete queries
+      allow read: if isAuthenticated()
+        && (verificationId == request.auth.uid || resource.data.userId == request.auth.uid || isAdmin());
+
+      // Users can create their own verification submission
+      allow create: if isAuthenticated()
+        && isEmailVerified()
+        && verificationId == request.auth.uid
+        && request.resource.data.userId == request.auth.uid
+        && request.resource.data.status == 'pending';
+
+      // Users can update their own pending verification (to resubmit)
+      // Admin can update any verification (to change status)
+      allow update: if isAuthenticated()
+        && isEmailVerified()
+        && (verificationId == request.auth.uid || isAdmin());
+
+      // Users can delete their own verification (GDPR right to erasure)
+      // Admin can also delete after review
+      allow delete: if isAuthenticated()
+        && (verificationId == request.auth.uid || resource.data.userId == request.auth.uid || isAdmin());
+    }
+
+    // Moderation Queue Collection (admin dashboard)
+    match /moderation_queue/{itemId} {
+      // Admin helper function for moderation collections
+      function isModerator() {
+        return request.auth.token.email in ['perezkevin640@gmail.com', 'admin@celestia.app'];
+      }
+
+      // Only admin can read moderation queue
+      allow read: if isAuthenticated() && isModerator();
+
+      // Only admin can create/update/delete
+      allow create, update, delete: if isAuthenticated() && isModerator();
+    }
+
+    // Flagged Content Collection (content moderation)
+    match /flagged_content/{contentId} {
+      function isModerator() {
+        return request.auth.token.email in ['perezkevin640@gmail.com', 'admin@celestia.app'];
+      }
+
+      allow read: if isAuthenticated() && isModerator();
+      allow create, update, delete: if isAuthenticated() && isModerator();
+    }
+
+    // User Warnings Collection
+    match /user_warnings/{warningId} {
+      function isModerator() {
+        return request.auth.token.email in ['perezkevin640@gmail.com', 'admin@celestia.app'];
+      }
+
+      // Users can read their own warnings, admin can read all
+      allow read: if isAuthenticated()
+        && (resource.data.userId == request.auth.uid || isModerator());
+
+      // Only admin can create/update/delete warnings
+      allow create, update, delete: if isAuthenticated() && isModerator();
+    }
+
+    // Admin Audit Logs Collection
+    match /admin_audit_logs/{logId} {
+      function isModerator() {
+        return request.auth.token.email in ['perezkevin640@gmail.com', 'admin@celestia.app'];
+      }
+
+      // Only admin can read audit logs
+      allow read: if isAuthenticated() && isModerator();
+
+      // System creates logs
+      allow create: if isAuthenticated() && isModerator();
+
+      // No updates or deletes on audit logs
+      allow update, delete: if false;
+    }
+
+    // Admin Alerts Collection
+    match /admin_alerts/{alertId} {
+      function isModerator() {
+        return request.auth.token.email in ['perezkevin640@gmail.com', 'admin@celestia.app'];
+      }
+
+      allow read: if isAuthenticated() && isModerator();
+      allow create, update: if isAuthenticated() && isModerator();
+      allow delete: if false;
+    }
+
+    // Fraud Logs Collection
+    match /fraud_logs/{logId} {
+      function isModerator() {
+        return request.auth.token.email in ['perezkevin640@gmail.com', 'admin@celestia.app'];
+      }
+
+      allow read: if isAuthenticated() && isModerator();
+      allow create: if isAuthenticated();
+      allow update, delete: if false;
+    }
+
+    // Flagged Transactions Collection
+    match /flagged_transactions/{transactionId} {
+      function isModerator() {
+        return request.auth.token.email in ['perezkevin640@gmail.com', 'admin@celestia.app'];
+      }
+
+      allow read: if isAuthenticated() && isModerator();
+      allow create, update: if isAuthenticated() && isModerator();
+      allow delete: if false;
+    }
+
+    // Security Logs Collection
+    match /security_logs/{logId} {
+      function isModerator() {
+        return request.auth.token.email in ['perezkevin640@gmail.com', 'admin@celestia.app'];
+      }
+
+      allow read: if isAuthenticated() && isModerator();
+      allow create: if isAuthenticated();
+      allow update, delete: if false;
+    }
+
+    // Purchases Collection
+    match /purchases/{purchaseId} {
+      function isModerator() {
+        return request.auth.token.email in ['perezkevin640@gmail.com', 'admin@celestia.app'];
+      }
+
+      // Users can read their own purchases, admin can read all
+      allow read: if isAuthenticated()
+        && (resource.data.userId == request.auth.uid || isModerator());
+
+      // System creates purchases
+      allow create: if isAuthenticated()
+        && request.resource.data.userId == request.auth.uid;
+
+      // Admin can update (for refunds)
+      allow update: if isAuthenticated() && isModerator();
+
+      // No deletes
+      allow delete: if false;
+    }
+
+    // Refund History Collection
+    match /refund_history/{refundId} {
+      function isModerator() {
+        return request.auth.token.email in ['perezkevin640@gmail.com', 'admin@celestia.app'];
+      }
+
+      // Users can read their own refunds, admin can read all
+      allow read: if isAuthenticated()
+        && (resource.data.userId == request.auth.uid || isModerator());
+
+      // Only admin can create/update refunds
+      allow create, update: if isAuthenticated() && isModerator();
+      allow delete: if false;
+    }
+
+    // Emergency Contacts Collection
+    match /emergency_contacts/{contactId} {
+      // Users can read their own emergency contacts
+      allow read: if isAuthenticated()
+        && resource.data.userId == request.auth.uid;
+
+      // Users can create contacts for themselves
+      allow create: if isAuthenticated()
+        && request.resource.data.userId == request.auth.uid;
+
+      // Users can update/delete their own contacts
+      allow update, delete: if isAuthenticated()
+        && resource.data.userId == request.auth.uid;
+    }
+
+    // Blocked Users Collection (SafetyCenter variant with underscore)
+    match /blocked_users/{blockId} {
+      allow read: if isAuthenticated()
+        && (resource.data.blockerId == request.auth.uid || resource.data.blockedUserId == request.auth.uid);
+
+      allow create: if isAuthenticated()
+        && request.resource.data.blockerId == request.auth.uid;
+
+      allow delete: if isAuthenticated()
+        && (resource.data.blockerId == request.auth.uid || resource.data.blockedUserId == request.auth.uid);
+
+      allow update: if false;
+    }
+
+    // Consent Records Collection (GDPR compliance)
+    match /consentRecords/{recordId} {
+      // Users can read their own consent records
+      allow read: if isAuthenticated()
+        && resource.data.userId == request.auth.uid;
+
+      // System creates consent records
+      allow create: if isAuthenticated()
+        && request.resource.data.userId == request.auth.uid;
+
+      // No updates or deletes (audit trail)
+      allow update, delete: if false;
+    }
+
+    // Data Subject Requests Collection (GDPR)
+    match /dataSubjectRequests/{requestId} {
+      function isModerator() {
+        return request.auth.token.email in ['perezkevin640@gmail.com', 'admin@celestia.app'];
+      }
+
+      // Users can read their own requests, admin can read all
+      allow read: if isAuthenticated()
+        && (resource.data.userId == request.auth.uid || isModerator());
+
+      // Users can create requests for themselves
+      allow create: if isAuthenticated()
+        && request.resource.data.userId == request.auth.uid;
+
+      // Admin can update request status
+      allow update: if isAuthenticated() && isModerator();
+
+      // No deletes
+      allow delete: if false;
+    }
+
+    // Device Fingerprints Collection (fraud detection)
+    match /deviceFingerprints/{fingerprintId} {
+      // Only system/admin can read
+      allow read: if isAdmin();
+
+      // System creates fingerprints
+      allow create: if isAuthenticated();
+
+      // No updates or deletes
+      allow update, delete: if false;
+    }
+
+    // Fraud Assessments Collection
+    match /fraudAssessments/{assessmentId} {
+      // Admin can read all, users can read their own
+      allow read: if isAdmin() ||
+        (isAuthenticated() && resource.data.userId == request.auth.uid);
+
+      // System creates assessments
+      allow create: if isAuthenticated();
+
+      // Admin can update (mark as resolved)
+      allow update: if isAdmin();
+
+      // No deletes
+      allow delete: if false;
+    }
+
+    // User Segment Assignments Collection
+    match /userSegmentAssignments/{assignmentId} {
+      // Users can read their own assignments (by doc ID or userId field)
+      allow read: if isAuthenticated()
+        && (assignmentId == request.auth.uid || resource.data.userId == request.auth.uid);
+
+      // System creates assignments
+      allow create: if isAuthenticated();
+
+      // Allow delete for account cleanup (by doc ID or userId field)
+      allow delete: if isAuthenticated()
+        && (assignmentId == request.auth.uid || resource.data.userId == request.auth.uid);
+
+      // No updates
+      allow update: if false;
+    }
+
+    // Compliance Audit Logs Collection
+    match /complianceAuditLogs/{logId} {
+      // Only admin can read
+      allow read: if isAdmin();
+
+      // System creates logs
+      allow create: if isAuthenticated();
+
+      // No updates or deletes (immutable audit trail)
+      allow update, delete: if false;
+    }
+
+    // AB Testing - Experiment Assignments (underscore variant)
+    match /experiment_assignments/{assignmentId} {
+      // Users can read their own assignments
+      allow read: if isAuthenticated();
+
+      // System creates assignments
+      allow create: if isAuthenticated();
+
+      // No updates or deletes
+      allow update, delete: if false;
+    }
+
+    // AB Testing - Experiment Conversions
+    match /experiment_conversions/{conversionId} {
+      // Admin can read for analytics
+      allow read: if isAdmin();
+
+      // System creates conversions
+      allow create: if isAuthenticated();
+
+      // No updates or deletes
+      allow update, delete: if false;
+    }
+
+    // AB Testing - Experiment Metrics
+    match /experiment_metrics/{metricId} {
+      // Admin can read for analytics
+      allow read: if isAdmin();
+
+      // System creates metrics
+      allow create: if isAuthenticated();
+
+      // No updates or deletes
+      allow update, delete: if false;
+    }
+
+    // Referral Signups Collection (tracking)
+    match /referralSignups/{signupId} {
+      // Admin can read all
+      allow read: if isAdmin();
+
+      // System creates signups
+      allow create: if isAuthenticated();
+
+      // No updates or deletes
+      allow update, delete: if false;
+    }
+
+    // Experiment Events Collection
+    match /experimentEvents/{eventId} {
+      // Admin can read for analytics
+      allow read: if isAdmin();
+
+      // System creates events
+      allow create: if isAuthenticated();
+
+      // No updates or deletes
+      allow update, delete: if false;
+    }
+
+    // Admin Alerts Collection (push notifications to admins)
+    match /admin_alerts/{alertId} {
+      // Only admins can read alerts
+      allow read: if isAdmin();
+
+      // System creates alerts (via Cloud Functions)
+      allow create: if isAuthenticated();
+
+      // Admins can mark alerts as read/dismissed
+      allow update: if isAdmin();
+
+      // No deletes
+      allow delete: if false;
+    }
+
+    // Notification Logs Collection (tracking sent notifications)
+    match /notification_logs/{logId} {
+      // Only admins can read logs
+      allow read: if isAdmin();
+
+      // System creates logs
+      allow create: if isAuthenticated();
+
+      // No updates or deletes (audit trail)
+      allow update, delete: if false;
+    }
+
+    // Typing Status Collection (real-time typing indicators)
+    match /typingStatus/{statusId} {
+      // Users can read typing status for matches they're part of
+      allow read: if isAuthenticated();
+
+      // Users can create/update their own typing status
+      allow create, update: if isAuthenticated()
+        && request.resource.data.userId == request.auth.uid;
+
+      // Allow delete for cleanup
+      allow delete: if isAuthenticated()
+        && resource.data.userId == request.auth.uid;
+    }
+
+    // Segment Assignments Collection (A/B testing)
+    match /segmentAssignments/{assignmentId} {
+      // Users can read their own assignments
+      allow read: if isAuthenticated()
+        && assignmentId == request.auth.uid;
+
+      // System creates assignments
+      allow create: if isAuthenticated()
+        && assignmentId == request.auth.uid;
+
+      // Allow delete for account cleanup
+      allow delete: if isAuthenticated()
+        && assignmentId == request.auth.uid;
+    }
+
+    // Emergency Contacts Collection (safety feature)
+    match /emergencyContacts/{contactId} {
+      // Users can read their own emergency contacts
+      allow read: if isAuthenticated()
+        && resource.data.userId == request.auth.uid;
+
+      // Users can create their own emergency contacts
+      allow create: if isAuthenticated()
+        && request.resource.data.userId == request.auth.uid;
+
+      // Users can update their own emergency contacts
+      allow update: if isAuthenticated()
+        && resource.data.userId == request.auth.uid;
+
+      // Users can delete their own emergency contacts (for account cleanup)
+      allow delete: if isAuthenticated()
+        && resource.data.userId == request.auth.uid;
+    }
+
+    // Default: Deny all other access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
