@@ -1,6 +1,6 @@
 //
 //  ImprovedComponents.swift
-//  Celestia
+//  FitBuddy
 //
 //  Reusable improved UI components
 //
@@ -319,7 +319,7 @@ struct ImprovedUserDetailSheet: View {
     private var detailsSection: some View {
         VStack(spacing: 16) {
             detailRow(icon: "person.fill", label: "Gender", value: user.gender)
-            detailRow(icon: "heart.circle.fill", label: "Looking for", value: user.lookingFor)
+            detailRow(icon: "heart.circle.fill", label: "Fitness Goal", value: user.workoutPreference)
         }
         .padding(20)
         .background(Color(.systemGray6))
@@ -532,7 +532,7 @@ struct FlowLayout: Layout {
             fullName: "Sofia Rodriguez",
             age: 25,
             gender: "Female",
-            lookingFor: "Male",
+            workoutPreference: "Male",
             bio: "Love to travel and explore new cultures. Passionate about photography and always looking for the next adventure!",
             location: "Barcelona",
             country: "Spain",

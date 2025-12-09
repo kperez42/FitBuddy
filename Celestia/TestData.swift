@@ -1,6 +1,6 @@
 //
 //  TestData.swift
-//  Celestia
+//  FitBuddy
 //
 //  Created by Claude
 //  Test data for previews and development
@@ -22,7 +22,7 @@ struct TestData {
             fullName: "Sarah Johnson",
             age: 24,
             gender: "Female",
-            lookingFor: "Male",
+            workoutPreference: "Male",
             bio: "Adventure seeker 🏔️ | Coffee enthusiast ☕ | Love hiking, photography, and spontaneous road trips. Always up for trying new restaurants!",
             location: "San Francisco",
             country: "USA",
@@ -46,7 +46,7 @@ struct TestData {
             fullName: "Mike Chen",
             age: 28,
             gender: "Male",
-            lookingFor: "Female",
+            workoutPreference: "Female",
             bio: "Tech entrepreneur 💻 | Fitness junkie 💪 | Building the future one line of code at a time. Love cooking, gaming, and good conversations.",
             location: "San Francisco",
             country: "USA",
@@ -70,7 +70,7 @@ struct TestData {
             fullName: "Emma Wilson",
             age: 26,
             gender: "Female",
-            lookingFor: "Male",
+            workoutPreference: "Male",
             bio: "Artist & dreamer 🎨 | Yoga instructor 🧘‍♀️ | Plant mom 🌱 | Looking for someone who appreciates art, nature, and deep conversations under the stars.",
             location: "Oakland",
             country: "USA",
@@ -95,7 +95,7 @@ struct TestData {
             fullName: "Alex Rodriguez",
             age: 30,
             gender: "Male",
-            lookingFor: "Female",
+            workoutPreference: "Female",
             bio: "Marketing director by day, DJ by night 🎧 | Music lover | Foodie | Looking for a partner in crime to explore the city's best hidden gems.",
             location: "Berkeley",
             country: "USA",
@@ -121,7 +121,7 @@ struct TestData {
             fullName: "Jessica Lee",
             age: 27,
             gender: "Female",
-            lookingFor: "Male",
+            workoutPreference: "Male",
             bio: "Doctor saving lives 👩‍⚕️ | Bookworm 📚 | Dog lover 🐕 | When I'm not at the hospital, you'll find me with a good book and my golden retriever.",
             location: "San Francisco",
             country: "USA",
@@ -473,7 +473,7 @@ struct TestData {
         fullName: "Kevin Perez",
         age: 25,
         gender: "Male",
-        lookingFor: "Female",
+        workoutPreference: "Female",
         bio: "iOS Developer | Tech enthusiast | Love building cool apps and meeting interesting people!",
         location: "San Francisco",
         country: "USA",

@@ -1,6 +1,6 @@
 //
 //  ImageUploadServiceTests.swift
-//  CelestiaTests
+//  FitBuddyTests
 //
 //  Comprehensive tests for ImageUploadService validation,
 //  optimization, and error handling
@@ -8,7 +8,7 @@
 
 import Testing
 import UIKit
-@testable import Celestia
+@testable import FitBuddy
 
 @Suite("ImageUploadService Tests")
 @MainActor
@@ -292,7 +292,7 @@ struct ImageUploadServiceTests {
 
     @Test("Error types are properly defined")
     func testErrorTypes() async throws {
-        let errors: [CelestiaError] = [
+        let errors: [FitBuddyError] = [
             .imageUploadFailed,
             .imageTooBig,
             .invalidImageFormat,
@@ -308,10 +308,10 @@ struct ImageUploadServiceTests {
 
     @Test("Error messages are user-friendly")
     func testErrorMessages() async throws {
-        let uploadError = CelestiaError.imageUploadFailed
-        let sizeError = CelestiaError.imageTooBig
-        let formatError = CelestiaError.invalidImageFormat
-        let limitError = CelestiaError.tooManyImages
+        let uploadError = FitBuddyError.imageUploadFailed
+        let sizeError = FitBuddyError.imageTooBig
+        let formatError = FitBuddyError.invalidImageFormat
+        let limitError = FitBuddyError.tooManyImages
 
         #expect(uploadError.errorDescription?.contains("upload") == true)
         #expect(sizeError.errorDescription?.contains("large") == true)

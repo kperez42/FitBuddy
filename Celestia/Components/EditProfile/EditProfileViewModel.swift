@@ -1,6 +1,6 @@
 //
 //  EditProfileViewModel.swift
-//  Celestia
+//  FitBuddy
 //
 //  ViewModel for Edit Profile - centralizes state and business logic
 //  Extracted from EditProfileView.swift to reduce file size and improve testability
@@ -20,7 +20,7 @@ class EditProfileViewModel: ObservableObject {
     @Published var location: String
     @Published var country: String
     @Published var gender: String
-    @Published var lookingFor: String
+    @Published var workoutPreference: String
 
     // Collections
     @Published var languages: [String]
@@ -31,7 +31,7 @@ class EditProfileViewModel: ObservableObject {
     // Advanced Profile Fields
     @Published var height: Int?
     @Published var religion: String?
-    @Published var relationshipGoal: String?
+    @Published var fitnessGoal: String?
     @Published var smoking: String?
     @Published var drinking: String?
     @Published var pets: String?
@@ -58,9 +58,9 @@ class EditProfileViewModel: ObservableObject {
     // MARK: - Constants
 
     let genderOptions = ["Male", "Female", "Non-binary", "Other"]
-    let lookingForOptions = ["Men", "Women", "Everyone"]
+    let workoutPreferenceOptions = ["Men", "Women", "Everyone"]
     let religionOptions = ["Prefer not to say", "Agnostic", "Atheist", "Buddhist", "Catholic", "Christian", "Hindu", "Jewish", "Muslim", "Spiritual", "Other"]
-    let relationshipGoalOptions = ["Prefer not to say", "Casual dating", "Relationship", "Long-term partner", "Marriage", "Open to anything"]
+    let fitnessGoalOptions = ["Prefer not to say", "Casual Workouts", "Committed Training Partner", "Competition Partner", "Social Fitness", "Open to anything"]
     let smokingOptions = ["Prefer not to say", "Non-smoker", "Social smoker", "Regular smoker", "Trying to quit"]
     let drinkingOptions = ["Prefer not to say", "Non-drinker", "Social drinker", "Regular drinker"]
     let petsOptions = ["Prefer not to say", "No pets", "Dog", "Cat", "Dog & Cat", "Other pets"]
@@ -88,7 +88,7 @@ class EditProfileViewModel: ObservableObject {
         self.location = currentUser?.location ?? ""
         self.country = currentUser?.country ?? ""
         self.gender = currentUser?.gender ?? "Other"
-        self.lookingFor = currentUser?.lookingFor ?? "Everyone"
+        self.workoutPreference = currentUser?.workoutPreference ?? "Everyone"
 
         // Initialize collections
         self.languages = currentUser?.languages ?? []
@@ -99,7 +99,7 @@ class EditProfileViewModel: ObservableObject {
         // Initialize advanced fields
         self.height = currentUser?.height
         self.religion = currentUser?.religion
-        self.relationshipGoal = currentUser?.relationshipGoal
+        self.fitnessGoal = currentUser?.fitnessGoal
         self.smoking = currentUser?.smoking
         self.drinking = currentUser?.drinking
         self.pets = currentUser?.pets
@@ -214,7 +214,7 @@ class EditProfileViewModel: ObservableObject {
             "location": location,
             "country": country,
             "gender": gender,
-            "lookingFor": lookingFor,
+            "workoutPreference": workoutPreference,
             "languages": languages,
             "interests": interests,
             "prompts": prompts.map { $0.toDictionary() },
@@ -231,8 +231,8 @@ class EditProfileViewModel: ObservableObject {
         if let religion = religion {
             updateData["religion"] = religion
         }
-        if let relationshipGoal = relationshipGoal {
-            updateData["relationshipGoal"] = relationshipGoal
+        if let fitnessGoal = fitnessGoal {
+            updateData["fitnessGoal"] = fitnessGoal
         }
         if let smoking = smoking {
             updateData["smoking"] = smoking

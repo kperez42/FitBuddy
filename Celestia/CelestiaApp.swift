@@ -1,6 +1,6 @@
 //
-//  CelestiaApp.swift
-//  Celestia
+//  FitBuddyApp.swift
+//  FitBuddy
 //
 //  Created by Kevin Perez on 10/29/25.
 //
@@ -161,7 +161,7 @@ extension Notification.Name {
 // MARK: - Main App
 
 @main
-struct CelestiaApp: App {
+struct FitBuddyApp: App {
     // Connect AppDelegate for push notification handling
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
@@ -203,7 +203,7 @@ struct CelestiaApp: App {
     private func handleDeepLink(_ url: URL) {
         Logger.shared.info("Deep link received: \(url)", category: .general)
 
-        // Handle celestia://join/CEL-XXXXXXXX or https://celestia.app/join/CEL-XXXXXXXX
+        // Handle fitbuddy://join/CEL-XXXXXXXX or https://fitbuddy.app/join/CEL-XXXXXXXX
         if url.pathComponents.contains("join"),
            let code = url.pathComponents.last,
            code.hasPrefix("CEL-") {

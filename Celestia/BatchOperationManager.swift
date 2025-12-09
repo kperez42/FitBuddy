@@ -1,6 +1,6 @@
 //
 //  BatchOperationManager.swift
-//  Celestia
+//  FitBuddy
 //
 //  Handles batch operations with transaction logging, idempotency, and retry logic
 //
@@ -128,7 +128,7 @@ class BatchOperationManager {
         // AUDIT FIX: Check network connectivity first
         guard networkMonitor.isConnected else {
             Logger.shared.warning("Cannot mark messages as read - offline", category: .messaging)
-            throw CelestiaError.noInternetConnection
+            throw FitBuddyError.noInternetConnection
         }
 
         // AUDIT FIX: Generate truly idempotent key using document IDs
@@ -202,7 +202,7 @@ class BatchOperationManager {
         // AUDIT FIX: Check network connectivity first
         guard networkMonitor.isConnected else {
             Logger.shared.warning("Cannot mark messages as delivered - offline", category: .messaging)
-            throw CelestiaError.noInternetConnection
+            throw FitBuddyError.noInternetConnection
         }
 
         // AUDIT FIX: Generate truly idempotent key using document IDs
@@ -270,7 +270,7 @@ class BatchOperationManager {
         // AUDIT FIX: Check network connectivity first
         guard networkMonitor.isConnected else {
             Logger.shared.warning("Cannot delete messages - offline", category: .messaging)
-            throw CelestiaError.noInternetConnection
+            throw FitBuddyError.noInternetConnection
         }
 
         // AUDIT FIX: Generate truly idempotent key using document IDs
@@ -411,7 +411,7 @@ class BatchOperationManager {
 
         // If we get here, all retries failed
         if let error = lastError {
-            throw CelestiaError.batchOperationFailed(operationId: currentLog.id, underlyingError: error)
+            throw FitBuddyError.batchOperationFailed(operationId: currentLog.id, underlyingError: error)
         }
     }
 

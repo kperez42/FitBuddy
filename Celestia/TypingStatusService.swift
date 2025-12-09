@@ -1,6 +1,6 @@
 //
 //  TypingStatusService.swift
-//  Celestia
+//  FitBuddy
 //
 //  Service for managing real-time typing indicators synced to Firestore
 //

@@ -1,6 +1,6 @@
 //
 //  ProfileInsights.swift
-//  Celestia
+//  FitBuddy
 //
 //  Profile analytics and insights data model
 //

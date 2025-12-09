@@ -1,6 +1,6 @@
 //
 //  LoginScreen.swift
-//  CelestiaUITests
+//  FitBuddyUITests
 //
 //  Page Object for Login Screen
 //

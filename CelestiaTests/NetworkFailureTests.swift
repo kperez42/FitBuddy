@@ -1,6 +1,6 @@
 //
 //  NetworkFailureTests.swift
-//  CelestiaTests
+//  FitBuddyTests
 //
 //  Tests for network failure scenarios:
 //  - Connection loss during operations
@@ -13,7 +13,7 @@
 import Testing
 import Foundation
 import FirebaseFirestore
-@testable import Celestia
+@testable import FitBuddy
 
 @Suite("Network Failure Simulation Tests")
 struct NetworkFailureTests {

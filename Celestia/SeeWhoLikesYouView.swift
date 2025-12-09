@@ -1,6 +1,6 @@
 //
 //  SeeWhoLikesYouView.swift
-//  Celestia
+//  FitBuddy
 //
 //  Premium feature: See who has liked you
 //

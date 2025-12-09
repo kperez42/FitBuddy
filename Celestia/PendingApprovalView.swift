@@ -1,6 +1,6 @@
 //
 //  PendingApprovalView.swift
-//  Celestia
+//  FitBuddy
 //
 //  Shows pending approval status to users whose profiles are under review
 //

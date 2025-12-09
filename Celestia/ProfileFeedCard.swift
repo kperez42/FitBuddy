@@ -1,6 +1,6 @@
 //
 //  ProfileFeedCard.swift
-//  Celestia
+//  FitBuddy
 //
 //  Feed-style profile card for vertical scrolling discovery
 //
@@ -221,7 +221,7 @@ struct ProfileFeedCard: View {
                 .font(.caption)
                 .foregroundColor(.pink)
 
-            Text("Seeking \(user.lookingFor), \(user.ageRangeMin)-\(user.ageRangeMax)")
+            Text("Seeking \(user.workoutPreference), \(user.ageRangeMin)-\(user.ageRangeMax)")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
 
@@ -757,7 +757,7 @@ struct FullScreenPhotoItem: View {
                 fullName: "Sarah Johnson",
                 age: 28,
                 gender: "Female",
-                lookingFor: "Men",
+                workoutPreference: "Men",
                 bio: "Love hiking and coffee",
                 location: "Los Angeles",
                 country: "USA",
@@ -770,7 +770,7 @@ struct FullScreenPhotoItem: View {
                 fullName: "John Doe",
                 age: 30,
                 gender: "Male",
-                lookingFor: "Women",
+                workoutPreference: "Women",
                 bio: "Tech enthusiast",
                 location: "Los Angeles",
                 country: "USA",

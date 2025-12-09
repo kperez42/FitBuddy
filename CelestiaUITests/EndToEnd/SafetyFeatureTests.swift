@@ -1,6 +1,6 @@
 //
 //  SafetyFeatureTests.swift
-//  CelestiaUITests
+//  FitBuddyUITests
 //
 //  End-to-end safety and moderation feature testing
 //  Tests: User blocking → Content reporting → Photo verification → Safety center

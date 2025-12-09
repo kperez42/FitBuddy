@@ -1,6 +1,6 @@
 //
 //  ProfileStatsService.swift
-//  Celestia
+//  FitBuddy
 //
 //  Service for calculating accurate profile statistics
 //  Ensures counts are based on actual database records, not incremented counters

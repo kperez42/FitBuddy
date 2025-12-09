@@ -1,6 +1,6 @@
 //
 //  ClipboardSecurityManager.swift
-//  Celestia
+//  FitBuddy
 //
 //  Manages clipboard security to protect sensitive user data
 //  Prevents accidental leakage of private messages and personal information

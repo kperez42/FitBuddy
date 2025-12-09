@@ -1,6 +1,6 @@
 //
 //  AdminModerationDashboard.swift
-//  Celestia
+//  FitBuddy
 //
 //  Admin dashboard for viewing and moderating user reports
 //
@@ -1726,13 +1726,13 @@ class ModerationViewModel: ObservableObject {
                         bio: data["bio"] as? String ?? "",
                         createdAt: createdAt,
                         createdAtDate: createdAtDate,
-                        lookingFor: data["lookingFor"] as? String ?? "",
+                        workoutPreference: data["workoutPreference"] as? String ?? "",
                         interests: data["interests"] as? [String] ?? [],
                         languages: data["languages"] as? [String] ?? [],
                         height: data["height"] as? Int,
                         educationLevel: data["educationLevel"] as? String,
                         religion: data["religion"] as? String,
-                        relationshipGoal: data["relationshipGoal"] as? String,
+                        fitnessGoal: data["fitnessGoal"] as? String,
                         smoking: data["smoking"] as? String,
                         drinking: data["drinking"] as? String,
                         exercise: data["exercise"] as? String,
@@ -2070,13 +2070,13 @@ class ModerationViewModel: ObservableObject {
                     bio: data["bio"] as? String ?? "",
                     createdAt: createdAt,
                     createdAtDate: createdAtDate,
-                    lookingFor: data["lookingFor"] as? String ?? "",
+                    workoutPreference: data["workoutPreference"] as? String ?? "",
                     interests: data["interests"] as? [String] ?? [],
                     languages: data["languages"] as? [String] ?? [],
                     height: data["height"] as? Int,
                     educationLevel: data["educationLevel"] as? String,
                     religion: data["religion"] as? String,
-                    relationshipGoal: data["relationshipGoal"] as? String,
+                    fitnessGoal: data["fitnessGoal"] as? String,
                     smoking: data["smoking"] as? String,
                     drinking: data["drinking"] as? String,
                     exercise: data["exercise"] as? String,
@@ -2876,7 +2876,7 @@ struct PendingProfile: Identifiable {
     let createdAtDate: Date
 
     // Profile preferences
-    let lookingFor: String
+    let workoutPreference: String
     let interests: [String]
     let languages: [String]
 
@@ -2884,7 +2884,7 @@ struct PendingProfile: Identifiable {
     let height: Int?
     let educationLevel: String?
     let religion: String?
-    let relationshipGoal: String?
+    let fitnessGoal: String?
     let smoking: String?
     let drinking: String?
     let exercise: String?
@@ -3145,11 +3145,11 @@ struct PendingProfileCard: View {
                 if !profile.interests.isEmpty || !profile.languages.isEmpty {
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 6) {
-                            if !profile.lookingFor.isEmpty {
+                            if !profile.workoutPreference.isEmpty {
                                 HStack(spacing: 4) {
                                     Image(systemName: "heart.fill")
                                         .font(.system(size: 9))
-                                    Text(profile.lookingFor)
+                                    Text(profile.workoutPreference)
                                 }
                                 .font(.system(size: 11, weight: .medium))
                                 .foregroundColor(.pink)
@@ -3677,7 +3677,7 @@ struct AdminPendingProfileDetailView: View {
                         }
 
                         // Looking for
-                        lookingForSection
+                        workoutPreferenceSection
                     }
                     .padding(20)
                     .padding(.bottom, 80)
@@ -3831,7 +3831,7 @@ struct AdminPendingProfileDetailView: View {
         profile.height != nil ||
         (profile.educationLevel.map { $0 != "Prefer not to say" && !$0.isEmpty } ?? false) ||
         (profile.religion.map { $0 != "Prefer not to say" && !$0.isEmpty } ?? false) ||
-        (profile.relationshipGoal.map { $0 != "Prefer not to say" && !$0.isEmpty } ?? false)
+        (profile.fitnessGoal.map { $0 != "Prefer not to say" && !$0.isEmpty } ?? false)
     }
 
     private var detailsSection: some View {
@@ -3850,8 +3850,8 @@ struct AdminPendingProfileDetailView: View {
                 if let religion = profile.religion, religion != "Prefer not to say", !religion.isEmpty {
                     AdminDetailRow(icon: "sparkles", label: "Religion", value: religion)
                 }
-                if let goal = profile.relationshipGoal, goal != "Prefer not to say", !goal.isEmpty {
-                    AdminDetailRow(icon: "heart.circle", label: "Looking for", value: goal)
+                if let goal = profile.fitnessGoal, goal != "Prefer not to say", !goal.isEmpty {
+                    AdminDetailRow(icon: "heart.circle", label: "Fitness Goal", value: goal)
                 }
             }
         }
@@ -3903,13 +3903,13 @@ struct AdminPendingProfileDetailView: View {
 
     // MARK: - Looking For Section
 
-    private var lookingForSection: some View {
+    private var workoutPreferenceSection: some View {
         VStack(alignment: .leading, spacing: 8) {
             Label("Interested In", systemImage: "heart.text.square")
                 .font(.headline)
                 .foregroundColor(.orange)
 
-            Text(profile.lookingFor.isEmpty ? "Everyone" : profile.lookingFor)
+            Text(profile.workoutPreference.isEmpty ? "Everyone" : profile.workoutPreference)
                 .font(.body)
         }
         .padding()

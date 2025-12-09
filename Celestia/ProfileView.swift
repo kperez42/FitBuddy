@@ -1,6 +1,6 @@
 //
 //  ProfileView.swift
-//  Celestia
+//  FitBuddy
 //
 //  ELITE PROFILE VIEW - Your Digital Identity
 //  ACCESSIBILITY: Full VoiceOver support, Dynamic Type, Reduce Motion, and WCAG 2.1 AA compliant
@@ -406,9 +406,9 @@ struct ProfileView: View {
                     // Share button - only show if user ID exists and URL is valid
                     if let userId = user.id,
                        !userId.isEmpty,
-                       let shareURL = URL(string: "https://celestia.app/profile/\(userId)"),
+                       let shareURL = URL(string: "https://fitbuddy.app/profile/\(userId)"),
                        shareURL.scheme == "https" {
-                        ShareLink(item: shareURL, subject: Text("Check out \(user.fullName)'s profile"), message: Text("See \(user.fullName) on Celestia!")) {
+                        ShareLink(item: shareURL, subject: Text("Check out \(user.fullName)'s profile"), message: Text("See \(user.fullName) on FitBuddy!")) {
                             Image(systemName: "square.and.arrow.up")
                                 .font(.title3)
                                 .foregroundColor(.white)
@@ -420,7 +420,7 @@ struct ProfileView: View {
                             HapticManager.shared.impact(.light)
                         })
                         .accessibilityLabel("Share profile")
-                        .accessibilityHint("Share your Celestia profile with others")
+                        .accessibilityHint("Share your FitBuddy profile with others")
                     }
 
                     Spacer()
@@ -1042,7 +1042,7 @@ struct ProfileView: View {
         VStack(spacing: 16) {
             detailRow(icon: "person.fill", label: "Gender", value: user.gender)
             Divider()
-            detailRow(icon: "heart.circle.fill", label: "Looking for", value: user.lookingFor)
+            detailRow(icon: "heart.circle.fill", label: "Fitness Goal", value: user.workoutPreference)
 
             // Height
             if let height = user.height {
@@ -1057,7 +1057,7 @@ struct ProfileView: View {
             }
 
             // Relationship goal
-            if let goal = user.relationshipGoal, goal != "Prefer not to say" {
+            if let goal = user.fitnessGoal, goal != "Prefer not to say" {
                 Divider()
                 detailRow(icon: "heart.text.square", label: "Relationship goal", value: goal)
             }
@@ -1499,9 +1499,9 @@ struct ProfileView: View {
                 icon: "questionmark.circle.fill",
                 title: "Help & Support",
                 color: .blue,
-                accessibilityHint: "Contact Celestia support team for assistance"
+                accessibilityHint: "Contact FitBuddy support team for assistance"
             ) {
-                guard let url = URL(string: "mailto:support@celestia.app"),
+                guard let url = URL(string: "mailto:support@fitbuddy.app"),
                       UIApplication.shared.canOpenURL(url) else {
                     Logger.shared.error("Cannot open mail client - email URL invalid or no mail app configured", category: .general)
                     return
@@ -1522,7 +1522,7 @@ struct ProfileView: View {
                 icon: "arrow.right.square.fill",
                 title: "Sign Out",
                 color: .red,
-                accessibilityHint: "Sign out of your Celestia account"
+                accessibilityHint: "Sign out of your FitBuddy account"
             ) {
                 showingLogoutConfirmation = true
             }

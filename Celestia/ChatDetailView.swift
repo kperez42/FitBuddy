@@ -1,6 +1,6 @@
 //
 //  ChatDetailView.swift
-//  Celestia
+//  FitBuddy
 //
 //  Chat conversation view
 //
@@ -245,7 +245,7 @@ struct ChatDetailView: View {
             fullName: "Sarah",
             age: 25,
             gender: "Female",
-            lookingFor: "Men",
+            workoutPreference: "Men",
             location: "Paris",
             country: "France"
         ))

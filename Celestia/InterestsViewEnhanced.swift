@@ -1,6 +1,6 @@
 //
 //  InterestsViewEnhanced.swift
-//  Celestia
+//  FitBuddy
 //
 //  Enhanced version with swipe gestures, filters, batch actions, and undo
 //

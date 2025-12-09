@@ -1,6 +1,6 @@
 //
 //  DiscoverViewModel.swift
-//  Celestia
+//  FitBuddy
 //
 //  Handles user discovery and browsing
 //
@@ -126,11 +126,11 @@ class DiscoverViewModel: ObservableObject {
             do {
                 // Use UserService instead of direct Firestore access
                 let ageRange = currentUser.ageRangeMin...currentUser.ageRangeMax
-                let lookingFor = currentUser.lookingFor != "Everyone" ? currentUser.lookingFor : nil
+                let workoutPreference = currentUser.workoutPreference != "Everyone" ? currentUser.workoutPreference : nil
 
                 try await userService.fetchUsers(
                     excludingUserId: userId,
-                    lookingFor: lookingFor,
+                    workoutPreference: workoutPreference,
                     ageRange: ageRange,
                     country: nil,
                     limit: limit,

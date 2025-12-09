@@ -1,6 +1,6 @@
 //
 //  RateLimiter.swift
-//  Celestia
+//  FitBuddy
 //
 //  Client-side rate limiting to prevent abuse
 //

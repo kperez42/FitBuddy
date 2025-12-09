@@ -1,6 +1,6 @@
 //
 //  SwipeScreen.swift
-//  CelestiaUITests
+//  FitBuddyUITests
 //
 //  Page Object for Swipe/Discovery Screen
 //

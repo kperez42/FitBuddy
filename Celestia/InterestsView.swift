@@ -1,6 +1,6 @@
 //
 //  InterestsView.swift
-//  Celestia
+//  FitBuddy
 //
 
 import SwiftUI

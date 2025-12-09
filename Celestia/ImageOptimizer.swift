@@ -1,6 +1,6 @@
 //
 //  ImageOptimizer.swift
-//  Celestia
+//  FitBuddy
 //
 //  Optimizes images with compression, resizing, and format conversion
 //  Generates multiple resolutions for different use cases

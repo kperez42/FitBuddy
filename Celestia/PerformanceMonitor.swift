@@ -1,6 +1,6 @@
 //
 //  PerformanceMonitor.swift
-//  Celestia
+//  FitBuddy
 //
 //  Comprehensive performance monitoring system
 //  Tracks FPS, memory, network, database queries, and image loading

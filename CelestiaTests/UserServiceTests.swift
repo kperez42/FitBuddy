@@ -1,13 +1,13 @@
 //
 //  UserServiceTests.swift
-//  CelestiaTests
+//  FitBuddyTests
 //
 //  Comprehensive tests for UserService
 //
 
 import Testing
 import FirebaseFirestore
-@testable import Celestia
+@testable import FitBuddy
 
 @Suite("UserService Tests")
 struct UserServiceTests {
@@ -43,8 +43,8 @@ struct UserServiceTests {
 
     @Test("Fetch users applies looking for filter")
     func testLookingForFilter() async throws {
-        let lookingFor = "Women"
-        #expect(lookingFor.isEmpty == false)
+        let workoutPreference = "Women"
+        #expect(workoutPreference.isEmpty == false)
     }
 
     // MARK: - Search Tests
@@ -207,7 +207,7 @@ struct UserServiceTests {
             fullName: "John Doe",
             age: 25,
             gender: "Male",
-            lookingFor: "Women",
+            workoutPreference: "Women",
             location: "New York",
             country: "USA"
         )
@@ -224,7 +224,7 @@ struct UserServiceTests {
             fullName: "John Doe",
             age: 25,
             gender: "Male",
-            lookingFor: "Women",
+            workoutPreference: "Women",
             location: "New York",
             country: "USA"
         )

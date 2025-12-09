@@ -1,6 +1,6 @@
 //
 //  ScreenshotDetectionService.swift
-//  Celestia
+//  FitBuddy
 //
 //  Service for detecting screenshots and notifying users
 //

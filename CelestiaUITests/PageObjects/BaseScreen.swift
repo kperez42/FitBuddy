@@ -1,6 +1,6 @@
 //
 //  BaseScreen.swift
-//  CelestiaUITests
+//  FitBuddyUITests
 //
 //  Base class for Page Object Model pattern
 //  Provides common functionality for all screen objects

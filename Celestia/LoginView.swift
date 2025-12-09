@@ -1,6 +1,6 @@
 //
 //  LoginView.swift
-//  Celestia
+//  FitBuddy
 //
 //  Login view (wrapper for SignInView)
 //

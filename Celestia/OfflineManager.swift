@@ -1,6 +1,6 @@
 //
 //  OfflineManager.swift
-//  Celestia
+//  FitBuddy
 //
 //  Manages offline functionality and data synchronization
 //  Handles caching, queue management, and sync when online
@@ -46,8 +46,8 @@ class OfflineManager: ObservableObject {
     // MARK: - Properties
 
     private let networkMonitor = NWPathMonitor()
-    private let monitorQueue = DispatchQueue(label: "com.celestia.network-monitor")
-    private let syncQueue = DispatchQueue(label: "com.celestia.sync-queue")
+    private let monitorQueue = DispatchQueue(label: "com.fitbuddy.network-monitor")
+    private let syncQueue = DispatchQueue(label: "com.fitbuddy.sync-queue")
 
     private var cancellables = Set<AnyCancellable>()
     private let cache = OfflineCache.shared

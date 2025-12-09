@@ -1,6 +1,6 @@
 //
 //  UserService.swift
-//  Celestia
+//  FitBuddy
 //
 //  Service for user-related operations
 //
@@ -43,7 +43,7 @@ class UserService: ObservableObject, UserServiceProtocol {
     /// Fetch users with filters and pagination support
     func fetchUsers(
         excludingUserId: String,
-        lookingFor: String? = nil,
+        workoutPreference: String? = nil,
         ageRange: ClosedRange<Int>? = nil,
         country: String? = nil,
         limit: Int = 20,
@@ -57,7 +57,7 @@ class UserService: ObservableObject, UserServiceProtocol {
         isLoading = true
         defer { isLoading = false }
 
-        Logger.shared.debug("UserService.fetchUsers called - lookingFor: \(lookingFor ?? "nil"), ageRange: \(ageRange?.description ?? "nil")", category: .database)
+        Logger.shared.debug("UserService.fetchUsers called - workoutPreference: \(workoutPreference ?? "nil"), ageRange: \(ageRange?.description ?? "nil")", category: .database)
 
         // NOTE: profileStatus filter moved to client-side to avoid needing new composite index
         // Server-side filter would require index: profileStatus + showMeInSearch + gender + age + lastActive
@@ -68,21 +68,21 @@ class UserService: ObservableObject, UserServiceProtocol {
             .limit(to: limit)
 
         // Apply filters
-        // IMPORTANT: Skip gender filter when lookingFor is "Everyone" to show all genders
-        if let lookingFor = lookingFor, lookingFor != "Everyone" {
-            // Convert lookingFor values to match gender field values
-            // lookingFor uses: "Men", "Women", "Everyone"
+        // IMPORTANT: Skip gender filter when workoutPreference is "Everyone" to show all genders
+        if let workoutPreference = workoutPreference, workoutPreference != "Everyone" {
+            // Convert workoutPreference values to match gender field values
+            // workoutPreference uses: "Men", "Women", "Everyone"
             // gender uses: "Male", "Female", "Non-binary", "Other"
             let genderToMatch: String
-            switch lookingFor {
+            switch workoutPreference {
             case "Women":
                 genderToMatch = "Female"
             case "Men":
                 genderToMatch = "Male"
             default:
-                genderToMatch = lookingFor // Use as-is if already in correct format
+                genderToMatch = workoutPreference // Use as-is if already in correct format
             }
-            Logger.shared.info("UserService: Filtering by gender = \(genderToMatch) (from lookingFor: \(lookingFor))", category: .database)
+            Logger.shared.info("UserService: Filtering by gender = \(genderToMatch) (from workoutPreference: \(workoutPreference))", category: .database)
             query = query.whereField("gender", isEqualTo: genderToMatch)
         }
 
@@ -105,7 +105,7 @@ class UserService: ObservableObject, UserServiceProtocol {
 
         do {
             Logger.shared.info("UserService: Executing Firestore query...", category: .database)
-            Logger.shared.info("UserService: Query details - showMeInSearch=true, ageRange=\(ageRange?.description ?? "none"), lookingFor=\(lookingFor ?? "Everyone")", category: .database)
+            Logger.shared.info("UserService: Query details - showMeInSearch=true, ageRange=\(ageRange?.description ?? "none"), workoutPreference=\(workoutPreference ?? "Everyone")", category: .database)
 
             let snapshot = try await query.getDocuments()
             lastDocument = snapshot.documents.last
@@ -411,10 +411,10 @@ class UserService: ObservableObject, UserServiceProtocol {
     }
     
     /// Load more users (pagination)
-    func loadMoreUsers(excludingUserId: String, lookingFor: String? = nil, ageRange: ClosedRange<Int>? = nil) async throws {
+    func loadMoreUsers(excludingUserId: String, workoutPreference: String? = nil, ageRange: ClosedRange<Int>? = nil) async throws {
         try await fetchUsers(
             excludingUserId: excludingUserId,
-            lookingFor: lookingFor,
+            workoutPreference: workoutPreference,
             ageRange: ageRange,
             reset: false
         )

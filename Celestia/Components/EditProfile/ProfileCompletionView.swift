@@ -1,6 +1,6 @@
 //
 //  ProfileCompletionView.swift
-//  Celestia
+//  FitBuddy
 //
 //  Profile completion progress indicator
 //  Extracted from EditProfileView.swift

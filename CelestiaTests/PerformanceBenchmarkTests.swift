@@ -1,6 +1,6 @@
 //
 //  PerformanceBenchmarkTests.swift
-//  CelestiaTests
+//  FitBuddyTests
 //
 //  Performance benchmark tests:
 //  - Message loading performance
@@ -13,7 +13,7 @@
 
 import Testing
 import Foundation
-@testable import Celestia
+@testable import FitBuddy
 
 @Suite("Performance Benchmark Tests")
 struct PerformanceBenchmarkTests {

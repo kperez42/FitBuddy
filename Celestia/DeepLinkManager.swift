@@ -1,6 +1,6 @@
 //
 //  DeepLinkManager.swift
-//  Celestia
+//  FitBuddy
 //
 //  Manages deep linking for referral codes
 //

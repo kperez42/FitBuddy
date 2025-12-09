@@ -1,6 +1,6 @@
 //
 //  TutorialView.swift
-//  Celestia
+//  FitBuddy
 //
 //  Interactive tutorials for core features
 //  Guides new users through swiping, matching, and messaging
@@ -299,8 +299,8 @@ class TutorialManager: ObservableObject {
         return [
             Tutorial(
                 id: "welcome",
-                title: "Welcome to Celestia! 🌟",
-                description: "Your journey to meaningful connections starts here. Let's show you around!",
+                title: "Welcome to FitBuddy! 🌟",
+                description: "Your journey to meaningful fitness partnerships starts here. Let's show you around!",
                 icon: "star.fill",
                 accentColor: .purple,
                 tips: [

@@ -1,13 +1,13 @@
 //
 //  ProfileEditViewModelTests.swift
-//  CelestiaTests
+//  FitBuddyTests
 //
 //  Comprehensive tests for ProfileEditViewModel
 //
 
 import Testing
 import UIKit
-@testable import Celestia
+@testable import FitBuddy
 
 @Suite("ProfileEditViewModel Tests")
 @MainActor

@@ -1,6 +1,6 @@
 //
 //  ImageUploadService.swift
-//  Celestia
+//  FitBuddy
 //
 //  Enhanced with comprehensive error handling, retry logic, background processing,
 //  and content moderation to prevent inappropriate uploads
@@ -53,7 +53,7 @@ class ImageUploadService {
             let moderationResult = await moderationService.preCheckPhoto(image)
             if !moderationResult.approved {
                 Logger.shared.warning("📷 Image rejected by content moderation: \(moderationResult.message)", category: .networking)
-                throw CelestiaError.contentNotAllowed(moderationResult.message)
+                throw FitBuddyError.contentNotAllowed(moderationResult.message)
             }
             Logger.shared.info("📷 Content moderation passed", category: .networking)
         } else {
@@ -67,7 +67,7 @@ class ImageUploadService {
 
         // Validate size
         if imageData.count > maxImageSize {
-            throw CelestiaError.imageTooBig
+            throw FitBuddyError.imageTooBig
         }
 
         // Upload with retry logic (network operation)
@@ -82,17 +82,17 @@ class ImageUploadService {
         // Perform image processing on background thread to avoid blocking UI
         return try await Task.detached(priority: .userInitiated) { [weak self] in
             guard let self = self else {
-                throw CelestiaError.invalidImageFormat
+                throw FitBuddyError.invalidImageFormat
             }
 
             // Optimize image using modern UIGraphicsImageRenderer
             guard let optimizedImage = self.optimizeImageOnBackgroundThread(image) else {
-                throw CelestiaError.invalidImageFormat
+                throw FitBuddyError.invalidImageFormat
             }
 
             // Convert to data
             guard let imageData = optimizedImage.jpegData(compressionQuality: self.compressionQuality) else {
-                throw CelestiaError.invalidImageFormat
+                throw FitBuddyError.invalidImageFormat
             }
 
             return imageData
@@ -163,19 +163,19 @@ class ImageUploadService {
             // REFACTORED: Use FirebaseErrorMapper for consistent error handling
             FirebaseErrorMapper.logError(error, context: "Image Upload")
 
-            // Map Firebase error to CelestiaError
+            // Map Firebase error to FitBuddyError
             let celestiaError = FirebaseErrorMapper.mapError(error)
 
             // Convert mapped error to appropriate image upload error
             switch celestiaError {
             case .storageQuotaExceeded:
-                throw CelestiaError.imageTooBig
+                throw FitBuddyError.imageTooBig
             case .unauthorized, .permissionDenied:
-                throw CelestiaError.permissionDenied
+                throw FitBuddyError.permissionDenied
             case .invalidData:
-                throw CelestiaError.invalidData
+                throw FitBuddyError.invalidData
             default:
-                throw CelestiaError.imageUploadFailed
+                throw FitBuddyError.imageUploadFailed
             }
         }
     }
@@ -185,13 +185,13 @@ class ImageUploadService {
     private func validateImage(_ image: UIImage) throws {
         // Check if image is valid
         guard image.size.width > 0, image.size.height > 0 else {
-            throw CelestiaError.invalidImageFormat
+            throw FitBuddyError.invalidImageFormat
         }
 
         // Check minimum dimensions
         let minDimension: CGFloat = 200
         if image.size.width < minDimension || image.size.height < minDimension {
-            throw CelestiaError.invalidImageFormat
+            throw FitBuddyError.invalidImageFormat
         }
 
         // Check aspect ratio (prevent extremely distorted images)
@@ -199,7 +199,7 @@ class ImageUploadService {
         // Allow ratios from 1:3 portrait (0.33) to 3:1 landscape (3.0)
         let aspectRatio = image.size.width / image.size.height
         if aspectRatio < 0.33 || aspectRatio > 3.0 {
-            throw CelestiaError.invalidImageFormat
+            throw FitBuddyError.invalidImageFormat
         }
     }
 
@@ -231,7 +231,7 @@ class ImageUploadService {
 
     func deleteImage(url: String) async throws {
         guard !url.isEmpty, let urlObj = URL(string: url) else {
-            throw CelestiaError.invalidData
+            throw FitBuddyError.invalidData
         }
 
         // Use retry logic for deletion
@@ -249,7 +249,7 @@ class ImageUploadService {
 
         guard !userId.isEmpty else {
             Logger.shared.error("📷 uploadProfileImage failed: Empty userId", category: .networking)
-            throw CelestiaError.invalidData
+            throw FitBuddyError.invalidData
         }
         // Use high-quality upload for profile images (these appear on cards)
         return try await uploadHighQualityImage(image, path: "profile_images/\(userId)")
@@ -276,7 +276,7 @@ class ImageUploadService {
             let moderationResult = await moderationService.preCheckPhoto(image)
             if !moderationResult.approved {
                 Logger.shared.warning("📷 Image rejected by content moderation: \(moderationResult.message)", category: .networking)
-                throw CelestiaError.contentNotAllowed(moderationResult.message)
+                throw FitBuddyError.contentNotAllowed(moderationResult.message)
             }
             Logger.shared.info("📷 Content moderation passed", category: .networking)
         }
@@ -289,7 +289,7 @@ class ImageUploadService {
         // Validate size
         if imageData.count > maxImageSize {
             Logger.shared.error("📷 Image too large: \(imageData.count) > \(maxImageSize)", category: .networking)
-            throw CelestiaError.imageTooBig
+            throw FitBuddyError.imageTooBig
         }
 
         // Upload with retry logic (network operation)
@@ -303,17 +303,17 @@ class ImageUploadService {
     private func optimizeProfileImageAsync(_ image: UIImage) async throws -> Data {
         return try await Task.detached(priority: .userInitiated) { [weak self] in
             guard let self = self else {
-                throw CelestiaError.invalidImageFormat
+                throw FitBuddyError.invalidImageFormat
             }
 
             // Optimize image using HIGH QUALITY settings
             guard let optimizedImage = self.optimizeProfileImage(image) else {
-                throw CelestiaError.invalidImageFormat
+                throw FitBuddyError.invalidImageFormat
             }
 
             // Convert to data with MAXIMUM quality for profile photos
             guard let imageData = optimizedImage.jpegData(compressionQuality: self.profileCompressionQuality) else {
-                throw CelestiaError.invalidImageFormat
+                throw FitBuddyError.invalidImageFormat
             }
 
             return imageData
@@ -354,7 +354,7 @@ class ImageUploadService {
 
         guard !matchId.isEmpty else {
             Logger.shared.error("📷 uploadChatImage failed: Empty matchId", category: .networking)
-            throw CelestiaError.invalidData
+            throw FitBuddyError.invalidData
         }
         return try await uploadImage(image, path: "chat_images/\(matchId)")
     }
@@ -363,7 +363,7 @@ class ImageUploadService {
 
     func uploadMultipleImages(_ images: [UIImage], path: String, maxImages: Int = 6) async throws -> [String] {
         guard images.count <= maxImages else {
-            throw CelestiaError.tooManyImages
+            throw FitBuddyError.tooManyImages
         }
 
         var uploadedURLs: [String] = []

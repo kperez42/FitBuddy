@@ -1,6 +1,6 @@
 //
 //  ProfileRejectionFeedbackView.swift
-//  Celestia
+//  FitBuddy
 //
 //  Shows rejection feedback to users whose profiles need corrections
 //

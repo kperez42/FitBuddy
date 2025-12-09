@@ -1,6 +1,6 @@
 //
 //  IntegrationTestBase.swift
-//  CelestiaTests
+//  FitBuddyTests
 //
 //  Base class for integration tests with Firebase Emulator support
 //  Provides common setup, teardown, and utilities for integration testing
@@ -12,7 +12,7 @@ import FirebaseCore
 import FirebaseAuth
 import FirebaseFirestore
 import FirebaseStorage
-@testable import Celestia
+@testable import FitBuddy
 
 /// Base configuration and utilities for integration tests
 @MainActor
@@ -99,7 +99,7 @@ class IntegrationTestBase {
         fullName: String = "Test User",
         age: Int = 25,
         gender: String = "Female",
-        lookingFor: String = "Male"
+        workoutPreference: String = "Male"
     ) async throws -> User {
         // Create auth user
         let authResult = try await auth.createUser(withEmail: email, password: "TestPass123!")
@@ -111,7 +111,7 @@ class IntegrationTestBase {
             fullName: fullName,
             age: age,
             gender: gender,
-            lookingFor: lookingFor,
+            workoutPreference: workoutPreference,
             location: "Test City",
             country: "Test Country"
         )

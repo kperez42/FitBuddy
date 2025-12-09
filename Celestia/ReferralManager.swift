@@ -1,6 +1,6 @@
 //
 //  ReferralManager.swift
-//  Celestia
+//  FitBuddy
 //
 //  Manages referral system logic
 //  Optimized for 10k+ users with caching, rate limiting, and efficient queries
@@ -1054,11 +1054,11 @@ class ReferralManager: ObservableObject {
 
     func getReferralShareMessage(code: String, userName: String) -> String {
         return """
-        Hey! Join me on Celestia, the best dating app for meaningful connections! 💜
+        Hey! Join me on FitBuddy, the best fitness partner app for meaningful fitness partnerships! 💜
 
         Use my code \(code) when you sign up and we'll both get 3 days of Premium free!
 
-        Download now: https://celestia.app/join/\(code)
+        Download now: https://fitbuddy.app/join/\(code)
         """
     }
 
@@ -1089,7 +1089,7 @@ class ReferralManager: ObservableObject {
     }
 
     func getReferralURL(code: String) -> URL? {
-        return URL(string: "https://celestia.app/join/\(code)")
+        return URL(string: "https://fitbuddy.app/join/\(code)")
     }
 
     // MARK: - Analytics (Enhanced)

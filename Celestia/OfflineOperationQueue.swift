@@ -1,6 +1,6 @@
 //
 //  OfflineOperationQueue.swift
-//  Celestia
+//  FitBuddy
 //
 //  Queues operations for execution when network connection is restored
 //  Provides offline support for critical app functions

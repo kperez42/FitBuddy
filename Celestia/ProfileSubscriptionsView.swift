@@ -1,6 +1,6 @@
 //
 //  ProfileSubscriptionsView.swift
-//  Celestia
+//  FitBuddy
 //
 //  Shows subscription management with swipeable tabs - consistent with LikesView and SavedProfilesView
 //  Features tab now uses Tinder-style card swiping for better UX
@@ -48,7 +48,7 @@ struct ProfileSubscriptionsView: View {
             description: "Like as many profiles as you want without daily limits. Never miss a potential match!",
             color: .purple,
             gradient: [Color.purple, Color.indigo],
-            benefit: "No restrictions on your dating journey"
+            benefit: "No restrictions on your fitness journey"
         ),
         FeatureCardItem(
             icon: "eye.fill",
@@ -804,7 +804,7 @@ struct ProfileSubscriptionsView: View {
 
             VStack(spacing: 0) {
                 Button {
-                    if let url = URL(string: "mailto:support@celestia.app") {
+                    if let url = URL(string: "mailto:support@fitbuddy.app") {
                         UIApplication.shared.open(url)
                     }
                 } label: {
@@ -825,7 +825,7 @@ struct ProfileSubscriptionsView: View {
                 Divider()
 
                 Button {
-                    if let url = URL(string: "https://celestia.app/faq") {
+                    if let url = URL(string: "https://fitbuddy.app/faq") {
                         UIApplication.shared.open(url)
                     }
                 } label: {
@@ -846,7 +846,7 @@ struct ProfileSubscriptionsView: View {
                 Divider()
 
                 Button {
-                    if let url = URL(string: "https://celestia.app/terms") {
+                    if let url = URL(string: "https://fitbuddy.app/terms") {
                         UIApplication.shared.open(url)
                     }
                 } label: {

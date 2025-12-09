@@ -1,6 +1,6 @@
 //
 //  Referral.swift
-//  Celestia
+//  FitBuddy
 //
 //  Referral system models
 //

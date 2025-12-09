@@ -1,6 +1,6 @@
 //
 //  ButtonStyles.swift
-//  Celestia
+//  FitBuddy
 //
 //  Unified button styles for consistent interactive feedback
 //

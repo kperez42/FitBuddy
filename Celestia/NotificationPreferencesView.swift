@@ -1,6 +1,6 @@
 //
 //  NotificationPreferencesView.swift
-//  Celestia
+//  FitBuddy
 //
 //  SwiftUI view for managing notification preferences
 //

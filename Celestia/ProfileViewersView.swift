@@ -1,6 +1,6 @@
 //
 //  ProfileViewersView.swift
-//  Celestia
+//  FitBuddy
 //
 //  Shows who viewed your profile (Premium feature)
 //

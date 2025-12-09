@@ -1,6 +1,6 @@
 //
 //  BatchOperationManagerTests.swift
-//  CelestiaTests
+//  FitBuddyTests
 //
 //  Tests for BatchOperationManager including:
 //  - Transaction logging
@@ -12,7 +12,7 @@
 import Testing
 import Foundation
 import FirebaseFirestore
-@testable import Celestia
+@testable import FitBuddy
 
 @Suite("BatchOperationManager Tests")
 struct BatchOperationManagerTests {

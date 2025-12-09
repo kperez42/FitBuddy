@@ -1,6 +1,6 @@
 //
 //  LazyView.swift
-//  Celestia
+//  FitBuddy
 //
 //  Lazy view wrapper for performance optimization
 //  PERFORMANCE: Pre-renders adjacent tabs for instant switching

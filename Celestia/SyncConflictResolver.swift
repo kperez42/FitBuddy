@@ -1,6 +1,6 @@
 //
 //  SyncConflictResolver.swift
-//  Celestia
+//  FitBuddy
 //
 //  Handles synchronization conflicts when offline changes conflict with server state
 //

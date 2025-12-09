@@ -1,6 +1,6 @@
 //
 //  ImagePerformanceMonitor.swift
-//  Celestia
+//  FitBuddy
 //
 //  Performance monitoring for image optimization system
 //  Tracks load times, CDN usage, bandwidth savings, and user engagement

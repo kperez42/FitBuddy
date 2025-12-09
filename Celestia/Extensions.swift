@@ -1,6 +1,6 @@
 //
 //  Extensions.swift
-//  Celestia
+//  FitBuddy
 //
 //  Useful extensions throughout the app
 //
@@ -396,7 +396,7 @@ extension Bundle {
     
     /// Get app name
     var appName: String {
-        infoDictionary?["CFBundleName"] as? String ?? "Celestia"
+        infoDictionary?["CFBundleName"] as? String ?? "FitBuddy"
     }
 }
 

@@ -1,6 +1,6 @@
 //
 //  PhotoUploadFlowTests.swift
-//  CelestiaTests
+//  FitBuddyTests
 //
 //  End-to-end tests for photo upload flow including:
 //  - Upload process verification
@@ -11,7 +11,7 @@
 
 import Testing
 import UIKit
-@testable import Celestia
+@testable import FitBuddy
 
 @Suite("Photo Upload Flow Tests")
 @MainActor
@@ -307,7 +307,7 @@ struct PhotoUploadFlowTests {
             _ = try await mockUpload.uploadPhoto(testImage, userId: "test123", imageType: .gallery)
             #expect(Bool(false), "Expected upload to fail")
         } catch {
-            #expect(error is CelestiaError)
+            #expect(error is FitBuddyError)
         }
 
         #expect(mockUpload.failureCount == 1)

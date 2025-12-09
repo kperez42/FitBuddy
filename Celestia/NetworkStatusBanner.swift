@@ -1,6 +1,6 @@
 //
 //  NetworkStatusBanner.swift
-//  Celestia
+//  FitBuddy
 //
 //  Network status banner to show offline/online state
 //  UX FIX: Prevents user confusion when network is unavailable

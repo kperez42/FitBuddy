@@ -1,6 +1,6 @@
 //
 //  LazyUserCardStack.swift
-//  Celestia
+//  FitBuddy
 //
 //  Lazy loading card stack with windowed rendering and image preloading
 //  Significantly improves performance by only rendering visible cards
@@ -136,7 +136,7 @@ struct CardData: Identifiable {
                 fullName: "Sofia Rodriguez",
                 age: 25,
                 gender: "Female",
-                lookingFor: "Male",
+                workoutPreference: "Male",
                 bio: "Love to travel and explore new cultures.",
                 location: "Barcelona",
                 country: "Spain",
@@ -149,7 +149,7 @@ struct CardData: Identifiable {
                 fullName: "Emma Thompson",
                 age: 28,
                 gender: "Female",
-                lookingFor: "Male",
+                workoutPreference: "Male",
                 bio: "Artist and coffee enthusiast.",
                 location: "London",
                 country: "UK",
@@ -162,7 +162,7 @@ struct CardData: Identifiable {
                 fullName: "Maria Garcia",
                 age: 26,
                 gender: "Female",
-                lookingFor: "Male",
+                workoutPreference: "Male",
                 bio: "Dancer and music lover.",
                 location: "Madrid",
                 country: "Spain",

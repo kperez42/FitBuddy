@@ -1,6 +1,6 @@
 //
 //  MatchesScreen.swift
-//  CelestiaUITests
+//  FitBuddyUITests
 //
 //  Page Object for Matches Screen
 //

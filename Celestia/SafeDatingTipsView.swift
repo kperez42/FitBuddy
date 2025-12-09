@@ -1,13 +1,13 @@
 //
-//  SafeDatingTipsView.swift
-//  Celestia
+//  SafetyTipsView.swift
+//  FitBuddy
 //
-//  Safety tips and resources for dating
+//  Safety tips and resources for meeting workout partners
 //
 
 import SwiftUI
 
-struct SafeDatingTipsView: View {
+struct SafetyTipsView: View {
     @State private var selectedCategory: TipCategory = .beforeMeeting
 
     var body: some View {
@@ -25,7 +25,7 @@ struct SafeDatingTipsView: View {
                 .padding()
             }
         }
-        .navigationTitle("Safe Dating Tips")
+        .navigationTitle("Workout Safety Tips")
         .navigationBarTitleDisplayMode(.inline)
     }
 
@@ -158,7 +158,7 @@ struct SafetyTipCard: View {
 
 enum TipCategory: CaseIterable {
     case beforeMeeting
-    case firstDate
+    case firstWorkout
     case ongoingSafety
     case redFlags
     case resources
@@ -166,7 +166,7 @@ enum TipCategory: CaseIterable {
     var title: String {
         switch self {
         case .beforeMeeting: return "Before"
-        case .firstDate: return "First Date"
+        case .firstWorkout: return "First Workout"
         case .ongoingSafety: return "Ongoing"
         case .redFlags: return "Red Flags"
         case .resources: return "Resources"
@@ -176,7 +176,7 @@ enum TipCategory: CaseIterable {
     var icon: String {
         switch self {
         case .beforeMeeting: return "calendar.badge.clock"
-        case .firstDate: return "hand.wave.fill"
+        case .firstWorkout: return "figure.run"
         case .ongoingSafety: return "shield.checkered"
         case .redFlags: return "exclamationmark.triangle.fill"
         case .resources: return "link"
@@ -213,12 +213,12 @@ struct SafetyTip: Identifiable {
                 SafetyTip(
                     icon: "bubble.left.and.bubble.right.fill",
                     title: "Get to Know Them First",
-                    description: "Message for at least a few days before meeting. Ask questions to verify they're genuine.",
+                    description: "Message for at least a few days before working out together. Discuss fitness goals and experience levels.",
                     priority: .important,
                     actionItems: [
-                        "Have several conversations",
+                        "Have several conversations about fitness",
                         "Video chat before meeting",
-                        "Verify their social media profiles"
+                        "Verify their fitness background"
                     ]
                 ),
                 SafetyTip(
@@ -235,11 +235,11 @@ struct SafetyTip: Identifiable {
                 SafetyTip(
                     icon: "person.2.fill",
                     title: "Share Your Plans",
-                    description: "Always tell a friend or family member where you're going and who you're meeting.",
+                    description: "Always tell a friend or family member where you're working out and who you're meeting.",
                     priority: .critical,
                     actionItems: [
-                        "Share date location and time",
-                        "Send match's profile info",
+                        "Share workout location and time",
+                        "Send workout partner's profile info",
                         "Set up check-in times"
                     ]
                 ),
@@ -251,28 +251,28 @@ struct SafetyTip: Identifiable {
                     actionItems: [
                         "Google their name",
                         "Check social media profiles",
-                        "Verify their work/education"
+                        "Look for fitness community presence"
                     ]
                 )
             ]
 
-        case .firstDate:
+        case .firstWorkout:
             return [
                 SafetyTip(
                     icon: "building.2.fill",
-                    title: "Meet in Public",
-                    description: "Always choose a busy, public place for first dates. Never go to their home or invite them to yours.",
+                    title: "Meet at a Public Gym",
+                    description: "Always choose a busy, public gym or fitness facility for first workouts. Avoid private locations.",
                     priority: .critical,
                     actionItems: [
-                        "Choose a busy cafe or restaurant",
-                        "Avoid secluded areas",
-                        "Stay in well-lit places"
+                        "Choose a well-known gym or park",
+                        "Avoid secluded trails",
+                        "Stay in well-populated areas"
                     ]
                 ),
                 SafetyTip(
                     icon: "car.fill",
                     title: "Arrange Your Own Transportation",
-                    description: "Drive yourself or use a rideshare. Never let them pick you up or know your address yet.",
+                    description: "Drive yourself or use a rideshare. Don't share your home address too quickly.",
                     priority: .critical,
                     actionItems: [
                         "Drive yourself",
@@ -281,14 +281,14 @@ struct SafetyTip: Identifiable {
                     ]
                 ),
                 SafetyTip(
-                    icon: "creditcard.fill",
-                    title: "Keep Your Own Tab",
-                    description: "Be prepared to pay for yourself. This maintains independence and avoids obligation.",
+                    icon: "figure.strengthtraining.traditional",
+                    title: "Start With a Light Workout",
+                    description: "Don't push too hard on the first session. Focus on getting to know your partner's style.",
                     priority: .important,
                     actionItems: [
-                        "Bring your own money",
-                        "Offer to split the bill",
-                        "Never feel obligated"
+                        "Agree on workout intensity",
+                        "Respect fitness levels",
+                        "Communicate during exercises"
                     ]
                 ),
                 SafetyTip(
@@ -303,14 +303,14 @@ struct SafetyTip: Identifiable {
                     ]
                 ),
                 SafetyTip(
-                    icon: "wineglass.fill",
-                    title: "Watch Your Drink",
-                    description: "Never leave your drink unattended. If you do, order a new one.",
-                    priority: .critical,
+                    icon: "drop.fill",
+                    title: "Bring Your Own Water",
+                    description: "Always bring your own water bottle and snacks. Stay hydrated during workouts.",
+                    priority: .important,
                     actionItems: [
-                        "Order drinks yourself",
-                        "Keep drink in sight",
-                        "Watch bartender make it"
+                        "Bring your own water bottle",
+                        "Never share drinks",
+                        "Pack your own nutrition"
                     ]
                 )
             ]
@@ -320,7 +320,7 @@ struct SafetyTip: Identifiable {
                 SafetyTip(
                     icon: "ear",
                     title: "Trust Your Instincts",
-                    description: "If something feels off, it probably is. You can leave at any time.",
+                    description: "If something feels off, it probably is. You can end a workout partnership at any time.",
                     priority: .critical,
                     actionItems: [
                         "Listen to your gut",
@@ -341,8 +341,8 @@ struct SafetyTip: Identifiable {
                 ),
                 SafetyTip(
                     icon: "clock.fill",
-                    title: "Take It Slow",
-                    description: "There's no rush. Take time to build trust before increasing intimacy or sharing more.",
+                    title: "Build Trust Gradually",
+                    description: "Take time to build trust before sharing personal details or working out in private.",
                     priority: .helpful,
                     actionItems: [
                         "Set your own pace",
@@ -379,7 +379,7 @@ struct SafetyTip: Identifiable {
                 SafetyTip(
                     icon: "eye.slash.fill",
                     title: "Inconsistent Stories",
-                    description: "Pay attention if their stories don't add up or they contradict themselves frequently.",
+                    description: "Pay attention if their fitness claims don't add up or they contradict themselves frequently.",
                     priority: .important,
                     actionItems: [
                         "Note inconsistencies",
@@ -399,20 +399,20 @@ struct SafetyTip: Identifiable {
                     ]
                 ),
                 SafetyTip(
-                    icon: "hourglass",
-                    title: "Rushes Intimacy",
-                    description: "Be wary of anyone who rushes physical or emotional intimacy or tries to isolate you from friends.",
+                    icon: "figure.run",
+                    title: "Pushes Your Limits Unsafely",
+                    description: "Be wary of anyone who pushes you to exercise beyond your limits or ignores your fitness level.",
                     priority: .important,
                     actionItems: [
-                        "Maintain your pace",
-                        "Keep friends involved",
-                        "Set clear boundaries"
+                        "Communicate your limits",
+                        "Don't be pushed too hard",
+                        "Safety comes first"
                     ]
                 ),
                 SafetyTip(
                     icon: "photo.on.rectangle.angled",
                     title: "Refuses to Video Chat",
-                    description: "If they consistently avoid video calls or meeting in person, they may be hiding something.",
+                    description: "If they consistently avoid video calls or meeting at public gyms, they may be hiding something.",
                     priority: .important,
                     actionItems: [
                         "Insist on video chat",
@@ -436,25 +436,25 @@ struct SafetyTip: Identifiable {
                     ]
                 ),
                 SafetyTip(
-                    icon: "heart.text.square.fill",
-                    title: "RAINN Hotline",
-                    description: "National Sexual Assault Hotline: 1-800-656-HOPE (4673). Free, confidential 24/7 support.",
+                    icon: "cross.case.fill",
+                    title: "Sports Medicine Resources",
+                    description: "Know where your local urgent care or sports medicine clinic is for workout injuries.",
                     priority: .important,
                     actionItems: [
-                        "Call 1-800-656-4673",
-                        "Online chat available",
-                        "Completely confidential"
+                        "Find nearest urgent care",
+                        "Know your gym's first aid location",
+                        "Learn basic injury care"
                     ]
                 ),
                 SafetyTip(
-                    icon: "house.fill",
-                    title: "Domestic Violence Hotline",
-                    description: "National Domestic Violence Hotline: 1-800-799-SAFE (7233). Help for abusive relationships.",
+                    icon: "heart.text.square.fill",
+                    title: "Mental Health Support",
+                    description: "National Suicide Prevention Lifeline: 988. Free, confidential 24/7 support.",
                     priority: .important,
                     actionItems: [
-                        "Call 1-800-799-7233",
-                        "Text START to 88788",
-                        "24/7 support available"
+                        "Call or text 988",
+                        "Online chat available",
+                        "Completely confidential"
                     ]
                 ),
                 SafetyTip(
@@ -470,13 +470,13 @@ struct SafetyTip: Identifiable {
                 ),
                 SafetyTip(
                     icon: "network",
-                    title: "Online Resources",
-                    description: "Visit these websites for more information on staying safe while dating online.",
+                    title: "Fitness Safety Resources",
+                    description: "Visit these websites for more information on safe exercise practices.",
                     priority: .helpful,
                     actionItems: [
-                        "love is respect.org",
-                        "cybercivilrights.org",
-                        "ncvc.org (National Center for Victims of Crime)"
+                        "acsm.org (American College of Sports Medicine)",
+                        "nasm.org (National Academy of Sports Medicine)",
+                        "acefitness.org (ACE Fitness)"
                     ]
                 )
             ]
@@ -486,6 +486,6 @@ struct SafetyTip: Identifiable {
 
 #Preview {
     NavigationStack {
-        SafeDatingTipsView()
+        SafetyTipsView()
     }
 }

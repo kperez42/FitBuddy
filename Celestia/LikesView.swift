@@ -1420,7 +1420,7 @@ class LikesViewModel: ObservableObject {
                 }
                 return .liked
             }
-        } catch let error as CelestiaError {
+        } catch let error as FitBuddyError {
             Logger.shared.error("Error liking back user", category: .matching, error: error)
             HapticManager.shared.notification(.error)
             return .error(error.localizedDescription)

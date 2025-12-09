@@ -1,6 +1,6 @@
 //
 //  StoreModels.swift
-//  Celestia
+//  FitBuddy
 //
 //  Product models and types for In-App Purchases
 //
@@ -14,22 +14,22 @@ struct ProductIdentifiers {
 
     // MARK: - Subscriptions (Auto-Renewable)
 
-    static let subscriptionBasicMonthly = "com.celestia.subscription.basic.monthly"
-    static let subscriptionBasicYearly = "com.celestia.subscription.basic.yearly"
+    static let subscriptionBasicMonthly = "com.fitbuddy.subscription.basic.monthly"
+    static let subscriptionBasicYearly = "com.fitbuddy.subscription.basic.yearly"
 
-    static let subscriptionPlusMonthly = "com.celestia.subscription.plus.monthly"
-    static let subscriptionPlusYearly = "com.celestia.subscription.plus.yearly"
+    static let subscriptionPlusMonthly = "com.fitbuddy.subscription.plus.monthly"
+    static let subscriptionPlusYearly = "com.fitbuddy.subscription.plus.yearly"
 
-    static let subscriptionPremiumMonthly = "com.celestia.subscription.premium.monthly"
-    static let subscriptionPremiumYearly = "com.celestia.subscription.premium.yearly"
+    static let subscriptionPremiumMonthly = "com.fitbuddy.subscription.premium.monthly"
+    static let subscriptionPremiumYearly = "com.fitbuddy.subscription.premium.yearly"
 
     // MARK: - Consumables
 
-    static let boost1Hour = "com.celestia.consumable.boost.1hour"
-    static let boost3Hours = "com.celestia.consumable.boost.3hours"
-    static let boost24Hours = "com.celestia.consumable.boost.24hours"
+    static let boost1Hour = "com.fitbuddy.consumable.boost.1hour"
+    static let boost3Hours = "com.fitbuddy.consumable.boost.3hours"
+    static let boost24Hours = "com.fitbuddy.consumable.boost.24hours"
 
-    static let spotlightWeekend = "com.celestia.consumable.spotlight.weekend"
+    static let spotlightWeekend = "com.fitbuddy.consumable.spotlight.weekend"
 
     // MARK: - All Products
 

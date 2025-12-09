@@ -1,12 +1,12 @@
 //
 //  SwipeServiceTests.swift
-//  CelestiaTests
+//  FitBuddyTests
 //
 //  Comprehensive unit tests for SwipeService
 //
 
 import Testing
-@testable import Celestia
+@testable import FitBuddy
 import Foundation
 
 @Suite("SwipeService Tests")

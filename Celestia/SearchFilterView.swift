@@ -1,6 +1,6 @@
 //
 //  SearchFilterView.swift
-//  Celestia
+//  FitBuddy
 //
 //  Comprehensive search filter interface
 //
@@ -343,9 +343,9 @@ struct SearchFilterView: View {
         FilterSection(title: "Relationship Goals", icon: "heart.circle.fill") {
             VStack(spacing: 16) {
                 MultiSelectMenu(
-                    title: "Looking for",
+                    title: "Fitness Goal",
                     options: RelationshipGoal.allCases,
-                    selections: $filter.relationshipGoals,
+                    selections: $filter.fitnessGoals,
                     displayName: { $0.displayName }
                 )
             }

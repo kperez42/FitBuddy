@@ -1,6 +1,6 @@
 //
 //  ConversationStartersView.swift
-//  Celestia
+//  FitBuddy
 //
 //  Beautiful UI for conversation starter suggestions
 //

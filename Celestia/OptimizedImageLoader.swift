@@ -1,6 +1,6 @@
 //
 //  OptimizedImageLoader.swift
-//  Celestia
+//  FitBuddy
 //
 //  Enhanced image loading with CDN support, responsive images, and progressive loading
 //  Performance improvement: 50% faster load times, 40% bandwidth savings

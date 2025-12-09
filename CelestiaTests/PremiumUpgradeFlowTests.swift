@@ -1,6 +1,6 @@
 //
 //  PremiumUpgradeFlowTests.swift
-//  CelestiaTests
+//  FitBuddyTests
 //
 //  Integration tests for premium upgrade and payment flows
 //  Tests StoreKit integration, subscription validation, and feature unlocking
@@ -8,7 +8,7 @@
 
 import Testing
 import Foundation
-@testable import Celestia
+@testable import FitBuddy
 
 @Suite("Premium Upgrade Flow Tests")
 @MainActor

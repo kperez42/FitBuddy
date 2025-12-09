@@ -1,13 +1,13 @@
 //
 //  SavedProfilesViewModelTests.swift
-//  CelestiaTests
+//  FitBuddyTests
 //
 //  Comprehensive tests for SavedProfilesViewModel and SavedProfile functionality
 //
 
 import Testing
 import FirebaseFirestore
-@testable import Celestia
+@testable import FitBuddy
 
 @Suite("SavedProfilesViewModel Tests")
 struct SavedProfilesViewModelTests {
@@ -22,7 +22,7 @@ struct SavedProfilesViewModelTests {
             fullName: "John Doe",
             age: 28,
             gender: "Male",
-            lookingFor: "Women",
+            workoutPreference: "Women",
             bio: "Test bio",
             location: "New York",
             country: "USA",
@@ -59,7 +59,7 @@ struct SavedProfilesViewModelTests {
             fullName: "Jane Smith",
             age: 26,
             gender: "Female",
-            lookingFor: "Men",
+            workoutPreference: "Men",
             bio: "Another test bio",
             location: "Los Angeles",
             country: "USA",
@@ -164,7 +164,7 @@ struct SavedProfilesViewModelTests {
             fullName: longName,
             age: 30,
             gender: "Male",
-            lookingFor: "Women",
+            workoutPreference: "Women",
             bio: "Test",
             location: "NYC",
             country: "USA",
@@ -244,7 +244,7 @@ struct SavedProfilesViewModelTests {
             fullName: specialName,
             age: 29,
             gender: "Male",
-            lookingFor: "Women",
+            workoutPreference: "Women",
             bio: "Test",
             location: "Madrid",
             country: "Spain",
@@ -428,7 +428,7 @@ struct SavedProfilesViewModelTests {
             fullName: name,
             age: 25,
             gender: "Other",
-            lookingFor: "Everyone",
+            workoutPreference: "Everyone",
             bio: "Test bio for \(name)",
             location: "Test City",
             country: "Test Country",

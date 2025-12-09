@@ -1,6 +1,6 @@
 //
 //  BadgeManager.swift
-//  Celestia
+//  FitBuddy
 //
 //  Manages app icon badge count across different notification types
 //

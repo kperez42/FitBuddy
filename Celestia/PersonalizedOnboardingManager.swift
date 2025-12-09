@@ -1,21 +1,21 @@
 //
 //  PersonalizedOnboardingManager.swift
-//  Celestia
+//  FitBuddy
 //
-//  Manages personalized onboarding paths based on user goals and preferences
-//  Adapts the onboarding experience to match user intentions
+//  Manages personalized onboarding paths based on user fitness goals and preferences
+//  Adapts the onboarding experience to match user fitness intentions
 //
 
 import Foundation
 import SwiftUI
 
-/// Manages personalized onboarding experiences based on user goals
+/// Manages personalized onboarding experiences based on fitness goals
 @MainActor
 class PersonalizedOnboardingManager: ObservableObject {
 
     static let shared = PersonalizedOnboardingManager()
 
-    @Published var selectedGoal: DatingGoal?
+    @Published var selectedGoal: FitnessGoalType?
     @Published var recommendedPath: OnboardingPath?
     @Published var customizations: [String: Any] = [:]
 
@@ -23,61 +23,61 @@ class PersonalizedOnboardingManager: ObservableObject {
 
     // MARK: - Models
 
-    enum DatingGoal: String, Codable, CaseIterable {
-        case seriousRelationship = "serious_relationship"
-        case casualDating = "casual_dating"
-        case newFriends = "new_friends"
-        case networking = "networking"
-        case figureItOut = "figure_it_out"
+    enum FitnessGoalType: String, Codable, CaseIterable {
+        case intensiveTraining = "intensive_training"
+        case casualFitness = "casual_fitness"
+        case socialWorkouts = "social_workouts"
+        case competitiveTraining = "competitive_training"
+        case exploreOptions = "explore_options"
 
         var displayName: String {
             switch self {
-            case .seriousRelationship: return "Long-term relationship"
-            case .casualDating: return "Casual dating"
-            case .newFriends: return "New friends"
-            case .networking: return "Professional networking"
-            case .figureItOut: return "Open to see what happens"
+            case .intensiveTraining: return "Intensive Training Partner"
+            case .casualFitness: return "Casual Workout Buddy"
+            case .socialWorkouts: return "Social Fitness Groups"
+            case .competitiveTraining: return "Competitive Training"
+            case .exploreOptions: return "Open to all workout types"
             }
         }
 
         var icon: String {
             switch self {
-            case .seriousRelationship: return "heart.fill"
-            case .casualDating: return "sparkles"
-            case .newFriends: return "person.2.fill"
-            case .networking: return "briefcase.fill"
-            case .figureItOut: return "star.fill"
+            case .intensiveTraining: return "flame.fill"
+            case .casualFitness: return "figure.walk"
+            case .socialWorkouts: return "person.3.fill"
+            case .competitiveTraining: return "trophy.fill"
+            case .exploreOptions: return "star.fill"
             }
         }
 
         var description: String {
             switch self {
-            case .seriousRelationship:
-                return "Looking for something meaningful and long-lasting"
-            case .casualDating:
-                return "Enjoying the journey, keeping it light"
-            case .newFriends:
-                return "Expanding your social circle"
-            case .networking:
-                return "Building professional connections"
-            case .figureItOut:
-                return "Exploring options and seeing where things go"
+            case .intensiveTraining:
+                return "Find dedicated partners for serious training goals"
+            case .casualFitness:
+                return "Looking for friendly workout companions"
+            case .socialWorkouts:
+                return "Join group fitness activities and classes"
+            case .competitiveTraining:
+                return "Train with athletes for competitions"
+            case .exploreOptions:
+                return "Exploring different workouts and activities"
             }
         }
 
         var color: Color {
             switch self {
-            case .seriousRelationship: return .red
-            case .casualDating: return .orange
-            case .newFriends: return .blue
-            case .networking: return .purple
-            case .figureItOut: return .green
+            case .intensiveTraining: return .red
+            case .casualFitness: return .orange
+            case .socialWorkouts: return .blue
+            case .competitiveTraining: return .purple
+            case .exploreOptions: return .green
             }
         }
     }
 
     struct OnboardingPath {
-        let goal: DatingGoal
+        let goal: FitnessGoalType
         let steps: [OnboardingPathStep]
         let focusAreas: [FocusArea]
         let recommendedFeatures: [String]
@@ -87,9 +87,10 @@ class PersonalizedOnboardingManager: ObservableObject {
             case profileDepth = "profile_depth"
             case photoQuality = "photo_quality"
             case bioOptimization = "bio_optimization"
-            case interestMatching = "interest_matching"
+            case fitnessMatching = "fitness_matching"
             case locationAccuracy = "location_accuracy"
             case verificationTrust = "verification_trust"
+            case workoutSchedule = "workout_schedule"
         }
     }
 
@@ -115,7 +116,7 @@ class PersonalizedOnboardingManager: ObservableObject {
 
     // MARK: - Goal Selection
 
-    func selectGoal(_ goal: DatingGoal) {
+    func selectGoal(_ goal: FitnessGoalType) {
         selectedGoal = goal
         recommendedPath = generatePath(for: goal)
         saveGoal()
@@ -127,39 +128,39 @@ class PersonalizedOnboardingManager: ObservableObject {
             "goal_name": goal.displayName
         ])
 
-        Logger.shared.info("User selected onboarding goal: \(goal.displayName)", category: .onboarding)
+        Logger.shared.info("User selected fitness goal: \(goal.displayName)", category: .onboarding)
     }
 
     // MARK: - Path Generation
 
-    private func generatePath(for goal: DatingGoal) -> OnboardingPath {
+    private func generatePath(for goal: FitnessGoalType) -> OnboardingPath {
         switch goal {
-        case .seriousRelationship:
-            return createSeriousRelationshipPath()
-        case .casualDating:
-            return createCasualDatingPath()
-        case .newFriends:
-            return createNewFriendsPath()
-        case .networking:
-            return createNetworkingPath()
-        case .figureItOut:
-            return createOpenPath()
+        case .intensiveTraining:
+            return createIntensiveTrainingPath()
+        case .casualFitness:
+            return createCasualFitnessPath()
+        case .socialWorkouts:
+            return createSocialWorkoutsPath()
+        case .competitiveTraining:
+            return createCompetitiveTrainingPath()
+        case .exploreOptions:
+            return createExploreOptionsPath()
         }
     }
 
-    private func createSeriousRelationshipPath() -> OnboardingPath {
+    private func createIntensiveTrainingPath() -> OnboardingPath {
         OnboardingPath(
-            goal: .seriousRelationship,
+            goal: .intensiveTraining,
             steps: [
                 OnboardingPathStep(
                     id: "detailed_profile",
-                    title: "Create a Detailed Profile",
-                    description: "Share your values, interests, and what you're looking for",
+                    title: "Create Your Fitness Profile",
+                    description: "Share your fitness goals, experience level, and training preferences",
                     importance: .critical,
                     tips: [
-                        "Write a thoughtful bio about your personality and values",
-                        "Add 4-6 high-quality photos showing different aspects of your life",
-                        "Share your long-term goals and what matters to you"
+                        "Describe your current fitness level and goals",
+                        "Add photos showing your training activities",
+                        "Share your workout schedule and preferred gym"
                     ]
                 ),
                 OnboardingPathStep(
@@ -168,157 +169,157 @@ class PersonalizedOnboardingManager: ObservableObject {
                     description: "Build trust with verified photos",
                     importance: .critical,
                     tips: [
-                        "Verified profiles get 2x more meaningful matches",
-                        "Shows you're serious and authentic",
+                        "Verified profiles get 2x more workout buddy requests",
+                        "Shows you're serious about fitness partnerships",
                         "Takes less than 2 minutes"
                     ]
                 ),
                 OnboardingPathStep(
-                    id: "interests_values",
-                    title: "Share Your Interests & Values",
-                    description: "Help us find compatible matches",
+                    id: "fitness_preferences",
+                    title: "Set Your Workout Preferences",
+                    description: "Help us find compatible training partners",
                     importance: .recommended,
                     tips: [
-                        "Select interests that truly represent you",
-                        "Be specific about what you're looking for",
-                        "Authenticity attracts the right people"
+                        "Select your preferred workout types",
+                        "Set your training schedule availability",
+                        "Specify your fitness level requirements"
                     ]
                 )
             ],
-            focusAreas: [.profileDepth, .verificationTrust, .bioOptimization, .interestMatching],
-            recommendedFeatures: ["Video Prompts", "Voice Messages", "Verified Matches"],
+            focusAreas: [.profileDepth, .verificationTrust, .bioOptimization, .fitnessMatching, .workoutSchedule],
+            recommendedFeatures: ["Training Videos", "Progress Tracking", "Verified Athletes"],
             tutorialPriority: ["profile_quality", "matching", "messaging", "safety", "scrolling"]
         )
     }
 
-    private func createCasualDatingPath() -> OnboardingPath {
+    private func createCasualFitnessPath() -> OnboardingPath {
         OnboardingPath(
-            goal: .casualDating,
+            goal: .casualFitness,
             steps: [
                 OnboardingPathStep(
                     id: "fun_profile",
-                    title: "Create a Fun Profile",
-                    description: "Show your personality and what makes you interesting",
+                    title: "Create Your Workout Profile",
+                    description: "Show your personality and fitness interests",
                     importance: .critical,
                     tips: [
-                        "Add photos that show you having fun",
-                        "Keep your bio light and engaging",
-                        "Show different sides of your personality"
+                        "Add photos of your favorite activities",
+                        "Keep your bio friendly and approachable",
+                        "Share what motivates you to stay active"
                     ]
                 ),
                 OnboardingPathStep(
-                    id: "interests",
-                    title: "Share Your Interests",
-                    description: "Find people with shared hobbies",
+                    id: "activities",
+                    title: "Share Your Activities",
+                    description: "Find buddies with similar interests",
                     importance: .recommended,
                     tips: [
-                        "Select activities you enjoy",
-                        "Be open to new experiences",
-                        "Show what makes you unique"
+                        "Select activities you enjoy or want to try",
+                        "Be open to different workout styles",
+                        "Show what makes fitness fun for you"
                     ]
                 )
             ],
-            focusAreas: [.photoQuality, .interestMatching, .locationAccuracy],
-            recommendedFeatures: ["Quick Match", "Nearby Matches", "Icebreakers"],
+            focusAreas: [.photoQuality, .fitnessMatching, .locationAccuracy],
+            recommendedFeatures: ["Quick Match", "Nearby Gyms", "Activity Suggestions"],
             tutorialPriority: ["scrolling", "matching", "messaging", "profile_quality"]
         )
     }
 
-    private func createNewFriendsPath() -> OnboardingPath {
+    private func createSocialWorkoutsPath() -> OnboardingPath {
         OnboardingPath(
-            goal: .newFriends,
+            goal: .socialWorkouts,
             steps: [
                 OnboardingPathStep(
-                    id: "friendly_profile",
-                    title: "Create a Friendly Profile",
-                    description: "Show what kind of friend you'd be",
+                    id: "social_profile",
+                    title: "Create Your Social Fitness Profile",
+                    description: "Show what kind of workout buddy you'd be",
                     importance: .critical,
                     tips: [
-                        "Highlight your hobbies and interests",
-                        "Share what activities you enjoy",
+                        "Highlight your favorite group activities",
+                        "Share what fitness classes you enjoy",
                         "Be genuine and approachable"
                     ]
                 ),
                 OnboardingPathStep(
-                    id: "location_interests",
-                    title: "Share Location & Interests",
-                    description: "Find friends with shared activities nearby",
+                    id: "location_activities",
+                    title: "Share Location & Activities",
+                    description: "Find fitness friends near you",
                     importance: .critical,
                     tips: [
-                        "Add your city for local connections",
+                        "Add your city and preferred gyms",
                         "Select group activities you enjoy",
-                        "Be specific about your interests"
+                        "Be specific about your schedule"
                     ]
                 )
             ],
-            focusAreas: [.interestMatching, .locationAccuracy, .bioOptimization],
-            recommendedFeatures: ["Group Activities", "Interest Groups", "Events"],
+            focusAreas: [.fitnessMatching, .locationAccuracy, .bioOptimization, .workoutSchedule],
+            recommendedFeatures: ["Group Classes", "Fitness Events", "Workout Meetups"],
             tutorialPriority: ["scrolling", "matching", "messaging", "profile_quality"]
         )
     }
 
-    private func createNetworkingPath() -> OnboardingPath {
+    private func createCompetitiveTrainingPath() -> OnboardingPath {
         OnboardingPath(
-            goal: .networking,
+            goal: .competitiveTraining,
             steps: [
                 OnboardingPathStep(
-                    id: "professional_profile",
-                    title: "Create a Professional Profile",
-                    description: "Highlight your professional interests and goals",
+                    id: "athlete_profile",
+                    title: "Create Your Athlete Profile",
+                    description: "Showcase your competitive background and goals",
                     importance: .critical,
                     tips: [
-                        "Share your professional background",
-                        "Mention industries or fields of interest",
-                        "Keep photos professional yet approachable"
+                        "Share your sport and competition history",
+                        "Mention your training goals and timeline",
+                        "Add action photos from training or events"
                     ]
                 ),
                 OnboardingPathStep(
-                    id: "verify_credentials",
+                    id: "verify_athlete",
                     title: "Verify Your Profile",
-                    description: "Build professional credibility",
+                    description: "Build credibility with fellow athletes",
                     importance: .recommended,
                     tips: [
-                        "Verification builds trust in professional contexts",
-                        "Shows you're a serious networker",
-                        "Increases connection rate"
+                        "Verification builds trust among serious athletes",
+                        "Shows your commitment to training",
+                        "Attracts dedicated training partners"
                     ]
                 )
             ],
-            focusAreas: [.profileDepth, .verificationTrust, .locationAccuracy],
-            recommendedFeatures: ["Professional Mode", "Industry Tags", "LinkedIn Integration"],
+            focusAreas: [.profileDepth, .verificationTrust, .fitnessMatching, .workoutSchedule],
+            recommendedFeatures: ["Athlete Network", "Competition Calendar", "Performance Tracking"],
             tutorialPriority: ["profile_quality", "matching", "messaging"]
         )
     }
 
-    private func createOpenPath() -> OnboardingPath {
+    private func createExploreOptionsPath() -> OnboardingPath {
         OnboardingPath(
-            goal: .figureItOut,
+            goal: .exploreOptions,
             steps: [
                 OnboardingPathStep(
                     id: "basic_profile",
                     title: "Create Your Profile",
-                    description: "Start with the basics and explore from there",
+                    description: "Start with the basics and discover what works for you",
                     importance: .critical,
                     tips: [
-                        "Add a few good photos",
-                        "Write a brief bio about yourself",
-                        "Select some interests you enjoy"
+                        "Add a few photos showing your interests",
+                        "Write a brief bio about your fitness journey",
+                        "Select activities you'd like to try"
                     ]
                 ),
                 OnboardingPathStep(
                     id: "explore",
                     title: "Start Exploring",
-                    description: "See who's out there and what feels right",
+                    description: "Discover workout buddies and activities near you",
                     importance: .recommended,
                     tips: [
-                        "Try swiping to see different people",
+                        "Browse different workout partners",
                         "You can always update your preferences",
-                        "Take your time finding what you're looking for"
+                        "Try different activities to find your fit"
                     ]
                 )
             ],
-            focusAreas: [.photoQuality, .bioOptimization, .interestMatching],
-            recommendedFeatures: ["Discovery", "Filters", "Profile Insights"],
+            focusAreas: [.photoQuality, .bioOptimization, .fitnessMatching],
+            recommendedFeatures: ["Discovery", "Activity Filters", "Workout Suggestions"],
             tutorialPriority: ["welcome", "scrolling", "matching", "messaging", "profile_quality"]
         )
     }
@@ -357,7 +358,7 @@ class PersonalizedOnboardingManager: ObservableObject {
 
     private func loadSavedGoal() {
         if let data = UserDefaults.standard.data(forKey: userDefaultsKey),
-           let goal = try? JSONDecoder().decode(DatingGoal.self, from: data) {
+           let goal = try? JSONDecoder().decode(FitnessGoalType.self, from: data) {
             selectedGoal = goal
             recommendedPath = generatePath(for: goal)
         }
@@ -370,17 +371,17 @@ struct OnboardingGoalSelectionView: View {
     @ObservedObject var manager = PersonalizedOnboardingManager.shared
     @Environment(\.dismiss) var dismiss
 
-    let onGoalSelected: (PersonalizedOnboardingManager.DatingGoal) -> Void
+    let onGoalSelected: (PersonalizedOnboardingManager.FitnessGoalType) -> Void
 
     var body: some View {
         VStack(spacing: 0) {
             // Header
             VStack(spacing: 12) {
-                Text("What brings you here?")
+                Text("What's your fitness goal?")
                     .font(.title)
                     .fontWeight(.bold)
 
-                Text("This helps us personalize your experience")
+                Text("This helps us find your perfect workout partners")
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
@@ -391,7 +392,7 @@ struct OnboardingGoalSelectionView: View {
             // Goal Options
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 16) {
-                    ForEach(PersonalizedOnboardingManager.DatingGoal.allCases, id: \.self) { goal in
+                    ForEach(PersonalizedOnboardingManager.FitnessGoalType.allCases, id: \.self) { goal in
                         GoalCard(goal: goal, isSelected: manager.selectedGoal == goal) {
                             withAnimation(.spring(response: 0.3)) {
                                 manager.selectGoal(goal)
@@ -422,7 +423,7 @@ struct OnboardingGoalSelectionView: View {
                     .padding(.vertical, 16)
                     .background(
                         LinearGradient(
-                            colors: [.purple, .pink],
+                            colors: [.purple, .green],
                             startPoint: .leading,
                             endPoint: .trailing
                         )
@@ -437,7 +438,7 @@ struct OnboardingGoalSelectionView: View {
         }
         .background(
             LinearGradient(
-                colors: [Color.purple.opacity(0.05), Color.pink.opacity(0.03)],
+                colors: [Color.purple.opacity(0.05), Color.green.opacity(0.03)],
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )
@@ -447,7 +448,7 @@ struct OnboardingGoalSelectionView: View {
 }
 
 struct GoalCard: View {
-    let goal: PersonalizedOnboardingManager.DatingGoal
+    let goal: PersonalizedOnboardingManager.FitnessGoalType
     let isSelected: Bool
     let onTap: () -> Void
 

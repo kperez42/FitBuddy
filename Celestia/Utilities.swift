@@ -1,6 +1,6 @@
 //
 //  Utilities.swift
-//  Celestia
+//  FitBuddy
 //
 //  Created by Claude
 //  General utility functions and helpers
@@ -153,17 +153,17 @@ enum ImageValidator {
 
     static func validate(_ data: Data) throws {
         guard data.count <= maxImageSize else {
-            throw CelestiaError.imageTooBig
+            throw FitBuddyError.imageTooBig
         }
 
         guard let image = UIImage(data: data) else {
-            throw CelestiaError.invalidImageFormat
+            throw FitBuddyError.invalidImageFormat
         }
 
         // Additional validation
         let maxDimension: CGFloat = 4096
         if image.size.width > maxDimension || image.size.height > maxDimension {
-            throw CelestiaError.imageTooBig
+            throw FitBuddyError.imageTooBig
         }
     }
 
@@ -229,7 +229,7 @@ struct AppInfo {
     }
 
     static var appName: String {
-        Bundle.main.infoDictionary?["CFBundleName"] as? String ?? "Celestia"
+        Bundle.main.infoDictionary?["CFBundleName"] as? String ?? "FitBuddy"
     }
 }
 
@@ -281,11 +281,11 @@ extension User {
     static var preview: User {
         User(
             id: "preview",
-            email: "test@celestia.app",
+            email: "test@fitbuddy.app",
             fullName: "Alex Johnson",
             age: 28,
             gender: "Male",
-            lookingFor: "Female",
+            workoutPreference: "Female",
             bio: "Love hiking, coffee, and good conversations. Always up for an adventure!",
             location: "San Francisco",
             country: "USA",
@@ -308,7 +308,7 @@ extension User {
                 fullName: "Sarah Miller",
                 age: 25,
                 gender: "Female",
-                lookingFor: "Male",
+                workoutPreference: "Male",
                 bio: "Artist and dreamer",
                 location: "Los Angeles",
                 country: "USA"
@@ -318,7 +318,7 @@ extension User {
                 fullName: "Mike Chen",
                 age: 30,
                 gender: "Male",
-                lookingFor: "Female",
+                workoutPreference: "Female",
                 bio: "Tech enthusiast",
                 location: "Seattle",
                 country: "USA"

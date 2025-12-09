@@ -1,6 +1,6 @@
 //
 //  NotificationModels.swift
-//  Celestia
+//  FitBuddy
 //
 //  Models and types for notification system
 //  NotificationData is defined in NotificationSettingsView.swift
@@ -628,12 +628,12 @@ enum NotificationPayload {
             return messages == 1 ? "You have an unread message" : "You have \(messages) unread messages"
         } else {
             let titles = [
-                "Your dating life awaits!",
+                "Your fitness journey awaits!",
                 "New people are nearby",
                 "Time to find your match!",
                 "Ready to meet someone new?"
             ]
-            return titles.randomElement() ?? "Your dating life awaits!"
+            return titles.randomElement() ?? "Your fitness journey awaits!"
         }
     }
 

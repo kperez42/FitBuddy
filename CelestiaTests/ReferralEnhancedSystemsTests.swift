@@ -1,6 +1,6 @@
 //
 //  ReferralEnhancedSystemsTests.swift
-//  CelestiaTests
+//  FitBuddyTests
 //
 //  Tests for enhanced referral systems:
 //  - Fraud Detection
@@ -12,7 +12,7 @@
 //
 
 import XCTest
-@testable import Celestia
+@testable import FitBuddy
 
 final class ReferralEnhancedSystemsTests: XCTestCase {
 

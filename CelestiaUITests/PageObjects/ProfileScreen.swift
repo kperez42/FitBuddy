@@ -1,6 +1,6 @@
 //
 //  ProfileScreen.swift
-//  CelestiaUITests
+//  FitBuddyUITests
 //
 //  Page Object for Profile/Settings Screen
 //

@@ -1,6 +1,6 @@
 //
 //  ProfilePromptsEditorView.swift
-//  Celestia
+//  FitBuddy
 //
 //  Editor for selecting and answering profile prompts
 //

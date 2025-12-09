@@ -1,6 +1,6 @@
 //
 //  ImageUploadErrorTests.swift
-//  CelestiaTests
+//  FitBuddyTests
 //
 //  Comprehensive error tests for the image upload system covering all failure scenarios:
 //  - Upload failures (network, timeout, server errors)
@@ -14,7 +14,7 @@
 
 import Testing
 import UIKit
-@testable import Celestia
+@testable import FitBuddy
 
 // MARK: - Upload Failure Error Tests
 
@@ -30,7 +30,7 @@ struct ImageUploadErrorTests {
         @Test("Image upload failed error has correct description")
         @MainActor
         func testImageUploadFailedError() async throws {
-            let error = CelestiaError.imageUploadFailed
+            let error = FitBuddyError.imageUploadFailed
 
             #expect(error.errorDescription != nil)
             #expect(error.errorDescription?.lowercased().contains("upload") == true)
@@ -42,7 +42,7 @@ struct ImageUploadErrorTests {
         @MainActor
         func testUploadFailedWithMessage() async throws {
             let customMessage = "Connection reset by server"
-            let error = CelestiaError.uploadFailed(customMessage)
+            let error = FitBuddyError.uploadFailed(customMessage)
 
             #expect(error.errorDescription != nil)
             #expect(error.errorDescription?.contains(customMessage) == true)
@@ -51,7 +51,7 @@ struct ImageUploadErrorTests {
         @Test("Network error during upload is properly identified")
         @MainActor
         func testNetworkErrorDuringUpload() async throws {
-            let error = CelestiaError.networkError
+            let error = FitBuddyError.networkError
 
             #expect(error.errorDescription != nil)
             #expect(error.errorDescription?.lowercased().contains("network") == true)
@@ -62,8 +62,8 @@ struct ImageUploadErrorTests {
         @Test("Timeout error during upload has correct message")
         @MainActor
         func testTimeoutErrorDuringUpload() async throws {
-            let timeoutError = CelestiaError.timeout
-            let requestTimeoutError = CelestiaError.requestTimeout
+            let timeoutError = FitBuddyError.timeout
+            let requestTimeoutError = FitBuddyError.requestTimeout
 
             #expect(timeoutError.errorDescription != nil)
             #expect(timeoutError.errorDescription?.lowercased().contains("timed out") == true)
@@ -75,7 +75,7 @@ struct ImageUploadErrorTests {
         @Test("Server error during upload is properly handled")
         @MainActor
         func testServerErrorDuringUpload() async throws {
-            let error = CelestiaError.serverError
+            let error = FitBuddyError.serverError
 
             #expect(error.errorDescription != nil)
             #expect(error.errorDescription?.lowercased().contains("server") == true)
@@ -86,7 +86,7 @@ struct ImageUploadErrorTests {
         @Test("No internet connection error is user friendly")
         @MainActor
         func testNoInternetConnectionError() async throws {
-            let error = CelestiaError.noInternetConnection
+            let error = FitBuddyError.noInternetConnection
 
             #expect(error.errorDescription != nil)
             #expect(error.errorDescription?.lowercased().contains("internet") == true)
@@ -96,7 +96,7 @@ struct ImageUploadErrorTests {
         @Test("Service temporarily unavailable error has retry suggestion")
         @MainActor
         func testServiceUnavailableError() async throws {
-            let error = CelestiaError.serviceTemporarilyUnavailable
+            let error = FitBuddyError.serviceTemporarilyUnavailable
 
             #expect(error.errorDescription != nil)
             #expect(error.errorDescription?.lowercased().contains("temporarily unavailable") == true)
@@ -112,7 +112,7 @@ struct ImageUploadErrorTests {
         @Test("Storage quota exceeded error is properly handled")
         @MainActor
         func testStorageQuotaExceededError() async throws {
-            let error = CelestiaError.storageQuotaExceeded
+            let error = FitBuddyError.storageQuotaExceeded
 
             #expect(error.errorDescription != nil)
             #expect(error.errorDescription?.lowercased().contains("quota") == true)
@@ -122,7 +122,7 @@ struct ImageUploadErrorTests {
         @Test("Permission denied error has correct message")
         @MainActor
         func testPermissionDeniedError() async throws {
-            let error = CelestiaError.permissionDenied
+            let error = FitBuddyError.permissionDenied
 
             #expect(error.errorDescription != nil)
             #expect(error.errorDescription?.lowercased().contains("permission") == true)
@@ -132,7 +132,7 @@ struct ImageUploadErrorTests {
         @Test("Unauthorized error prevents save")
         @MainActor
         func testUnauthorizedError() async throws {
-            let error = CelestiaError.unauthorized
+            let error = FitBuddyError.unauthorized
 
             #expect(error.errorDescription != nil)
             #expect(error.errorDescription?.lowercased().contains("authorized") == true)
@@ -142,7 +142,7 @@ struct ImageUploadErrorTests {
         @Test("Unauthenticated error requires sign in")
         @MainActor
         func testUnauthenticatedError() async throws {
-            let error = CelestiaError.unauthenticated
+            let error = FitBuddyError.unauthenticated
 
             #expect(error.errorDescription != nil)
             #expect(error.errorDescription?.lowercased().contains("sign in") == true)
@@ -152,7 +152,7 @@ struct ImageUploadErrorTests {
         @Test("Invalid data error during save")
         @MainActor
         func testInvalidDataError() async throws {
-            let error = CelestiaError.invalidData
+            let error = FitBuddyError.invalidData
 
             #expect(error.errorDescription != nil)
             #expect(error.errorDescription?.lowercased().contains("invalid") == true)
@@ -162,7 +162,7 @@ struct ImageUploadErrorTests {
         @MainActor
         func testDatabaseErrorDuringSave() async throws {
             let errorMessage = "Write operation failed"
-            let error = CelestiaError.databaseError(errorMessage)
+            let error = FitBuddyError.databaseError(errorMessage)
 
             #expect(error.errorDescription != nil)
             #expect(error.errorDescription?.contains(errorMessage) == true)
@@ -177,7 +177,7 @@ struct ImageUploadErrorTests {
         @Test("Document not found error when deleting")
         @MainActor
         func testDocumentNotFoundOnDelete() async throws {
-            let error = CelestiaError.documentNotFound
+            let error = FitBuddyError.documentNotFound
 
             #expect(error.errorDescription != nil)
             #expect(error.errorDescription?.lowercased().contains("not found") == true)
@@ -186,7 +186,7 @@ struct ImageUploadErrorTests {
         @Test("Network error during deletion is retryable")
         @MainActor
         func testNetworkErrorDuringDelete() async throws {
-            let error = CelestiaError.networkError
+            let error = FitBuddyError.networkError
 
             #expect(error.errorDescription != nil)
             #expect(error.recoverySuggestion?.lowercased().contains("connection") == true)
@@ -195,7 +195,7 @@ struct ImageUploadErrorTests {
         @Test("Permission denied on deletion")
         @MainActor
         func testPermissionDeniedOnDelete() async throws {
-            let error = CelestiaError.permissionDenied
+            let error = FitBuddyError.permissionDenied
 
             #expect(error.errorDescription != nil)
             #expect(error.errorDescription?.lowercased().contains("permission") == true)
@@ -204,7 +204,7 @@ struct ImageUploadErrorTests {
         @Test("Invalid URL for deletion throws invalid data")
         @MainActor
         func testInvalidUrlForDeletion() async throws {
-            let error = CelestiaError.invalidData
+            let error = FitBuddyError.invalidData
 
             #expect(error.errorDescription != nil)
             #expect(error.errorDescription?.lowercased().contains("invalid") == true)
@@ -213,7 +213,7 @@ struct ImageUploadErrorTests {
         @Test("Operation cancelled during deletion")
         @MainActor
         func testOperationCancelledDuringDeletion() async throws {
-            let error = CelestiaError.operationCancelled
+            let error = FitBuddyError.operationCancelled
 
             #expect(error.errorDescription != nil)
             #expect(error.errorDescription?.lowercased().contains("cancelled") == true)
@@ -229,7 +229,7 @@ struct ImageUploadErrorTests {
         @Test("Image too big error has size information")
         @MainActor
         func testImageTooBigError() async throws {
-            let error = CelestiaError.imageTooBig
+            let error = FitBuddyError.imageTooBig
 
             #expect(error.errorDescription != nil)
             #expect(error.errorDescription?.lowercased().contains("large") == true)
@@ -240,7 +240,7 @@ struct ImageUploadErrorTests {
         @Test("Invalid image format error has correct message")
         @MainActor
         func testInvalidImageFormatError() async throws {
-            let error = CelestiaError.invalidImageFormat
+            let error = FitBuddyError.invalidImageFormat
 
             #expect(error.errorDescription != nil)
             #expect(error.errorDescription?.lowercased().contains("format") == true)
@@ -251,7 +251,7 @@ struct ImageUploadErrorTests {
         @Test("Too many images error shows limit")
         @MainActor
         func testTooManyImagesError() async throws {
-            let error = CelestiaError.tooManyImages
+            let error = FitBuddyError.tooManyImages
 
             #expect(error.errorDescription != nil)
             #expect(error.errorDescription?.contains("6") == true)
@@ -268,7 +268,7 @@ struct ImageUploadErrorTests {
             #expect(tooSmallImage.size.width < 200)
             #expect(tooSmallImage.size.height < 200)
 
-            let error = CelestiaError.invalidImageFormat
+            let error = FitBuddyError.invalidImageFormat
             #expect(error.errorDescription != nil)
         }
 
@@ -285,14 +285,14 @@ struct ImageUploadErrorTests {
             #expect(narrowRatio < 0.33)
             #expect(wideRatio > 3.0)
 
-            let error = CelestiaError.invalidImageFormat
+            let error = FitBuddyError.invalidImageFormat
             #expect(error.errorDescription != nil)
         }
 
         @Test("Zero dimension image is invalid")
         @MainActor
         func testZeroDimensionImage() async throws {
-            let error = CelestiaError.invalidImageFormat
+            let error = FitBuddyError.invalidImageFormat
 
             #expect(error.errorDescription != nil)
             #expect(error.errorDescription?.lowercased().contains("invalid") == true)
@@ -301,7 +301,7 @@ struct ImageUploadErrorTests {
         @Test("Validation error with field and reason")
         @MainActor
         func testValidationErrorWithDetails() async throws {
-            let error = CelestiaError.validationError(field: "image", reason: "dimensions too small")
+            let error = FitBuddyError.validationError(field: "image", reason: "dimensions too small")
 
             #expect(error.errorDescription != nil)
             #expect(error.errorDescription?.contains("image") == true)
@@ -318,7 +318,7 @@ struct ImageUploadErrorTests {
         @MainActor
         func testContentNotAllowedError() async throws {
             let reason = "Image contains inappropriate content"
-            let error = CelestiaError.contentNotAllowed(reason)
+            let error = FitBuddyError.contentNotAllowed(reason)
 
             #expect(error.errorDescription != nil)
             #expect(error.errorDescription?.contains(reason) == true)
@@ -329,7 +329,7 @@ struct ImageUploadErrorTests {
         @Test("Content not allowed with empty message has default")
         @MainActor
         func testContentNotAllowedEmptyMessage() async throws {
-            let error = CelestiaError.contentNotAllowed("")
+            let error = FitBuddyError.contentNotAllowed("")
 
             #expect(error.errorDescription != nil)
             #expect(error.errorDescription?.lowercased().contains("not allowed") == true)
@@ -338,7 +338,7 @@ struct ImageUploadErrorTests {
         @Test("Inappropriate content error is shown correctly")
         @MainActor
         func testInappropriateContentError() async throws {
-            let error = CelestiaError.inappropriateContent
+            let error = FitBuddyError.inappropriateContent
 
             #expect(error.errorDescription != nil)
             #expect(error.errorDescription?.lowercased().contains("inappropriate") == true)
@@ -349,7 +349,7 @@ struct ImageUploadErrorTests {
         @MainActor
         func testInappropriateContentWithReasons() async throws {
             let reasons = ["Adult content detected", "Violence detected", "Racy content"]
-            let error = CelestiaError.inappropriateContentWithReasons(reasons)
+            let error = FitBuddyError.inappropriateContentWithReasons(reasons)
 
             #expect(error.errorDescription != nil)
             for reason in reasons {
@@ -425,7 +425,7 @@ struct ImageUploadErrorTests {
         @Test("Batch upload fails when exceeding max images")
         @MainActor
         func testBatchUploadExceedsLimit() async throws {
-            let error = CelestiaError.tooManyImages
+            let error = FitBuddyError.tooManyImages
 
             #expect(error.errorDescription != nil)
             #expect(error.errorDescription?.contains("6") == true)
@@ -436,7 +436,7 @@ struct ImageUploadErrorTests {
         func testBatchOperationFailedError() async throws {
             let operationId = "batch_upload_12345"
             let underlyingError = NSError(domain: "TestDomain", code: 500, userInfo: [NSLocalizedDescriptionKey: "Server error"])
-            let error = CelestiaError.batchOperationFailed(operationId: operationId, underlyingError: underlyingError)
+            let error = FitBuddyError.batchOperationFailed(operationId: operationId, underlyingError: underlyingError)
 
             #expect(error.errorDescription != nil)
             #expect(error.errorDescription?.contains(operationId) == true)
@@ -449,8 +449,8 @@ struct ImageUploadErrorTests {
         func testPartialBatchFailureCleanup() async throws {
             // Simulates a scenario where some uploads succeed then one fails
             // The service should clean up the successful uploads
-            let uploadError = CelestiaError.imageUploadFailed
-            let networkError = CelestiaError.networkError
+            let uploadError = FitBuddyError.imageUploadFailed
+            let networkError = FitBuddyError.networkError
 
             #expect(uploadError.errorDescription != nil)
             #expect(networkError.errorDescription != nil)
@@ -496,7 +496,7 @@ struct ImageUploadErrorTests {
             #expect(images.count == 7)
             #expect(images.count > 6)
 
-            let error = CelestiaError.tooManyImages
+            let error = FitBuddyError.tooManyImages
             #expect(error.errorDescription != nil)
         }
     }
@@ -509,7 +509,7 @@ struct ImageUploadErrorTests {
         @Test("JPEG conversion failure returns invalid format")
         @MainActor
         func testJPEGConversionFailure() async throws {
-            let error = CelestiaError.invalidImageFormat
+            let error = FitBuddyError.invalidImageFormat
 
             #expect(error.errorDescription != nil)
             #expect(error.errorDescription?.lowercased().contains("format") == true)
@@ -553,7 +553,7 @@ struct ImageUploadErrorTests {
         @Test("Oversized image triggers imageTooBig error")
         @MainActor
         func testOversizedImageError() async throws {
-            let error = CelestiaError.imageTooBig
+            let error = FitBuddyError.imageTooBig
 
             #expect(error.errorDescription != nil)
             #expect(error.errorDescription?.lowercased().contains("large") == true)
@@ -569,7 +569,7 @@ struct ImageUploadErrorTests {
         @Test("Rate limit exceeded error")
         @MainActor
         func testRateLimitExceededError() async throws {
-            let error = CelestiaError.rateLimitExceeded
+            let error = FitBuddyError.rateLimitExceeded
 
             #expect(error.errorDescription != nil)
             #expect(error.errorDescription?.lowercased().contains("often") == true)
@@ -579,7 +579,7 @@ struct ImageUploadErrorTests {
         @Test("Rate limit with time shows remaining time")
         @MainActor
         func testRateLimitWithTimeError() async throws {
-            let error = CelestiaError.rateLimitExceededWithTime(90) // 90 seconds
+            let error = FitBuddyError.rateLimitExceededWithTime(90) // 90 seconds
 
             #expect(error.errorDescription != nil)
             #expect(error.errorDescription?.contains("1m") == true ||
@@ -589,7 +589,7 @@ struct ImageUploadErrorTests {
         @Test("Rate limit with short time shows seconds")
         @MainActor
         func testRateLimitWithShortTime() async throws {
-            let error = CelestiaError.rateLimitExceededWithTime(30) // 30 seconds
+            let error = FitBuddyError.rateLimitExceededWithTime(30) // 30 seconds
 
             #expect(error.errorDescription != nil)
             #expect(error.errorDescription?.contains("30") == true)
@@ -598,7 +598,7 @@ struct ImageUploadErrorTests {
         @Test("Too many requests error")
         @MainActor
         func testTooManyRequestsError() async throws {
-            let error = CelestiaError.tooManyRequests
+            let error = FitBuddyError.tooManyRequests
 
             #expect(error.errorDescription != nil)
             #expect(error.errorDescription?.lowercased().contains("too many") == true)
@@ -613,7 +613,7 @@ struct ImageUploadErrorTests {
         @Test("Storage object not found maps to documentNotFound")
         @MainActor
         func testStorageObjectNotFoundMapping() async throws {
-            let error = CelestiaError.documentNotFound
+            let error = FitBuddyError.documentNotFound
 
             #expect(error.errorDescription != nil)
             #expect(error.errorDescription?.lowercased().contains("not found") == true)
@@ -622,7 +622,7 @@ struct ImageUploadErrorTests {
         @Test("Storage quota exceeded maps correctly")
         @MainActor
         func testStorageQuotaExceededMapping() async throws {
-            let error = CelestiaError.storageQuotaExceeded
+            let error = FitBuddyError.storageQuotaExceeded
 
             #expect(error.errorDescription != nil)
             #expect(error.errorDescription?.lowercased().contains("quota") == true)
@@ -631,7 +631,7 @@ struct ImageUploadErrorTests {
         @Test("Storage unauthorized maps to unauthorized")
         @MainActor
         func testStorageUnauthorizedMapping() async throws {
-            let error = CelestiaError.unauthorized
+            let error = FitBuddyError.unauthorized
 
             #expect(error.errorDescription != nil)
         }
@@ -639,7 +639,7 @@ struct ImageUploadErrorTests {
         @Test("Storage unauthenticated maps to unauthenticated")
         @MainActor
         func testStorageUnauthenticatedMapping() async throws {
-            let error = CelestiaError.unauthenticated
+            let error = FitBuddyError.unauthenticated
 
             #expect(error.errorDescription != nil)
         }
@@ -647,7 +647,7 @@ struct ImageUploadErrorTests {
         @Test("Storage download size exceeded maps to imageTooBig")
         @MainActor
         func testStorageDownloadSizeExceededMapping() async throws {
-            let error = CelestiaError.imageTooBig
+            let error = FitBuddyError.imageTooBig
 
             #expect(error.errorDescription != nil)
         }
@@ -655,7 +655,7 @@ struct ImageUploadErrorTests {
         @Test("Storage cancelled maps to operationCancelled")
         @MainActor
         func testStorageCancelledMapping() async throws {
-            let error = CelestiaError.operationCancelled
+            let error = FitBuddyError.operationCancelled
 
             #expect(error.errorDescription != nil)
             #expect(error.errorDescription?.lowercased().contains("cancelled") == true)
@@ -664,7 +664,7 @@ struct ImageUploadErrorTests {
         @Test("Storage checksum mismatch maps to uploadFailed")
         @MainActor
         func testStorageChecksumMismatchMapping() async throws {
-            let error = CelestiaError.uploadFailed("File corrupted during transfer")
+            let error = FitBuddyError.uploadFailed("File corrupted during transfer")
 
             #expect(error.errorDescription != nil)
             #expect(error.errorDescription?.lowercased().contains("corrupted") == true)
@@ -679,7 +679,7 @@ struct ImageUploadErrorTests {
         @Test("Network error has retry suggestion")
         @MainActor
         func testNetworkErrorRecovery() async throws {
-            let error = CelestiaError.networkError
+            let error = FitBuddyError.networkError
 
             #expect(error.recoverySuggestion != nil)
             #expect(error.recoverySuggestion?.lowercased().contains("connection") == true)
@@ -688,7 +688,7 @@ struct ImageUploadErrorTests {
         @Test("Image too big has resize suggestion")
         @MainActor
         func testImageTooBigRecovery() async throws {
-            let error = CelestiaError.imageTooBig
+            let error = FitBuddyError.imageTooBig
 
             #expect(error.recoverySuggestion != nil)
             #expect(error.recoverySuggestion?.lowercased().contains("smaller") == true ||
@@ -698,7 +698,7 @@ struct ImageUploadErrorTests {
         @Test("Content not allowed has guidelines suggestion")
         @MainActor
         func testContentNotAllowedRecovery() async throws {
-            let error = CelestiaError.contentNotAllowed("Inappropriate content")
+            let error = FitBuddyError.contentNotAllowed("Inappropriate content")
 
             #expect(error.recoverySuggestion != nil)
             #expect(error.recoverySuggestion?.lowercased().contains("guidelines") == true ||
@@ -708,7 +708,7 @@ struct ImageUploadErrorTests {
         @Test("Permission denied has contact support suggestion")
         @MainActor
         func testPermissionDeniedRecovery() async throws {
-            let error = CelestiaError.permissionDenied
+            let error = FitBuddyError.permissionDenied
 
             #expect(error.recoverySuggestion != nil)
             #expect(error.recoverySuggestion?.lowercased().contains("support") == true ||
@@ -718,7 +718,7 @@ struct ImageUploadErrorTests {
         @Test("Timeout error has retry suggestion")
         @MainActor
         func testTimeoutRecovery() async throws {
-            let error = CelestiaError.timeout
+            let error = FitBuddyError.timeout
 
             #expect(error.recoverySuggestion != nil)
             #expect(error.recoverySuggestion?.lowercased().contains("again") == true)
@@ -727,7 +727,7 @@ struct ImageUploadErrorTests {
         @Test("Server error has wait suggestion")
         @MainActor
         func testServerErrorRecovery() async throws {
-            let error = CelestiaError.serverError
+            let error = FitBuddyError.serverError
 
             #expect(error.recoverySuggestion != nil)
             #expect(error.recoverySuggestion?.lowercased().contains("wait") == true ||
@@ -743,7 +743,7 @@ struct ImageUploadErrorTests {
         @Test("Image errors have photo icon")
         @MainActor
         func testImageErrorIcons() async throws {
-            let imageErrors: [CelestiaError] = [
+            let imageErrors: [FitBuddyError] = [
                 .imageUploadFailed,
                 .imageTooBig,
                 .invalidImageFormat,
@@ -758,7 +758,7 @@ struct ImageUploadErrorTests {
         @Test("Network errors have wifi icon")
         @MainActor
         func testNetworkErrorIcons() async throws {
-            let networkErrors: [CelestiaError] = [
+            let networkErrors: [FitBuddyError] = [
                 .networkError,
                 .noInternetConnection,
                 .timeout,
@@ -773,7 +773,7 @@ struct ImageUploadErrorTests {
         @Test("Auth errors have lock icon")
         @MainActor
         func testAuthErrorIcons() async throws {
-            let authErrors: [CelestiaError] = [
+            let authErrors: [FitBuddyError] = [
                 .notAuthenticated,
                 .unauthorized,
                 .unauthenticated,
@@ -789,7 +789,7 @@ struct ImageUploadErrorTests {
         @Test("Content moderation errors have warning icon")
         @MainActor
         func testContentModerationIcons() async throws {
-            let contentErrors: [CelestiaError] = [
+            let contentErrors: [FitBuddyError] = [
                 .contentNotAllowed("test"),
                 .inappropriateContent,
                 .inappropriateContentWithReasons(["test"])
@@ -803,7 +803,7 @@ struct ImageUploadErrorTests {
         @Test("Rate limit errors have clock icon")
         @MainActor
         func testRateLimitIcons() async throws {
-            let rateLimitErrors: [CelestiaError] = [
+            let rateLimitErrors: [FitBuddyError] = [
                 .rateLimitExceeded,
                 .rateLimitExceededWithTime(60),
                 .tooManyRequests
@@ -823,7 +823,7 @@ struct ImageUploadErrorTests {
         @Test("Each error has unique ID")
         @MainActor
         func testErrorUniqueIds() async throws {
-            let errors: [CelestiaError] = [
+            let errors: [FitBuddyError] = [
                 .imageUploadFailed,
                 .imageTooBig,
                 .invalidImageFormat,
@@ -849,7 +849,7 @@ struct ImageUploadErrorTests {
                 userInfo: nil
             )
 
-            let celestiaError = CelestiaError.from(nsError)
+            let celestiaError = FitBuddyError.from(nsError)
 
             #expect(celestiaError == .noInternetConnection)
         }
@@ -863,7 +863,7 @@ struct ImageUploadErrorTests {
                 userInfo: nil
             )
 
-            let celestiaError = CelestiaError.from(nsError)
+            let celestiaError = FitBuddyError.from(nsError)
 
             #expect(celestiaError == .requestTimeout)
         }
@@ -877,7 +877,7 @@ struct ImageUploadErrorTests {
                 userInfo: [NSLocalizedDescriptionKey: "Unknown error occurred"]
             )
 
-            let celestiaError = CelestiaError.from(nsError)
+            let celestiaError = FitBuddyError.from(nsError)
 
             if case .unknown(let message) = celestiaError {
                 #expect(message.contains("Unknown error occurred"))
@@ -895,7 +895,7 @@ struct ImageUploadErrorTests {
         @Test("Empty user ID for profile image throws invalid data")
         @MainActor
         func testEmptyUserIdProfileImage() async throws {
-            let error = CelestiaError.invalidData
+            let error = FitBuddyError.invalidData
 
             #expect(error.errorDescription != nil)
             #expect(error.errorDescription?.lowercased().contains("invalid") == true)
@@ -904,7 +904,7 @@ struct ImageUploadErrorTests {
         @Test("Empty match ID for chat image throws invalid data")
         @MainActor
         func testEmptyMatchIdChatImage() async throws {
-            let error = CelestiaError.invalidData
+            let error = FitBuddyError.invalidData
 
             #expect(error.errorDescription != nil)
             #expect(error.errorDescription?.lowercased().contains("invalid") == true)
@@ -939,9 +939,9 @@ struct ImageUploadErrorTests {
         @Test("Multiple simultaneous upload errors are handled independently")
         @MainActor
         func testMultipleUploadErrorsIndependent() async throws {
-            let error1 = CelestiaError.imageUploadFailed
-            let error2 = CelestiaError.networkError
-            let error3 = CelestiaError.timeout
+            let error1 = FitBuddyError.imageUploadFailed
+            let error2 = FitBuddyError.networkError
+            let error3 = FitBuddyError.timeout
 
             #expect(error1.errorDescription != error2.errorDescription)
             #expect(error2.errorDescription != error3.errorDescription)
@@ -952,9 +952,9 @@ struct ImageUploadErrorTests {
         @Test("Error types are distinguishable")
         @MainActor
         func testErrorTypesDistinguishable() async throws {
-            let uploadError = CelestiaError.imageUploadFailed
-            let sizeError = CelestiaError.imageTooBig
-            let formatError = CelestiaError.invalidImageFormat
+            let uploadError = FitBuddyError.imageUploadFailed
+            let sizeError = FitBuddyError.imageTooBig
+            let formatError = FitBuddyError.invalidImageFormat
 
             #expect(uploadError.errorDescription?.contains("upload") == true)
             #expect(sizeError.errorDescription?.contains("large") == true)
@@ -970,7 +970,7 @@ struct ImageUploadErrorTests {
         @Test("Network error has user friendly message")
         @MainActor
         func testNetworkErrorUserMessage() async throws {
-            let error = CelestiaError.networkError
+            let error = FitBuddyError.networkError
 
             #expect(error.userMessage.lowercased().contains("network") == true ||
                    error.userMessage.lowercased().contains("connection") == true)
@@ -979,7 +979,7 @@ struct ImageUploadErrorTests {
         @Test("Upload failed has user friendly message")
         @MainActor
         func testUploadFailedUserMessage() async throws {
-            let error = CelestiaError.uploadFailed("Test failure")
+            let error = FitBuddyError.uploadFailed("Test failure")
 
             #expect(error.userMessage.contains("Test failure"))
         }
@@ -987,7 +987,7 @@ struct ImageUploadErrorTests {
         @Test("Storage quota exceeded has user friendly message")
         @MainActor
         func testStorageQuotaUserMessage() async throws {
-            let error = CelestiaError.storageQuotaExceeded
+            let error = FitBuddyError.storageQuotaExceeded
 
             #expect(error.userMessage.lowercased().contains("quota") == true)
         }
@@ -995,7 +995,7 @@ struct ImageUploadErrorTests {
         @Test("Image too big has user friendly message")
         @MainActor
         func testImageTooBigUserMessage() async throws {
-            let error = CelestiaError.imageTooBig
+            let error = FitBuddyError.imageTooBig
 
             #expect(error.userMessage.lowercased().contains("large") == true ||
                    error.userMessage.lowercased().contains("big") == true)
@@ -1004,7 +1004,7 @@ struct ImageUploadErrorTests {
         @Test("Permission denied has user friendly message")
         @MainActor
         func testPermissionDeniedUserMessage() async throws {
-            let error = CelestiaError.permissionDenied
+            let error = FitBuddyError.permissionDenied
 
             #expect(error.userMessage.lowercased().contains("permission") == true)
         }

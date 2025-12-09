@@ -1,6 +1,6 @@
 //
 //  UserJourneyTests.swift
-//  CelestiaUITests
+//  FitBuddyUITests
 //
 //  Complete end-to-end user journey testing
 //  Tests: Signup → Onboarding → Discover → Match → Chat → Settings

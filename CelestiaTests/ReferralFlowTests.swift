@@ -1,6 +1,6 @@
 //
 //  ReferralFlowTests.swift
-//  CelestiaTests
+//  FitBuddyTests
 //
 //  Integration tests for referral system flows
 //  Tests referral code generation, validation, and reward distribution
@@ -8,7 +8,7 @@
 
 import Testing
 import Foundation
-@testable import Celestia
+@testable import FitBuddy
 
 @Suite("Referral Flow Tests")
 @MainActor
@@ -57,7 +57,7 @@ struct ReferralFlowTests {
             fullName: "New User",
             age: 25,
             gender: "Female",
-            lookingFor: "Male",
+            workoutPreference: "Male",
             location: "New York",
             country: "USA",
             referralCode: referralCode
@@ -96,7 +96,7 @@ struct ReferralFlowTests {
             fullName: "Normal User",
             age: 28,
             gender: "Male",
-            lookingFor: "Female",
+            workoutPreference: "Female",
             location: "Los Angeles",
             country: "USA",
             referralCode: "" // No referral code
@@ -390,13 +390,13 @@ struct ReferralFlowTests {
     func testShareableReferralLink() async throws {
         let userId = "user123"
         let referralCode = "ABC123"
-        let baseURL = "https://celestia.app"
+        let baseURL = "https://fitbuddy.app"
 
         let shareableLink = "\(baseURL)/signup?ref=\(referralCode)"
-        #expect(shareableLink == "https://celestia.app/signup?ref=ABC123")
+        #expect(shareableLink == "https://fitbuddy.app/signup?ref=ABC123")
 
         // Shareable message
-        let shareMessage = "Join Celestia using my code \(referralCode) and get 2 free Super Likes! \(shareableLink)"
+        let shareMessage = "Join FitBuddy using my code \(referralCode) and get 2 free Super Likes! \(shareableLink)"
         #expect(shareMessage.contains(referralCode))
         #expect(shareMessage.contains(shareableLink))
     }

@@ -1,12 +1,12 @@
 //
 //  AuthServiceTests.swift
-//  CelestiaTests
+//  FitBuddyTests
 //
 //  Comprehensive unit tests for AuthService
 //
 
 import Testing
-@testable import Celestia
+@testable import FitBuddy
 import Foundation
 
 @Suite("AuthService Tests")
@@ -191,9 +191,9 @@ struct AuthServiceTests {
                "Password error should mention length requirement")
     }
 
-    @Test("CelestiaError provides helpful descriptions")
-    func testCelestiaErrorDescriptions() async throws {
-        let errors: [CelestiaError] = [
+    @Test("FitBuddyError provides helpful descriptions")
+    func testFitBuddyErrorDescriptions() async throws {
+        let errors: [FitBuddyError] = [
             .invalidCredentials,
             .weakPassword,
             .emailNotVerified,
@@ -251,7 +251,7 @@ struct AuthServiceTests {
             fullName: "Test User",
             age: 25,
             gender: "Male",
-            lookingFor: "Female",
+            workoutPreference: "Female",
             location: "New York",
             country: "USA"
         )
@@ -273,7 +273,7 @@ struct AuthServiceTests {
             fullName: "Test",
             age: 18,
             gender: "Other",
-            lookingFor: "Everyone",
+            workoutPreference: "Everyone",
             location: "Unknown",
             country: "Unknown"
         )

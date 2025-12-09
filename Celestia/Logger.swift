@@ -1,6 +1,6 @@
 //
 //  Logger.swift
-//  Celestia
+//  FitBuddy
 //
 //  Comprehensive logging system to replace print statements
 //  Provides structured logging with levels, categories, and persistence
@@ -77,7 +77,7 @@ enum LogCategory: String {
     case general = "General"
 
     var subsystem: String {
-        "com.celestia.app"
+        "com.fitbuddy.app"
     }
 }
 
@@ -132,7 +132,7 @@ class Logger {
     private var osLoggers: [LogCategory: OSLog] = [:]
 
     /// Serial queue for thread-safe logging
-    private let loggingQueue = DispatchQueue(label: "com.celestia.logger", qos: .utility)
+    private let loggingQueue = DispatchQueue(label: "com.fitbuddy.logger", qos: .utility)
 
     /// Date formatter for log timestamps
     private let dateFormatter: DateFormatter = {

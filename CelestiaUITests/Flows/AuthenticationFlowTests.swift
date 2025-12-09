@@ -1,6 +1,6 @@
 //
 //  AuthenticationFlowTests.swift
-//  CelestiaUITests
+//  FitBuddyUITests
 //
 //  Tests for complete authentication flows
 //
@@ -44,7 +44,7 @@ final class AuthenticationFlowTests: XCTestCase {
 
         // And: User fills in signup form
         let timestamp = Int(Date().timeIntervalSince1970)
-        let email = "test\(timestamp)@celestia.app"
+        let email = "test\(timestamp)@fitbuddy.app"
 
         signupScreen.completeSignup(
             name: "Test User",
@@ -52,7 +52,7 @@ final class AuthenticationFlowTests: XCTestCase {
             password: "Test1234!",
             age: "25",
             gender: "Male",
-            lookingFor: "Female"
+            workoutPreference: "Female"
         )
         signupScreen.takeScreenshot(named: "03_Signup_Completed")
 
@@ -108,7 +108,7 @@ final class AuthenticationFlowTests: XCTestCase {
 
         // When: User signs in with valid credentials
         loginScreen.signIn(
-            email: "test@celestia.app",
+            email: "test@fitbuddy.app",
             password: "Test1234!"
         )
 
@@ -125,7 +125,7 @@ final class AuthenticationFlowTests: XCTestCase {
 
         // When: User attempts login with invalid credentials
         loginScreen.signIn(
-            email: "invalid@celestia.app",
+            email: "invalid@fitbuddy.app",
             password: "WrongPassword"
         )
 
@@ -148,7 +148,7 @@ final class AuthenticationFlowTests: XCTestCase {
         resetScreen.takeScreenshot(named: "Forgot_Password_Screen")
 
         // When: User enters email and requests reset
-        resetScreen.enterEmail("test@celestia.app")
+        resetScreen.enterEmail("test@fitbuddy.app")
         resetScreen.tapSendResetLink()
 
         // Then: Confirmation should be shown
@@ -164,7 +164,7 @@ final class AuthenticationFlowTests: XCTestCase {
         // Given: User has signed up but not verified email
         // (This assumes test user exists in unverified state)
         let loginScreen = LoginScreen(app: app)
-        loginScreen.signIn(email: "unverified@celestia.app", password: "Test1234!")
+        loginScreen.signIn(email: "unverified@fitbuddy.app", password: "Test1234!")
 
         let verificationScreen = EmailVerificationScreen(app: app)
         verificationScreen.verifyEmailVerificationScreen()
@@ -183,7 +183,7 @@ final class AuthenticationFlowTests: XCTestCase {
 
         // Given: User receives verification email with deep link
         let verificationToken = "test_verification_token_123"
-        let url = URL(string: "https://celestia.app/verify-email?token=\(verificationToken)")!
+        let url = URL(string: "https://fitbuddy.app/verify-email?token=\(verificationToken)")!
 
         // When: User opens verification link
         XCUIDevice.shared.system.open(url)
@@ -201,7 +201,7 @@ final class AuthenticationFlowTests: XCTestCase {
 
         // Given: User is signed in
         let loginScreen = LoginScreen(app: app)
-        loginScreen.signIn(email: "test@celestia.app", password: "Test1234!")
+        loginScreen.signIn(email: "test@fitbuddy.app", password: "Test1234!")
 
         let swipeScreen = SwipeScreen(app: app)
         swipeScreen.verifySwipeScreen()
@@ -281,7 +281,7 @@ class ForgotPasswordScreen: BaseScreen {
 
 class OnboardingScreen: BaseScreen {
     private var welcomeMessage: XCUIElement {
-        app.staticTexts["Welcome to Celestia"]
+        app.staticTexts["Welcome to FitBuddy"]
     }
 
     private var continueButton: XCUIElement {

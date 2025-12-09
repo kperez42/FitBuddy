@@ -1,6 +1,6 @@
 //
 //  SafetyCenter.swift
-//  Celestia
+//  FitBuddy
 //
 //  Safety features: reporting and blocking
 //

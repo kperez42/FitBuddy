@@ -1,6 +1,6 @@
 //
 //  AdminVerificationReviewView.swift
-//  Celestia
+//  FitBuddy
 //
 //  Admin dashboard to review and approve/reject ID verification submissions
 //  For small apps - manual review before scaling to Stripe Identity

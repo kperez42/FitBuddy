@@ -1,6 +1,6 @@
 //
 //  LikeSystemErrorTests.swift
-//  CelestiaTests
+//  FitBuddyTests
 //
 //  Comprehensive error scenario tests for the Like System
 //  Tests all failure modes: network errors, rate limits, database failures,
@@ -8,7 +8,7 @@
 //
 
 import Testing
-@testable import Celestia
+@testable import FitBuddy
 import Foundation
 
 // MARK: - Like System Error Tests
@@ -23,12 +23,12 @@ struct LikeSystemErrorTests {
     func testLikeFailsWithNetworkError() async throws {
         let mockRepo = MockSwipeRepository()
         mockRepo.shouldFailOnCreateLike = true
-        mockRepo.createLikeError = CelestiaError.networkError
+        mockRepo.createLikeError = FitBuddyError.networkError
 
         do {
             try await mockRepo.createLike(fromUserId: "user1", toUserId: "user2", isSuperLike: false)
             #expect(Bool(false), "Should have thrown network error")
-        } catch let error as CelestiaError {
+        } catch let error as FitBuddyError {
             #expect(error == .networkError, "Should throw network error")
         }
 
@@ -40,12 +40,12 @@ struct LikeSystemErrorTests {
     func testLikeFailsWithTimeoutError() async throws {
         let mockRepo = MockSwipeRepository()
         mockRepo.shouldFailOnCreateLike = true
-        mockRepo.createLikeError = CelestiaError.timeout
+        mockRepo.createLikeError = FitBuddyError.timeout
 
         do {
             try await mockRepo.createLike(fromUserId: "user1", toUserId: "user2", isSuperLike: false)
             #expect(Bool(false), "Should have thrown timeout error")
-        } catch let error as CelestiaError {
+        } catch let error as FitBuddyError {
             #expect(error == .timeout, "Should throw timeout error")
         }
 
@@ -56,12 +56,12 @@ struct LikeSystemErrorTests {
     func testLikeFailsWithServerError() async throws {
         let mockRepo = MockSwipeRepository()
         mockRepo.shouldFailOnCreateLike = true
-        mockRepo.createLikeError = CelestiaError.serverError
+        mockRepo.createLikeError = FitBuddyError.serverError
 
         do {
             try await mockRepo.createLike(fromUserId: "user1", toUserId: "user2", isSuperLike: false)
             #expect(Bool(false), "Should have thrown server error")
-        } catch let error as CelestiaError {
+        } catch let error as FitBuddyError {
             #expect(error == .serverError, "Should throw server error")
         }
     }
@@ -70,12 +70,12 @@ struct LikeSystemErrorTests {
     func testLikeFailsWithDatabaseError() async throws {
         let mockRepo = MockSwipeRepository()
         mockRepo.shouldFailOnCreateLike = true
-        mockRepo.createLikeError = CelestiaError.databaseError("Write failed")
+        mockRepo.createLikeError = FitBuddyError.databaseError("Write failed")
 
         do {
             try await mockRepo.createLike(fromUserId: "user1", toUserId: "user2", isSuperLike: false)
             #expect(Bool(false), "Should have thrown database error")
-        } catch let error as CelestiaError {
+        } catch let error as FitBuddyError {
             if case .databaseError(let message) = error {
                 #expect(message == "Write failed", "Should contain error message")
             } else {
@@ -88,12 +88,12 @@ struct LikeSystemErrorTests {
     func testLikeFailsWithNoInternet() async throws {
         let mockRepo = MockSwipeRepository()
         mockRepo.shouldFailOnCreateLike = true
-        mockRepo.createLikeError = CelestiaError.noInternetConnection
+        mockRepo.createLikeError = FitBuddyError.noInternetConnection
 
         do {
             try await mockRepo.createLike(fromUserId: "user1", toUserId: "user2", isSuperLike: false)
             #expect(Bool(false), "Should have thrown no internet error")
-        } catch let error as CelestiaError {
+        } catch let error as FitBuddyError {
             #expect(error == .noInternetConnection, "Should throw no internet error")
         }
     }
@@ -102,12 +102,12 @@ struct LikeSystemErrorTests {
     func testSuperLikeFailsWithNetworkError() async throws {
         let mockRepo = MockSwipeRepository()
         mockRepo.shouldFailOnCreateLike = true
-        mockRepo.createLikeError = CelestiaError.networkError
+        mockRepo.createLikeError = FitBuddyError.networkError
 
         do {
             try await mockRepo.createLike(fromUserId: "user1", toUserId: "user2", isSuperLike: true)
             #expect(Bool(false), "Should have thrown network error for super like")
-        } catch let error as CelestiaError {
+        } catch let error as FitBuddyError {
             #expect(error == .networkError, "Should throw network error")
         }
 
@@ -120,12 +120,12 @@ struct LikeSystemErrorTests {
     func testLikeFailsWithRateLimitExceeded() async throws {
         let mockRepo = MockSwipeRepository()
         mockRepo.shouldFailOnCreateLike = true
-        mockRepo.createLikeError = CelestiaError.rateLimitExceeded
+        mockRepo.createLikeError = FitBuddyError.rateLimitExceeded
 
         do {
             try await mockRepo.createLike(fromUserId: "user1", toUserId: "user2", isSuperLike: false)
             #expect(Bool(false), "Should have thrown rate limit error")
-        } catch let error as CelestiaError {
+        } catch let error as FitBuddyError {
             #expect(error == .rateLimitExceeded, "Should throw rate limit exceeded")
         }
     }
@@ -134,12 +134,12 @@ struct LikeSystemErrorTests {
     func testLikeFailsWithRateLimitExceededWithTime() async throws {
         let mockRepo = MockSwipeRepository()
         mockRepo.shouldFailOnCreateLike = true
-        mockRepo.createLikeError = CelestiaError.rateLimitExceededWithTime(120.0)
+        mockRepo.createLikeError = FitBuddyError.rateLimitExceededWithTime(120.0)
 
         do {
             try await mockRepo.createLike(fromUserId: "user1", toUserId: "user2", isSuperLike: false)
             #expect(Bool(false), "Should have thrown rate limit with time error")
-        } catch let error as CelestiaError {
+        } catch let error as FitBuddyError {
             if case .rateLimitExceededWithTime(let retryAfter) = error {
                 #expect(retryAfter == 120.0, "Should have 120 second retry time")
             } else {
@@ -158,7 +158,7 @@ struct LikeSystemErrorTests {
         for i in 0..<10 {
             if i >= 3 {
                 mockRepo.shouldFailOnCreateLike = true
-                mockRepo.createLikeError = CelestiaError.rateLimitExceeded
+                mockRepo.createLikeError = FitBuddyError.rateLimitExceeded
             }
 
             do {
@@ -180,12 +180,12 @@ struct LikeSystemErrorTests {
         let mockRepo = MockSwipeRepository()
         mockRepo.addLike(fromUserId: "user1", toUserId: "user2")
         mockRepo.shouldFailOnUnlikeUser = true
-        mockRepo.unlikeUserError = CelestiaError.networkError
+        mockRepo.unlikeUserError = FitBuddyError.networkError
 
         do {
             try await mockRepo.unlikeUser(fromUserId: "user1", toUserId: "user2")
             #expect(Bool(false), "Should have thrown network error")
-        } catch let error as CelestiaError {
+        } catch let error as FitBuddyError {
             #expect(error == .networkError, "Should throw network error")
         }
 
@@ -199,12 +199,12 @@ struct LikeSystemErrorTests {
         let mockRepo = MockSwipeRepository()
         mockRepo.addLike(fromUserId: "user1", toUserId: "user2")
         mockRepo.shouldFailOnUnlikeUser = true
-        mockRepo.unlikeUserError = CelestiaError.databaseError("Update failed")
+        mockRepo.unlikeUserError = FitBuddyError.databaseError("Update failed")
 
         do {
             try await mockRepo.unlikeUser(fromUserId: "user1", toUserId: "user2")
             #expect(Bool(false), "Should have thrown database error")
-        } catch let error as CelestiaError {
+        } catch let error as FitBuddyError {
             if case .databaseError(let message) = error {
                 #expect(message == "Update failed")
             } else {
@@ -218,12 +218,12 @@ struct LikeSystemErrorTests {
         let mockRepo = MockSwipeRepository()
         mockRepo.addLike(fromUserId: "user1", toUserId: "user2")
         mockRepo.shouldFailOnDeleteSwipe = true
-        mockRepo.deleteSwipeError = CelestiaError.networkError
+        mockRepo.deleteSwipeError = FitBuddyError.networkError
 
         do {
             try await mockRepo.deleteSwipe(fromUserId: "user1", toUserId: "user2")
             #expect(Bool(false), "Should have thrown network error")
-        } catch let error as CelestiaError {
+        } catch let error as FitBuddyError {
             #expect(error == .networkError, "Should throw network error")
         }
 
@@ -236,12 +236,12 @@ struct LikeSystemErrorTests {
         let mockRepo = MockSwipeRepository()
         mockRepo.addLike(fromUserId: "user1", toUserId: "user2")
         mockRepo.shouldFailOnDeleteSwipe = true
-        mockRepo.deleteSwipeError = CelestiaError.serverError
+        mockRepo.deleteSwipeError = FitBuddyError.serverError
 
         do {
             try await mockRepo.deleteSwipe(fromUserId: "user1", toUserId: "user2")
             #expect(Bool(false), "Should have thrown server error")
-        } catch let error as CelestiaError {
+        } catch let error as FitBuddyError {
             #expect(error == .serverError, "Should throw server error")
         }
     }
@@ -265,12 +265,12 @@ struct LikeSystemErrorTests {
     func testGetLikesReceivedFailsWithNetworkError() async throws {
         let mockRepo = MockSwipeRepository()
         mockRepo.shouldFailOnGetLikesReceived = true
-        mockRepo.getLikesReceivedError = CelestiaError.networkError
+        mockRepo.getLikesReceivedError = FitBuddyError.networkError
 
         do {
             _ = try await mockRepo.getLikesReceived(userId: "user1")
             #expect(Bool(false), "Should have thrown network error")
-        } catch let error as CelestiaError {
+        } catch let error as FitBuddyError {
             #expect(error == .networkError, "Should throw network error")
         }
     }
@@ -279,12 +279,12 @@ struct LikeSystemErrorTests {
     func testGetLikesReceivedFailsWithTimeout() async throws {
         let mockRepo = MockSwipeRepository()
         mockRepo.shouldFailOnGetLikesReceived = true
-        mockRepo.getLikesReceivedError = CelestiaError.timeout
+        mockRepo.getLikesReceivedError = FitBuddyError.timeout
 
         do {
             _ = try await mockRepo.getLikesReceived(userId: "user1")
             #expect(Bool(false), "Should have thrown timeout error")
-        } catch let error as CelestiaError {
+        } catch let error as FitBuddyError {
             #expect(error == .timeout, "Should throw timeout error")
         }
     }
@@ -293,12 +293,12 @@ struct LikeSystemErrorTests {
     func testGetLikesSentFailsWithNetworkError() async throws {
         let mockRepo = MockSwipeRepository()
         mockRepo.shouldFailOnGetLikesSent = true
-        mockRepo.getLikesSentError = CelestiaError.networkError
+        mockRepo.getLikesSentError = FitBuddyError.networkError
 
         do {
             _ = try await mockRepo.getLikesSent(userId: "user1")
             #expect(Bool(false), "Should have thrown network error")
-        } catch let error as CelestiaError {
+        } catch let error as FitBuddyError {
             #expect(error == .networkError, "Should throw network error")
         }
     }
@@ -307,12 +307,12 @@ struct LikeSystemErrorTests {
     func testCheckLikeExistsFailsWithNetworkError() async throws {
         let mockRepo = MockSwipeRepository()
         mockRepo.shouldFailOnCheckLikeExists = true
-        mockRepo.checkLikeExistsError = CelestiaError.networkError
+        mockRepo.checkLikeExistsError = FitBuddyError.networkError
 
         do {
             _ = try await mockRepo.checkLikeExists(fromUserId: "user1", toUserId: "user2")
             #expect(Bool(false), "Should have thrown network error")
-        } catch let error as CelestiaError {
+        } catch let error as FitBuddyError {
             #expect(error == .networkError, "Should throw network error")
         }
     }
@@ -321,12 +321,12 @@ struct LikeSystemErrorTests {
     func testHasSwipedOnFailsWithNetworkError() async throws {
         let mockRepo = MockSwipeRepository()
         mockRepo.shouldFailOnHasSwipedOn = true
-        mockRepo.hasSwipedOnError = CelestiaError.networkError
+        mockRepo.hasSwipedOnError = FitBuddyError.networkError
 
         do {
             _ = try await mockRepo.hasSwipedOn(fromUserId: "user1", toUserId: "user2")
             #expect(Bool(false), "Should have thrown network error")
-        } catch let error as CelestiaError {
+        } catch let error as FitBuddyError {
             #expect(error == .networkError, "Should throw network error")
         }
     }
@@ -337,12 +337,12 @@ struct LikeSystemErrorTests {
     func testCheckMutualLikeFailsWithNetworkError() async throws {
         let mockRepo = MockSwipeRepository()
         mockRepo.shouldFailOnCheckMutualLike = true
-        mockRepo.checkMutualLikeError = CelestiaError.networkError
+        mockRepo.checkMutualLikeError = FitBuddyError.networkError
 
         do {
             _ = try await mockRepo.checkMutualLike(fromUserId: "user1", toUserId: "user2")
             #expect(Bool(false), "Should have thrown network error")
-        } catch let error as CelestiaError {
+        } catch let error as FitBuddyError {
             #expect(error == .networkError, "Should throw network error")
         }
     }
@@ -351,12 +351,12 @@ struct LikeSystemErrorTests {
     func testCheckMutualLikeFailsWithDatabaseError() async throws {
         let mockRepo = MockSwipeRepository()
         mockRepo.shouldFailOnCheckMutualLike = true
-        mockRepo.checkMutualLikeError = CelestiaError.databaseError("Query failed")
+        mockRepo.checkMutualLikeError = FitBuddyError.databaseError("Query failed")
 
         do {
             _ = try await mockRepo.checkMutualLike(fromUserId: "user1", toUserId: "user2")
             #expect(Bool(false), "Should have thrown database error")
-        } catch let error as CelestiaError {
+        } catch let error as FitBuddyError {
             if case .databaseError(let message) = error {
                 #expect(message == "Query failed")
             } else {
@@ -377,12 +377,12 @@ struct LikeSystemErrorTests {
 
         // Now simulate failure on mutual check
         mockRepo.shouldFailOnCheckMutualLike = true
-        mockRepo.checkMutualLikeError = CelestiaError.networkError
+        mockRepo.checkMutualLikeError = FitBuddyError.networkError
 
         do {
             _ = try await mockRepo.checkMutualLike(fromUserId: "user1", toUserId: "user2")
             #expect(Bool(false), "Should have thrown network error")
-        } catch let error as CelestiaError {
+        } catch let error as FitBuddyError {
             #expect(error == .networkError, "Should throw network error")
         }
 
@@ -396,12 +396,12 @@ struct LikeSystemErrorTests {
     func testPassFailsWithNetworkError() async throws {
         let mockRepo = MockSwipeRepository()
         mockRepo.shouldFailOnCreatePass = true
-        mockRepo.createPassError = CelestiaError.networkError
+        mockRepo.createPassError = FitBuddyError.networkError
 
         do {
             try await mockRepo.createPass(fromUserId: "user1", toUserId: "user2")
             #expect(Bool(false), "Should have thrown network error")
-        } catch let error as CelestiaError {
+        } catch let error as FitBuddyError {
             #expect(error == .networkError, "Should throw network error")
         }
 
@@ -412,12 +412,12 @@ struct LikeSystemErrorTests {
     func testPassFailsWithRateLimitExceeded() async throws {
         let mockRepo = MockSwipeRepository()
         mockRepo.shouldFailOnCreatePass = true
-        mockRepo.createPassError = CelestiaError.rateLimitExceeded
+        mockRepo.createPassError = FitBuddyError.rateLimitExceeded
 
         do {
             try await mockRepo.createPass(fromUserId: "user1", toUserId: "user2")
             #expect(Bool(false), "Should have thrown rate limit error")
-        } catch let error as CelestiaError {
+        } catch let error as FitBuddyError {
             #expect(error == .rateLimitExceeded, "Should throw rate limit exceeded")
         }
     }
@@ -507,7 +507,7 @@ struct LikeSystemErrorTests {
     func testAllOperationsFailWhenShouldFailIsTrue() async throws {
         let mockRepo = MockSwipeRepository()
         mockRepo.shouldFail = true
-        mockRepo.failureError = CelestiaError.serverError
+        mockRepo.failureError = FitBuddyError.serverError
 
         var failureCount = 0
 
@@ -583,12 +583,12 @@ struct LikeSystemErrorTests {
     func testLikeFailsWhenServiceUnavailable() async throws {
         let mockRepo = MockSwipeRepository()
         mockRepo.shouldFailOnCreateLike = true
-        mockRepo.createLikeError = CelestiaError.serviceTemporarilyUnavailable
+        mockRepo.createLikeError = FitBuddyError.serviceTemporarilyUnavailable
 
         do {
             try await mockRepo.createLike(fromUserId: "user1", toUserId: "user2", isSuperLike: false)
             #expect(Bool(false), "Should have thrown service unavailable error")
-        } catch let error as CelestiaError {
+        } catch let error as FitBuddyError {
             #expect(error == .serviceTemporarilyUnavailable)
         }
     }
@@ -597,12 +597,12 @@ struct LikeSystemErrorTests {
     func testOperationsFailWithPermissionDenied() async throws {
         let mockRepo = MockSwipeRepository()
         mockRepo.shouldFailOnCreateLike = true
-        mockRepo.createLikeError = CelestiaError.permissionDenied
+        mockRepo.createLikeError = FitBuddyError.permissionDenied
 
         do {
             try await mockRepo.createLike(fromUserId: "user1", toUserId: "user2", isSuperLike: false)
             #expect(Bool(false), "Should have thrown permission denied error")
-        } catch let error as CelestiaError {
+        } catch let error as FitBuddyError {
             #expect(error == .permissionDenied)
         }
     }
@@ -908,7 +908,7 @@ struct LikeNotWorkingScenarioTests {
     func testLikeNotWorkingDueToNetworkFailures() async throws {
         let mockRepo = MockSwipeRepository()
         mockRepo.shouldFailOnCreateLike = true
-        mockRepo.createLikeError = CelestiaError.networkError
+        mockRepo.createLikeError = FitBuddyError.networkError
 
         var failedAttempts = 0
         for _ in 1...5 {
@@ -935,7 +935,7 @@ struct LikeNotWorkingScenarioTests {
 
         // But mutual check fails
         mockRepo.shouldFailOnCheckMutualLike = true
-        mockRepo.checkMutualLikeError = CelestiaError.networkError
+        mockRepo.checkMutualLikeError = FitBuddyError.networkError
 
         // The like exists but we can't detect the match
         let likeExists = try await mockRepo.checkLikeExists(fromUserId: "user1", toUserId: "user2")
@@ -972,12 +972,12 @@ struct LikeNotWorkingScenarioTests {
     func testLikeFailsWhenUserBlocked() async throws {
         let mockRepo = MockSwipeRepository()
         mockRepo.shouldFailOnCreateLike = true
-        mockRepo.createLikeError = CelestiaError.userBlocked
+        mockRepo.createLikeError = FitBuddyError.userBlocked
 
         do {
             try await mockRepo.createLike(fromUserId: "user1", toUserId: "blocked_user", isSuperLike: false)
             #expect(Bool(false), "Should have thrown user blocked error")
-        } catch let error as CelestiaError {
+        } catch let error as FitBuddyError {
             #expect(error == .userBlocked, "Should throw user blocked error")
         }
     }
@@ -986,12 +986,12 @@ struct LikeNotWorkingScenarioTests {
     func testLikeFailsWhenTargetUserNotFound() async throws {
         let mockRepo = MockSwipeRepository()
         mockRepo.shouldFailOnCreateLike = true
-        mockRepo.createLikeError = CelestiaError.userNotFound
+        mockRepo.createLikeError = FitBuddyError.userNotFound
 
         do {
             try await mockRepo.createLike(fromUserId: "user1", toUserId: "deleted_user", isSuperLike: false)
             #expect(Bool(false), "Should have thrown user not found error")
-        } catch let error as CelestiaError {
+        } catch let error as FitBuddyError {
             #expect(error == .userNotFound, "Should throw user not found error")
         }
     }
@@ -1000,12 +1000,12 @@ struct LikeNotWorkingScenarioTests {
     func testLikeFailsWhenNotAuthenticated() async throws {
         let mockRepo = MockSwipeRepository()
         mockRepo.shouldFailOnCreateLike = true
-        mockRepo.createLikeError = CelestiaError.notAuthenticated
+        mockRepo.createLikeError = FitBuddyError.notAuthenticated
 
         do {
             try await mockRepo.createLike(fromUserId: "", toUserId: "user2", isSuperLike: false)
             #expect(Bool(false), "Should have thrown not authenticated error")
-        } catch let error as CelestiaError {
+        } catch let error as FitBuddyError {
             #expect(error == .notAuthenticated, "Should throw not authenticated error")
         }
     }
@@ -1021,7 +1021,7 @@ struct LikeNotWorkingScenarioTests {
 
         // But query fails
         mockRepo.shouldFailOnGetLikesReceived = true
-        mockRepo.getLikesReceivedError = CelestiaError.networkError
+        mockRepo.getLikesReceivedError = FitBuddyError.networkError
 
         do {
             _ = try await mockRepo.getLikesReceived(userId: "target")
@@ -1068,7 +1068,7 @@ struct LikeErrorRecoveryTests {
 
         // First attempt fails
         mockRepo.shouldFailOnCreateLike = true
-        mockRepo.createLikeError = CelestiaError.networkError
+        mockRepo.createLikeError = FitBuddyError.networkError
 
         do {
             try await mockRepo.createLike(fromUserId: "user1", toUserId: "user2", isSuperLike: false)
@@ -1092,11 +1092,11 @@ struct LikeErrorRecoveryTests {
 
         // Rate limited
         mockRepo.shouldFailOnCreateLike = true
-        mockRepo.createLikeError = CelestiaError.rateLimitExceededWithTime(60.0)
+        mockRepo.createLikeError = FitBuddyError.rateLimitExceededWithTime(60.0)
 
         do {
             try await mockRepo.createLike(fromUserId: "user1", toUserId: "user2", isSuperLike: false)
-        } catch let error as CelestiaError {
+        } catch let error as FitBuddyError {
             if case .rateLimitExceededWithTime(let retryAfter) = error {
                 #expect(retryAfter == 60.0, "Should have 60 second wait")
             }
@@ -1119,7 +1119,7 @@ struct LikeErrorRecoveryTests {
         for i in 1...10 {
             // Simulate intermittent failures (every other request fails)
             mockRepo.shouldFailOnCreateLike = (i % 2 == 0)
-            mockRepo.createLikeError = CelestiaError.networkError
+            mockRepo.createLikeError = FitBuddyError.networkError
 
             do {
                 try await mockRepo.createLike(fromUserId: "user1", toUserId: "user\(i)", isSuperLike: false)
@@ -1140,7 +1140,7 @@ struct LikeErrorRecoveryTests {
 
         // First unlike fails
         mockRepo.shouldFailOnUnlikeUser = true
-        mockRepo.unlikeUserError = CelestiaError.networkError
+        mockRepo.unlikeUserError = FitBuddyError.networkError
 
         do {
             try await mockRepo.unlikeUser(fromUserId: "user1", toUserId: "user2")

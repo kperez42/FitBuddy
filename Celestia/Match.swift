@@ -1,6 +1,6 @@
 //
 //  Match.swift
-//  Celestia
+//  FitBuddy
 //
 //  Match model for tracking user matches
 //

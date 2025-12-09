@@ -1,6 +1,6 @@
 //
 //  ImprovedUserCard.swift
-//  Celestia
+//  FitBuddy
 //
 //  Enhanced profile card with depth, shadows, and smooth gestures
 //  ACCESSIBILITY: Full VoiceOver support, Dynamic Type, Reduce Motion, and WCAG 2.1 AA compliant
@@ -268,7 +268,7 @@ struct ImprovedUserCard: View {
                     }
 
                     // Relationship Goal
-                    if let goal = user.relationshipGoal, goal != "Prefer not to say" {
+                    if let goal = user.fitnessGoal, goal != "Prefer not to say" {
                         InfoChip(icon: "heart.circle", text: goal)
                             .accessibilityLabel("Looking for: \(goal)")
                     }
@@ -398,7 +398,7 @@ struct ImprovedUserCard: View {
             components.append("Height: \(height) centimeters")
         }
 
-        if let goal = user.relationshipGoal, goal != "Prefer not to say" {
+        if let goal = user.fitnessGoal, goal != "Prefer not to say" {
             components.append("Looking for: \(goal)")
         }
 
@@ -493,7 +493,7 @@ enum CardSwipeAction {
             fullName: "Sofia Rodriguez",
             age: 25,
             gender: "Female",
-            lookingFor: "Male",
+            workoutPreference: "Male",
             bio: "Love to travel and explore new cultures. Speak 4 languages and always looking for adventure! 🌍✈️",
             location: "Barcelona",
             country: "Spain",

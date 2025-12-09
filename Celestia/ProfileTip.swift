@@ -1,6 +1,6 @@
 //
 //  ProfileTip.swift
-//  Celestia
+//  FitBuddy
 //
 //  Model for profile completion tips
 //

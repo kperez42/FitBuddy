@@ -1,6 +1,6 @@
 //
 //  ContentModerator.swift
-//  Celestia
+//  FitBuddy
 //
 //  Content moderation service to filter inappropriate content
 //

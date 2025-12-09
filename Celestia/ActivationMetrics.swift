@@ -1,6 +1,6 @@
 //
 //  ActivationMetrics.swift
-//  Celestia
+//  FitBuddy
 //
 //  Tracks user activation and engagement metrics
 //  Measures onboarding completion, time to first match, and D1 retention

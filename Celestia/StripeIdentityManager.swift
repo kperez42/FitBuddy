@@ -1,6 +1,6 @@
 //
 //  StripeIdentityManager.swift
-//  Celestia
+//  FitBuddy
 //
 //  Third-party ID verification using Stripe Identity SDK
 //  This replaces the on-device face recognition with Stripe's robust verification service

@@ -1,6 +1,6 @@
 //
 //  FilterPresetsView.swift
-//  Celestia
+//  FitBuddy
 //
 //  Manage and load saved filter presets
 //
@@ -203,8 +203,8 @@ struct PresetRow: View {
                     FilterChip(text: "Verified", icon: "checkmark.seal.fill")
                 }
 
-                if !preset.filter.relationshipGoals.isEmpty {
-                    FilterChip(text: "\(preset.filter.relationshipGoals.count) goals")
+                if !preset.filter.fitnessGoals.isEmpty {
+                    FilterChip(text: "\(preset.filter.fitnessGoals.count) goals")
                 }
 
                 if !preset.filter.educationLevels.isEmpty {

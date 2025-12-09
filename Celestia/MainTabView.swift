@@ -1,6 +1,6 @@
 //
 //  MainTabView.swift
-//  Celestia
+//  FitBuddy
 //
 //  ELITE TAB BAR - Smooth Navigation Experience
 //
@@ -26,7 +26,7 @@ struct MainTabView: View {
             return true
         }
         guard let email = authService.currentUser?.email else { return false }
-        let adminEmails = ["perezkevin640@gmail.com", "admin@celestia.app"]
+        let adminEmails = ["perezkevin640@gmail.com", "admin@fitbuddy.app"]
         return adminEmails.contains(email.lowercased())
     }
 

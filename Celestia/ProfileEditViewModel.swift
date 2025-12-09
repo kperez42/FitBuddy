@@ -1,6 +1,6 @@
 //
 //  ProfileEditViewModel.swift
-//  Celestia
+//  FitBuddy
 //
 //  ViewModel for profile editing
 //
@@ -57,21 +57,21 @@ class ProfileEditViewModel: ObservableObject {
         let nameValidation = ValidationHelper.validateName(name)
         guard nameValidation.isValid else {
             errorMessage = nameValidation.errorMessage
-            throw CelestiaError.invalidProfileData
+            throw FitBuddyError.invalidProfileData
         }
 
         // Validate age
         let ageValidation = ValidationHelper.validateAge(age)
         guard ageValidation.isValid else {
             errorMessage = ageValidation.errorMessage
-            throw CelestiaError.ageRestriction
+            throw FitBuddyError.ageRestriction
         }
 
         // Validate bio length (critical: prevents database bloat)
         let bioValidation = ValidationHelper.validateBio(bio)
         guard bioValidation.isValid else {
             errorMessage = bioValidation.errorMessage
-            throw CelestiaError.validationError(field: "bio", reason: bioValidation.errorMessage ?? "Bio is too long")
+            throw FitBuddyError.validationError(field: "bio", reason: bioValidation.errorMessage ?? "Bio is too long")
         }
 
         // Sanitize inputs using InputSanitizer

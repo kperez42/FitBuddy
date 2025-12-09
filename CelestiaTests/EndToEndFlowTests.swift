@@ -1,6 +1,6 @@
 //
 //  EndToEndFlowTests.swift
-//  CelestiaTests
+//  FitBuddyTests
 //
 //  End-to-end user flow tests simulating real user journeys:
 //  - Complete signup flow
@@ -13,7 +13,7 @@
 
 import Testing
 import Foundation
-@testable import Celestia
+@testable import FitBuddy
 
 @Suite("End-to-End User Flow Tests")
 struct EndToEndFlowTests {
@@ -34,7 +34,7 @@ struct EndToEndFlowTests {
             fullName: "Alice Johnson",
             age: 26,
             gender: "Female",
-            lookingFor: "Male"
+            workoutPreference: "Male"
         )
         #expect(user1.id != nil)
         #expect(user1.email.contains("test"))
@@ -45,7 +45,7 @@ struct EndToEndFlowTests {
             fullName: "Bob Smith",
             age: 28,
             gender: "Male",
-            lookingFor: "Female"
+            workoutPreference: "Female"
         )
         #expect(user2.id != nil)
 
@@ -140,7 +140,7 @@ struct EndToEndFlowTests {
             fullName: fullName,
             age: 24,
             gender: "Female",
-            lookingFor: "Male",
+            workoutPreference: "Male",
             location: "San Francisco",
             country: "USA"
         )
@@ -183,7 +183,7 @@ struct EndToEndFlowTests {
             fullName: "Referred User",
             age: 25,
             gender: "Male",
-            lookingFor: "Female",
+            workoutPreference: "Female",
             location: "New York",
             country: "USA",
             referralCode: referralCode
@@ -207,7 +207,7 @@ struct EndToEndFlowTests {
         let currentUser = try await testBase.createTestUser(
             fullName: "Current User",
             gender: "Male",
-            lookingFor: "Female"
+            workoutPreference: "Female"
         )
 
         let discoveredUsers = try await testBase.createTestUsers(count: 5)

@@ -1,6 +1,6 @@
 //
 //  PremiumUpgradeView.swift
-//  Celestia
+//  FitBuddy
 //
 //  PREMIUM UPGRADE - Immersive Conversion Experience
 //

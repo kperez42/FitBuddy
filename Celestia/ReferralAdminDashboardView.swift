@@ -1,6 +1,6 @@
 //
 //  ReferralAdminDashboardView.swift
-//  Celestia
+//  FitBuddy
 //
 //  Admin dashboard for referral program analytics and management
 //  Features: ROI metrics, conversion funnels, fraud review, A/B test results

@@ -1,6 +1,6 @@
 //
 //  TypingIndicator.swift
-//  Celestia
+//  FitBuddy
 //
 //  Typing indicator animation for chat
 //

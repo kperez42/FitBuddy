@@ -1,6 +1,6 @@
 //
 //  AppShortcuts.swift
-//  Celestia
+//  FitBuddy
 //
 //  App Shortcuts and Siri integration for quick actions
 //  Requires iOS 16+ for App Intents framework
@@ -12,7 +12,7 @@ import AppIntents
 // MARK: - App Shortcuts Provider
 
 @available(iOS 16.0, *)
-struct CelestiaAppShortcuts: AppShortcutsProvider {
+struct FitBuddyAppShortcuts: AppShortcutsProvider {
     static var appShortcuts: [AppShortcut] {
         AppShortcut(
             intent: ViewMatchesIntent(),
@@ -98,7 +98,7 @@ struct CelestiaAppShortcuts: AppShortcutsProvider {
 @available(iOS 16.0, *)
 struct ViewMatchesIntent: AppIntent {
     static var title: LocalizedStringResource = "View Matches"
-    static var description = IntentDescription("View your current matches in Celestia")
+    static var description = IntentDescription("View your current matches in FitBuddy")
     static var openAppWhenRun: Bool = true
 
     @MainActor
@@ -119,7 +119,7 @@ struct ViewMatchesIntent: AppIntent {
 @available(iOS 16.0, *)
 struct StartSwipingIntent: AppIntent {
     static var title: LocalizedStringResource = "Start Swiping"
-    static var description = IntentDescription("Start discovering new people on Celestia")
+    static var description = IntentDescription("Start discovering new people on FitBuddy")
     static var openAppWhenRun: Bool = true
 
     @MainActor
@@ -138,7 +138,7 @@ struct StartSwipingIntent: AppIntent {
 @available(iOS 16.0, *)
 struct CheckMessagesIntent: AppIntent {
     static var title: LocalizedStringResource = "Check Messages"
-    static var description = IntentDescription("Check your messages on Celestia")
+    static var description = IntentDescription("Check your messages on FitBuddy")
     static var openAppWhenRun: Bool = true
 
     @MainActor
@@ -210,14 +210,14 @@ struct ShareDateDetailsIntent: AppIntent {
 
         // If parameters provided, create share date automatically
         if let matchName = matchName, let location = location, let dateTime = dateTime {
-            // This would integrate with ShareDateView functionality
+            // This would integrate with ShareWorkoutView functionality
             return .result(
                 dialog: IntentDialog("Date details shared with your emergency contacts")
             )
         } else {
             // Open app to share date screen
             return .result(
-                dialog: IntentDialog("Opening Celestia to share your date details")
+                dialog: IntentDialog("Opening FitBuddy to share your date details")
             )
         }
     }
@@ -262,7 +262,7 @@ struct AddEmergencyContactIntent: AppIntent {
             )
         } else {
             return .result(
-                dialog: IntentDialog("Opening Celestia to add emergency contact")
+                dialog: IntentDialog("Opening FitBuddy to add emergency contact")
             )
         }
     }

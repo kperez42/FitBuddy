@@ -1,6 +1,6 @@
 //
 //  FilterView.swift
-//  Celestia
+//  FitBuddy
 //
 //  Created by Kevin Perez on 10/29/25.
 //
@@ -14,11 +14,11 @@ struct FilterView: View {
 
     @State private var ageRangeMin: Int = 18
     @State private var ageRangeMax: Int = 99
-    @State private var lookingFor = "Everyone"
+    @State private var workoutPreference = "Everyone"
     @State private var isLoading = false
     @State private var showSaveConfirmation = false
 
-    let lookingForOptions = ["Men", "Women", "Everyone"]
+    let workoutPreferenceOptions = ["Men", "Women", "Everyone"]
 
     var body: some View {
         NavigationStack {
@@ -211,8 +211,8 @@ struct FilterView: View {
             }
 
             // Gender picker
-            Picker("Looking for", selection: $lookingFor) {
-                ForEach(lookingForOptions, id: \.self) { option in
+            Picker("Fitness Goal", selection: $workoutPreference) {
+                ForEach(workoutPreferenceOptions, id: \.self) { option in
                     Text(option).tag(option)
                 }
             }
@@ -236,7 +236,7 @@ struct FilterView: View {
 
             do {
                 // Update user's preferences in their profile
-                currentUser.lookingFor = lookingFor
+                currentUser.workoutPreference = workoutPreference
                 currentUser.ageRangeMin = ageRangeMin
                 currentUser.ageRangeMax = ageRangeMax
 
@@ -246,7 +246,7 @@ struct FilterView: View {
                 // Fetch users with new filters
                 try await userService.fetchUsers(
                     excludingUserId: currentUserId,
-                    lookingFor: lookingFor == "Everyone" ? nil : lookingFor,
+                    workoutPreference: workoutPreference == "Everyone" ? nil : workoutPreference,
                     ageRange: ageRangeInt,
                     country: nil
                 )
@@ -267,7 +267,7 @@ struct FilterView: View {
     private func loadCurrentPreferences() {
         guard let currentUser = authService.currentUser else { return }
 
-        lookingFor = currentUser.lookingFor
+        workoutPreference = currentUser.workoutPreference
         ageRangeMin = currentUser.ageRangeMin
         ageRangeMax = currentUser.ageRangeMax
     }

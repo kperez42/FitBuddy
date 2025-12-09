@@ -1,13 +1,13 @@
 //
 //  MockServices.swift
-//  CelestiaTests
+//  FitBuddyTests
 //
 //  Mock implementations of service protocols for testing
 //
 
 import Foundation
 import UIKit
-@testable import Celestia
+@testable import FitBuddy
 
 // MARK: - Mock Auth Service
 
@@ -36,17 +36,17 @@ class MockAuthService: AuthServiceProtocol {
         }
 
         if shouldFail {
-            throw CelestiaError.invalidCredentials
+            throw FitBuddyError.invalidCredentials
         }
 
         isEmailVerified = true
     }
 
-    func createUser(withEmail email: String, password: String, fullName: String, age: Int, gender: String, lookingFor: String, location: String, country: String, referralCode: String = "", photos: [UIImage] = []) async throws {
+    func createUser(withEmail email: String, password: String, fullName: String, age: Int, gender: String, workoutPreference: String, location: String, country: String, referralCode: String = "", photos: [UIImage] = []) async throws {
         createUserCalled = true
 
         if shouldFail {
-            throw CelestiaError.emailAlreadyExists
+            throw FitBuddyError.emailAlreadyExists
         }
 
         currentUser = User(
@@ -55,7 +55,7 @@ class MockAuthService: AuthServiceProtocol {
             fullName: fullName,
             age: age,
             gender: gender,
-            lookingFor: lookingFor,
+            workoutPreference: workoutPreference,
             location: location,
             country: country
         )
@@ -94,12 +94,12 @@ class MockUserService: UserServiceProtocol {
         return mockUser
     }
 
-    func fetchUsers(excludingUserId: String, lookingFor: String?, ageRange: ClosedRange<Int>?, country: String?, limit: Int, reset: Bool) async throws {
+    func fetchUsers(excludingUserId: String, workoutPreference: String?, ageRange: ClosedRange<Int>?, country: String?, limit: Int, reset: Bool) async throws {
         fetchUsersCalled = true
         // Return mock users
         users = [
-            User(id: "1", email: "user1@test.com", fullName: "Test User 1", age: 25, gender: "Female", lookingFor: "Male", location: "New York", country: "USA"),
-            User(id: "2", email: "user2@test.com", fullName: "Test User 2", age: 28, gender: "Male", lookingFor: "Female", location: "Los Angeles", country: "USA")
+            User(id: "1", email: "user1@test.com", fullName: "Test User 1", age: 25, gender: "Female", workoutPreference: "Male", location: "New York", country: "USA"),
+            User(id: "2", email: "user2@test.com", fullName: "Test User 2", age: 28, gender: "Male", workoutPreference: "Female", location: "Los Angeles", country: "USA")
         ]
     }
 
@@ -281,7 +281,7 @@ class MockImageUploadService: ImageUploadServiceProtocol {
         uploadCalled = true
 
         if shouldFail {
-            throw CelestiaError.imageUploadFailed
+            throw FitBuddyError.imageUploadFailed
         }
 
         return "https://mock-image-url.com/image.jpg"
@@ -343,7 +343,7 @@ class MockInterestService {
         sentInterestToUserId = toUserId
 
         if shouldFail {
-            throw CelestiaError.networkError
+            throw FitBuddyError.networkError
         }
     }
 

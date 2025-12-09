@@ -1,6 +1,6 @@
 //
 //  PhotoPersistenceTests.swift
-//  CelestiaTests
+//  FitBuddyTests
 //
 //  Critical tests to ensure photos:
 //  1. Are saved to Firebase correctly
@@ -11,7 +11,7 @@
 
 import Testing
 import UIKit
-@testable import Celestia
+@testable import FitBuddy
 
 // MARK: - Mock Services for Testing
 
@@ -38,11 +38,11 @@ class MockFirebaseAuthService: AuthServiceProtocol {
     }
 
     func signIn(email: String, password: String) async throws -> User {
-        throw CelestiaError.notImplemented
+        throw FitBuddyError.notImplemented
     }
 
     func signUp(email: String, password: String, name: String, age: Int) async throws -> User {
-        throw CelestiaError.notImplemented
+        throw FitBuddyError.notImplemented
     }
 
     func signOut() async throws {}

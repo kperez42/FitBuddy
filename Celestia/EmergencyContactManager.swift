@@ -1,6 +1,6 @@
 //
 //  EmergencyContactManager.swift
-//  Celestia
+//  FitBuddy
 //
 //  Emergency contact management for safety features
 //  Allows users to designate trusted contacts who receive safety alerts

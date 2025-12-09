@@ -1,6 +1,6 @@
 //
 //  BackendAPIService.swift
-//  Celestia
+//  FitBuddy
 //
 //  Backend API service for server-side validation and operations
 //  SECURITY: All critical operations should be validated server-side
@@ -96,7 +96,7 @@ class BackendAPIService: BackendAPIServiceProtocol {
 
     enum Configuration {
         // DISABLED: Backend API not deployed yet - use client-side fallbacks
-        // Set to true when api.celestia.app is available
+        // Set to true when api.fitbuddy.app is available
         static let isEnabled = false
 
         #if DEBUG

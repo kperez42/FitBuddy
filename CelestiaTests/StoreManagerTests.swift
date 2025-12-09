@@ -1,13 +1,13 @@
 //
 //  StoreManagerTests.swift
-//  CelestiaTests
+//  FitBuddyTests
 //
 //  CRITICAL: Tests for payment/subscription handling
 //
 
 import Testing
 import StoreKit
-@testable import Celestia
+@testable import FitBuddy
 
 @Suite("StoreManager Tests - CRITICAL for Payments")
 struct StoreManagerTests {
@@ -78,7 +78,7 @@ struct StoreManagerTests {
 
     @Test("Consumable amounts default to 1")
     func testConsumableDefaultAmount() async throws {
-        let unknownProduct = "com.celestia.unknown.product"
+        let unknownProduct = "com.fitbuddy.unknown.product"
 
         // Should default to 1 if not recognized
         let defaultAmount = 1
@@ -342,7 +342,7 @@ struct StoreManagerTests {
 
     @Test("Unknown product type handled gracefully")
     func testUnknownProductTypeHandling() async throws {
-        let unknownProductId = "com.celestia.unknown.product"
+        let unknownProductId = "com.fitbuddy.unknown.product"
 
         #expect(!unknownProductId.isEmpty)
         // Should return nil or handle gracefully

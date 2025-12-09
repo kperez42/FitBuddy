@@ -1,6 +1,6 @@
 //
 //  AuthService.swift
-//  Celestia
+//  FitBuddy
 //
 //  Created by Kevin Perez on 10/29/25.
 //
@@ -158,14 +158,14 @@ class AuthService: ObservableObject, AuthServiceProtocol {
         guard emailValidation.isValid else {
             isLoading = false
             errorMessage = emailValidation.errorMessage ?? AppConstants.ErrorMessages.invalidEmail
-            throw CelestiaError.invalidCredentials
+            throw FitBuddyError.invalidCredentials
         }
 
         // Validate password is not empty
         guard !sanitizedPassword.isEmpty else {
             isLoading = false
             errorMessage = "Password cannot be empty."
-            throw CelestiaError.invalidCredentials
+            throw FitBuddyError.invalidCredentials
         }
 
         // SECURITY FIX: Never log email addresses
@@ -223,7 +223,7 @@ class AuthService: ObservableObject, AuthServiceProtocol {
         let emailValidation = ValidationHelper.validateEmail(sanitizedEmail)
         guard emailValidation.isValid else {
             errorMessage = emailValidation.errorMessage ?? AppConstants.ErrorMessages.invalidEmail
-            throw CelestiaError.invalidCredentials
+            throw FitBuddyError.invalidCredentials
         }
 
         do {
@@ -240,7 +240,7 @@ class AuthService: ObservableObject, AuthServiceProtocol {
     }
 
     @MainActor
-    func createUser(withEmail email: String, password: String, fullName: String, age: Int, gender: String, lookingFor: String, location: String, country: String, referralCode: String = "", photos: [UIImage] = []) async throws {
+    func createUser(withEmail email: String, password: String, fullName: String, age: Int, gender: String, workoutPreference: String, location: String, country: String, referralCode: String = "", photos: [UIImage] = []) async throws {
         isLoading = true
         errorMessage = nil
 
@@ -261,21 +261,21 @@ class AuthService: ObservableObject, AuthServiceProtocol {
             isLoading = false
             errorMessage = signUpValidation.errorMessage ?? "Invalid sign up information."
 
-            // Map validation errors to appropriate CelestiaError types
+            // Map validation errors to appropriate FitBuddyError types
             if let errorMsg = signUpValidation.errorMessage {
                 if errorMsg.contains("email") {
-                    throw CelestiaError.invalidCredentials
+                    throw FitBuddyError.invalidCredentials
                 } else if errorMsg.contains("password") || errorMsg.contains("Password") {
-                    throw CelestiaError.weakPassword
+                    throw FitBuddyError.weakPassword
                 } else if errorMsg.contains("18") {
-                    throw CelestiaError.ageRestriction
+                    throw FitBuddyError.ageRestriction
                 } else if errorMsg.contains("Name") || errorMsg.contains("name") {
-                    throw CelestiaError.invalidProfileData
+                    throw FitBuddyError.invalidProfileData
                 } else {
-                    throw CelestiaError.validationError(field: "signup", reason: errorMsg)
+                    throw FitBuddyError.validationError(field: "signup", reason: errorMsg)
                 }
             }
-            throw CelestiaError.validationError(field: "signup", reason: "Invalid sign up information")
+            throw FitBuddyError.validationError(field: "signup", reason: "Invalid sign up information")
         }
 
         // SECURITY FIX: Never log email addresses
@@ -295,7 +295,7 @@ class AuthService: ObservableObject, AuthServiceProtocol {
                 fullName: sanitizedFullName,
                 age: age,
                 gender: gender,
-                lookingFor: lookingFor,
+                workoutPreference: workoutPreference,
                 bio: "",
                 location: location,
                 country: country,
@@ -325,7 +325,7 @@ class AuthService: ObservableObject, AuthServiceProtocol {
 
             // Step 3: Save to Firestore
             guard let userId = user.id else {
-                throw CelestiaError.invalidData
+                throw FitBuddyError.invalidData
             }
 
             let encodedUser = try Firestore.Encoder().encode(user)
@@ -339,7 +339,7 @@ class AuthService: ObservableObject, AuthServiceProtocol {
                 let isConnected = await MainActor.run { NetworkMonitor.shared.isConnected }
                 guard isConnected else {
                     Logger.shared.auth("❌ Photo upload blocked: No network connection", level: .error)
-                    throw CelestiaError.networkError
+                    throw FitBuddyError.networkError
                 }
 
                 Logger.shared.auth("📶 Network OK - Starting upload of \(photos.count) photos (parallel with retries)", level: .info)
@@ -601,7 +601,7 @@ class AuthService: ObservableObject, AuthServiceProtocol {
             fullName: firebaseUser.displayName ?? "User",
             age: 18,
             gender: "Other",
-            lookingFor: "Everyone",
+            workoutPreference: "Everyone",
             bio: "",
             location: "Unknown",
             country: "Unknown",
@@ -651,7 +651,7 @@ class AuthService: ObservableObject, AuthServiceProtocol {
     @MainActor
     func deleteAccount() async throws {
         guard let user = Auth.auth().currentUser else {
-            throw CelestiaError.notAuthenticated
+            throw FitBuddyError.notAuthenticated
         }
         let uid = user.uid
 
@@ -741,7 +741,7 @@ class AuthService: ObservableObject, AuthServiceProtocol {
                 Logger.shared.auth("Account deletion requires re-authentication", level: .warning)
                 self.requiresReauthentication = true
                 // Note: Firestore data may be partially deleted, but user can re-auth and retry
-                throw CelestiaError.requiresRecentLogin
+                throw FitBuddyError.requiresRecentLogin
             }
             // For other errors, log but continue - Firestore data is already deleted
             Logger.shared.auth("Auth deletion failed: \(error.localizedDescription)", level: .error)
@@ -766,7 +766,7 @@ class AuthService: ObservableObject, AuthServiceProtocol {
         let filterKeys = [
             "maxDistance", "minAge", "maxAge", "showVerifiedOnly",
             "selectedInterests", "educationLevels", "minHeight", "maxHeight",
-            "religions", "relationshipGoals", "smokingPreferences",
+            "religions", "fitnessGoals", "smokingPreferences",
             "drinkingPreferences", "petPreferences", "exercisePreferences", "dietPreferences"
         ]
         for key in filterKeys {
@@ -1343,13 +1343,13 @@ class AuthService: ObservableObject, AuthServiceProtocol {
     func reauthenticate(withPassword password: String) async throws {
         guard let user = Auth.auth().currentUser,
               let email = user.email else {
-            throw CelestiaError.notAuthenticated
+            throw FitBuddyError.notAuthenticated
         }
 
         // Sanitize password input
         let sanitizedPassword = InputSanitizer.basic(password)
         guard !sanitizedPassword.isEmpty else {
-            throw CelestiaError.invalidCredentials
+            throw FitBuddyError.invalidCredentials
         }
 
         Logger.shared.auth("Re-authenticating user for sensitive operation", level: .info)
@@ -1389,7 +1389,7 @@ class AuthService: ObservableObject, AuthServiceProtocol {
     @MainActor
     func changePassword(currentPassword: String, newPassword: String) async throws {
         guard let user = Auth.auth().currentUser else {
-            throw CelestiaError.notAuthenticated
+            throw FitBuddyError.notAuthenticated
         }
 
         // Validate new password
@@ -1397,7 +1397,7 @@ class AuthService: ObservableObject, AuthServiceProtocol {
         let passwordValidation = ValidationHelper.validatePassword(sanitizedNewPassword)
         guard passwordValidation.isValid else {
             errorMessage = passwordValidation.errorMessage ?? "Invalid password."
-            throw CelestiaError.weakPassword
+            throw FitBuddyError.weakPassword
         }
 
         Logger.shared.auth("Changing user password", level: .info)
@@ -1413,7 +1413,7 @@ class AuthService: ObservableObject, AuthServiceProtocol {
         } catch let error as NSError {
             if error.domain == "FIRAuthErrorDomain" && error.code == 17014 {
                 self.requiresReauthentication = true
-                throw CelestiaError.requiresRecentLogin
+                throw FitBuddyError.requiresRecentLogin
             }
             FirebaseErrorMapper.logError(error, context: "Change Password")
             errorMessage = FirebaseErrorMapper.getUserFriendlyMessage(for: error)
@@ -1427,7 +1427,7 @@ class AuthService: ObservableObject, AuthServiceProtocol {
     @MainActor
     func changeEmail(currentPassword: String, newEmail: String) async throws {
         guard let user = Auth.auth().currentUser else {
-            throw CelestiaError.notAuthenticated
+            throw FitBuddyError.notAuthenticated
         }
 
         // Validate new email
@@ -1435,7 +1435,7 @@ class AuthService: ObservableObject, AuthServiceProtocol {
         let emailValidation = ValidationHelper.validateEmail(sanitizedNewEmail)
         guard emailValidation.isValid else {
             errorMessage = emailValidation.errorMessage ?? "Invalid email address."
-            throw CelestiaError.invalidEmail
+            throw FitBuddyError.invalidEmail
         }
 
         Logger.shared.auth("Changing user email", level: .info)
@@ -1454,7 +1454,7 @@ class AuthService: ObservableObject, AuthServiceProtocol {
         } catch let error as NSError {
             if error.domain == "FIRAuthErrorDomain" && error.code == 17014 {
                 self.requiresReauthentication = true
-                throw CelestiaError.requiresRecentLogin
+                throw FitBuddyError.requiresRecentLogin
             }
             FirebaseErrorMapper.logError(error, context: "Change Email")
             errorMessage = FirebaseErrorMapper.getUserFriendlyMessage(for: error)
@@ -1468,7 +1468,7 @@ class AuthService: ObservableObject, AuthServiceProtocol {
     @MainActor
     func sendEmailVerification() async throws {
         guard let user = Auth.auth().currentUser else {
-            throw CelestiaError.notAuthenticated
+            throw FitBuddyError.notAuthenticated
         }
 
         guard !user.isEmailVerified else {
@@ -1497,7 +1497,7 @@ class AuthService: ObservableObject, AuthServiceProtocol {
     @MainActor
     func reloadUser() async throws {
         guard let user = Auth.auth().currentUser else {
-            throw CelestiaError.notAuthenticated
+            throw FitBuddyError.notAuthenticated
         }
 
         try await user.reload()
@@ -1516,13 +1516,13 @@ class AuthService: ObservableObject, AuthServiceProtocol {
     @MainActor
     func requireEmailVerification() async throws {
         guard let user = Auth.auth().currentUser else {
-            throw CelestiaError.notAuthenticated
+            throw FitBuddyError.notAuthenticated
         }
 
         try await user.reload()
 
         guard user.isEmailVerified else {
-            throw CelestiaError.emailNotVerified
+            throw FitBuddyError.emailNotVerified
         }
     }
 
@@ -1552,9 +1552,9 @@ class AuthService: ObservableObject, AuthServiceProtocol {
             if error.domain == "FIRAuthErrorDomain" {
                 switch error.code {
                 case 17045: // Invalid action code (expired or already used)
-                    throw CelestiaError.invalidData
+                    throw FitBuddyError.invalidData
                 case 17999: // Network error
-                    throw CelestiaError.networkError
+                    throw FitBuddyError.networkError
                 default:
                     throw error
                 }

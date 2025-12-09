@@ -1,6 +1,6 @@
 //
 //  VerificationFlowView.swift
-//  Celestia
+//  FitBuddy
 //
 //  Complete verification flow UI (Photo, ID, Background Check)
 //
