@@ -68,7 +68,7 @@ struct PaywallView: View {
                 .font(.title)
                 .fontWeight(.bold)
 
-            Text("Find your perfect match faster with unlimited access")
+            Text("Find your ideal workout partner faster with unlimited access")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
