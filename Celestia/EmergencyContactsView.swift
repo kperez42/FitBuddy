@@ -2,7 +2,7 @@
 //  EmergencyContactsView.swift
 //  FitBuddy
 //
-//  Manage emergency contacts for date safety
+//  Manage emergency contacts for workout safety
 //
 
 import SwiftUI
@@ -59,7 +59,7 @@ struct EmergencyContactsView: View {
                 Text("No Emergency Contacts")
                     .font(.title2.bold())
 
-                Text("Add trusted friends or family who can check on you during dates.")
+                Text("Add trusted friends or family who can check on you during workouts.")
                     .font(.body)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
@@ -128,7 +128,7 @@ struct EmergencyContactsView: View {
                     .font(.headline)
             }
 
-            Text("These contacts can receive your date details and check-in notifications. They won't see your normal app activity.")
+            Text("These contacts can receive your workout details and check-in notifications. They won't see your normal app activity.")
                 .font(.caption)
                 .foregroundColor(.secondary)
         }
@@ -214,9 +214,9 @@ struct EmergencyContactCard: View {
 
             Divider()
 
-            // Date Updates Toggle
+            // Workout Updates Toggle
             Toggle(isOn: Binding(
-                get: { contact.notificationPreferences.receiveScheduledDateAlerts },
+                get: { contact.notificationPreferences.receiveScheduledWorkoutAlerts },
                 set: { _ in
                     Task {
                         await onToggleDateUpdates()
@@ -226,7 +226,7 @@ struct EmergencyContactCard: View {
                 HStack {
                     Image(systemName: "calendar.badge.clock")
                         .foregroundColor(.blue)
-                    Text("Receive Date Updates")
+                    Text("Receive Workout Updates")
                         .font(.subheadline)
                 }
             }
@@ -282,9 +282,9 @@ struct AddEmergencyContactView: View {
                 }
 
                 Section {
-                    Toggle("Can receive date updates", isOn: .constant(true))
+                    Toggle("Can receive workout updates", isOn: .constant(true))
                 } footer: {
-                    Text("This contact will be able to receive your date details and check-in notifications.")
+                    Text("This contact will be able to receive your workout details and check-in notifications.")
                 }
             }
             .navigationTitle("Add Contact")

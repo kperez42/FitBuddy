@@ -422,8 +422,8 @@ class ShareWorkoutViewModel: ObservableObject {
 
             emergencyContacts = snapshot.documents.compactMap { doc in
                 let contact = try? doc.data(as: EmergencyContact.self)
-                // Filter for contacts that have date alerts enabled
-                return contact?.notificationPreferences.receiveScheduledDateAlerts == true ? contact : nil
+                // Filter for contacts that have workout alerts enabled
+                return contact?.notificationPreferences.receiveScheduledWorkoutAlerts == true ? contact : nil
             }
 
             Logger.shared.info("Loaded \(emergencyContacts.count) emergency contacts", category: .general)

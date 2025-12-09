@@ -59,13 +59,13 @@ struct FitBuddyAppShortcuts: AppShortcutsProvider {
         )
 
         AppShortcut(
-            intent: ShareDateDetailsIntent(),
+            intent: ShareWorkoutDetailsIntent(),
             phrases: [
-                "Share my date on \(.applicationName)",
-                "Share date details in \(.applicationName)",
-                "Tell someone about my date on \(.applicationName)"
+                "Share my workout on \(.applicationName)",
+                "Share workout details in \(.applicationName)",
+                "Tell someone about my workout on \(.applicationName)"
             ],
-            shortTitle: "Share Date",
+            shortTitle: "Share Workout",
             systemImageName: "location.circle.fill"
         )
 
@@ -85,7 +85,7 @@ struct FitBuddyAppShortcuts: AppShortcutsProvider {
             phrases: [
                 "Check in on \(.applicationName)",
                 "I'm safe on \(.applicationName)",
-                "Mark date as safe in \(.applicationName)"
+                "Mark workout as safe in \(.applicationName)"
             ],
             shortTitle: "Safety Check-In",
             systemImageName: "checkmark.shield.fill"
@@ -176,48 +176,48 @@ struct ViewPremiumIntent: AppIntent {
     }
 }
 
-// MARK: - Share Date Details Intent
+// MARK: - Share Workout Details Intent
 
 @available(iOS 16.0, *)
-struct ShareDateDetailsIntent: AppIntent {
-    static var title: LocalizedStringResource = "Share Date Details"
-    static var description = IntentDescription("Share your date location and time with emergency contacts")
+struct ShareWorkoutDetailsIntent: AppIntent {
+    static var title: LocalizedStringResource = "Share Workout Details"
+    static var description = IntentDescription("Share your workout location and time with emergency contacts")
     static var openAppWhenRun: Bool = true
 
-    @Parameter(title: "Match Name")
+    @Parameter(title: "Partner Name")
     var matchName: String?
 
     @Parameter(title: "Location")
     var location: String?
 
-    @Parameter(title: "Date Time")
+    @Parameter(title: "Workout Time")
     var dateTime: Date?
 
     static var parameterSummary: some ParameterSummary {
-        Summary("Share date with \(\.$matchName) at \(\.$location)")
+        Summary("Share workout with \(\.$matchName) at \(\.$location)")
     }
 
     @MainActor
     func perform() async throws -> some IntentResult & ProvidesDialog {
         // Track analytics
         AnalyticsManager.shared.logEvent(.appShortcutUsed, parameters: [
-            "shortcut": "share_date_details"
+            "shortcut": "share_workout_details"
         ])
 
         guard let currentUser = AuthService.shared.currentUser else {
             throw AppShortcutError.notAuthenticated
         }
 
-        // If parameters provided, create share date automatically
+        // If parameters provided, create share workout automatically
         if let matchName = matchName, let location = location, let dateTime = dateTime {
             // This would integrate with ShareWorkoutView functionality
             return .result(
-                dialog: IntentDialog("Date details shared with your emergency contacts")
+                dialog: IntentDialog("Workout details shared with your emergency contacts")
             )
         } else {
-            // Open app to share date screen
+            // Open app to share workout screen
             return .result(
-                dialog: IntentDialog("Opening FitBuddy to share your date details")
+                dialog: IntentDialog("Opening FitBuddy to share your workout details")
             )
         }
     }
@@ -273,7 +273,7 @@ struct AddEmergencyContactIntent: AppIntent {
 @available(iOS 16.0, *)
 struct CheckInIntent: AppIntent {
     static var title: LocalizedStringResource = "Safety Check-In"
-    static var description = IntentDescription("Check in to confirm you're safe during a date")
+    static var description = IntentDescription("Check in to confirm you're safe during your workout")
 
     @Parameter(title: "Status Message")
     var statusMessage: String?
@@ -289,11 +289,11 @@ struct CheckInIntent: AppIntent {
             throw AppShortcutError.notAuthenticated
         }
 
-        // This would integrate with DateCheckInManager
+        // This would integrate with WorkoutCheckInManager
         let message = statusMessage ?? "I'm safe"
 
-        // Mark current date as checked in
-        // DateCheckInManager.shared.checkIn(message: message)
+        // Mark current workout as checked in
+        // WorkoutCheckInManager.shared.checkIn(message: message)
 
         return .result(
             dialog: IntentDialog("Check-in recorded. Your emergency contacts have been notified you're safe.")
@@ -362,7 +362,7 @@ class AppShortcutDeepLinkHandler {
         case discover
         case messages
         case premium
-        case shareDate
+        case shareWorkout
         case emergencyContacts
         case checkIn
     }

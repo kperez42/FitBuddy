@@ -270,13 +270,13 @@ enum ContactRelationship: String, Codable, CaseIterable, Hashable {
 // MARK: - Notification Preferences
 
 struct EmergencyNotificationPreferences: Codable, Hashable {
-    var receiveScheduledDateAlerts: Bool = true
+    var receiveScheduledWorkoutAlerts: Bool = true
     var receiveCheckInAlerts: Bool = true
     var receiveEmergencyAlerts: Bool = true
     var receiveMissedCheckInAlerts: Bool = true
 
     var allEnabled: Bool {
-        return receiveScheduledDateAlerts &&
+        return receiveScheduledWorkoutAlerts &&
                receiveCheckInAlerts &&
                receiveEmergencyAlerts &&
                receiveMissedCheckInAlerts

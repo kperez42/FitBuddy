@@ -37,7 +37,7 @@ enum NotificationCategory: String, CaseIterable, Codable {
     var defaultTitle: String {
         switch self {
         case .newMatch:
-            return "New Match!"
+            return "New Workout Partner!"
         case .newMessage:
             return "New Message"
         case .profileView:
@@ -77,7 +77,7 @@ enum NotificationCategory: String, CaseIterable, Codable {
                     title: "Send Message",
                     options: [.authenticationRequired],
                     textInputButtonTitle: "Send",
-                    textInputPlaceholder: "Say hello..."
+                    textInputPlaceholder: "Start the conversation..."
                 ),
                 UNNotificationAction(
                     identifier: "VIEW_MATCH",
@@ -455,24 +455,24 @@ enum NotificationPayload {
 
     private static func randomMatchTitle(name: String) -> String {
         let titles = [
-            "It's a match with \(name)!",
+            "New workout partner: \(name)!",
             "You matched with \(name)!",
-            "\(name) likes you too!",
-            "New match: \(name)",
-            "Sparks flying with \(name)!"
+            "\(name) wants to train with you!",
+            "Partner found: \(name)",
+            "Great match with \(name)! 💪"
         ]
-        return titles.randomElement() ?? "New Match with \(name)!"
+        return titles.randomElement() ?? "New Partner: \(name)!"
     }
 
     private static func randomMatchBody(name: String) -> String {
         let bodies = [
-            "Say hi before someone else does!",
+            "Send a message and plan your first workout!",
             "Start chatting now - don't keep \(name) waiting!",
-            "Your next conversation could change everything.",
+            "Your next training partner is ready to connect.",
             "The first message matters - make it count!",
-            "Break the ice and say hello!"
+            "Break the ice and suggest a workout!"
         ]
-        return bodies.randomElement() ?? "Start a conversation now!"
+        return bodies.randomElement() ?? "Start planning your workout!"
     }
 
     private static func randomProfileViewTitle(name: String) -> String {
@@ -556,7 +556,7 @@ enum NotificationPayload {
         let bodies = [
             "Keep the conversation going!",
             "They're probably checking their phone right now...",
-            "A quick reply keeps the spark alive",
+            "A quick reply keeps the connection alive",
             "Don't leave them on read!",
             "Good things happen when you show up"
         ]
@@ -568,10 +568,10 @@ enum NotificationPayload {
             // Premium users see who liked them
             let titles = [
                 "\(name) likes you!",
-                "\(name) is interested in you",
+                "\(name) is interested in training with you",
                 "You caught \(name)'s attention!",
-                "\(name) wants to meet you",
-                "Someone special likes you: \(name)"
+                "\(name) wants to work out with you",
+                "Someone wants to train with you: \(name)"
             ]
             return titles.randomElement() ?? "\(name) likes you!"
         } else {
@@ -621,7 +621,7 @@ enum NotificationPayload {
 
     private static func dailyDigestTitle(likes: Int, matches: Int, messages: Int) -> String {
         if matches > 0 {
-            return matches == 1 ? "You got a new match!" : "You got \(matches) new matches!"
+            return matches == 1 ? "You got a new workout partner!" : "You got \(matches) new workout partners!"
         } else if likes > 0 {
             return likes == 1 ? "Someone new likes you!" : "\(likes) people like you!"
         } else if messages > 0 {
@@ -629,8 +629,8 @@ enum NotificationPayload {
         } else {
             let titles = [
                 "Your fitness journey awaits!",
-                "New people are nearby",
-                "Time to find your match!",
+                "New training partners nearby",
+                "Time to find your workout buddy!",
                 "Ready to meet someone new?"
             ]
             return titles.randomElement() ?? "Your fitness journey awaits!"
@@ -653,7 +653,7 @@ enum NotificationPayload {
         if parts.isEmpty {
             let bodies = [
                 "New profiles are waiting to be discovered!",
-                "Swipe now - your perfect match could be next!",
+                "Swipe now - your perfect training partner could be next!",
                 "Don't miss out on today's connections",
                 "The more you swipe, the more you match!"
             ]

@@ -628,7 +628,7 @@ struct ConversationRow: View {
                         HStack(spacing: 6) {
                             Image(systemName: "sparkles")
                                 .font(.caption)
-                            Text("New match! Say hi 👋")
+                            Text("New partner! Plan your workout 💪")
                                 .font(.subheadline)
                                 .fontWeight(.medium)
                         }

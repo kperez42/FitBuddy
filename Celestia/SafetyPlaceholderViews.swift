@@ -105,7 +105,7 @@ struct SafetySettingsView: View {
     }
 }
 
-// MARK: - Date Safety Views
+// MARK: - Workout Safety Views
 
 struct SafeDateLocationsView: View {
     @Environment(\.dismiss) var dismiss
@@ -119,7 +119,7 @@ struct SafeDateLocationsView: View {
             Text("Safe Meeting Spots")
                 .font(.title.bold())
 
-            Text("Public places recommended for first dates. Coming soon")
+            Text("Public places recommended for first workouts. Coming soon")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
@@ -130,7 +130,7 @@ struct SafeDateLocationsView: View {
     }
 }
 
-struct DateCheckInView: View {
+struct WorkoutCheckInView: View {
     @Environment(\.dismiss) var dismiss
 
     var body: some View {
@@ -139,16 +139,16 @@ struct DateCheckInView: View {
                 .font(.system(size: 60))
                 .foregroundColor(.orange)
 
-            Text("Date Check-In")
+            Text("Workout Check-In")
                 .font(.title.bold())
 
-            Text("Set reminders during your date. Coming soon")
+            Text("Set reminders during your workout. Coming soon")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal)
         }
-        .navigationTitle("Date Check-In")
+        .navigationTitle("Workout Check-In")
         .navigationBarTitleDisplayMode(.inline)
     }
 }

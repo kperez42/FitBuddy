@@ -465,21 +465,21 @@ struct WelcomeAwarenessSlidesView: View {
         AwarenessSlide(
             icon: "heart.fill",
             title: "Likes & Matches",
-            description: "Tap the heart on profiles you like. When they like you back, it's a match and you can start chatting!",
+            description: "Tap the heart on profiles you like. When they like you back, it's a match and you can start planning workouts!",
             color: .red,
             tips: [
-                "Your matches appear in the Matches tab",
-                "Send a message to start the conversation",
+                "Your workout partners appear in the Matches tab",
+                "Send a message to start planning",
                 "Be genuine and respectful"
             ]
         ),
         AwarenessSlide(
             icon: "message.fill",
             title: "Start Conversations",
-            description: "Once matched, send a message to start getting to know each other better.",
+            description: "Once matched, send a message to start planning your workout together.",
             color: .blue,
             tips: [
-                "Ask about their interests",
+                "Ask about their fitness goals",
                 "Reference something from their profile",
                 "Be yourself and have fun!"
             ]
