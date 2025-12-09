@@ -4149,7 +4149,7 @@ enum ProfileRejectionReason {
             • Social media handles
             • Phone numbers or email addresses
 
-            This app is for genuine connections, not marketing!
+            This app is for genuine fitness partnerships, not marketing!
             """
         case .offensiveContent:
             return """

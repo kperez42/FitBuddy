@@ -180,7 +180,7 @@ struct ProfileEnhancementView: View {
 
                 infoCard(
                     icon: "lightbulb.fill",
-                    text: "Sharing your background helps find compatible matches",
+                    text: "Sharing your background helps find compatible training partners",
                     color: .yellow
                 )
             }
@@ -242,7 +242,7 @@ struct ProfileEnhancementView: View {
 
                 infoCard(
                     icon: "heart.fill",
-                    text: "Lifestyle compatibility leads to stronger connections",
+                    text: "Lifestyle compatibility leads to stronger fitness partnerships",
                     color: .pink
                 )
             }

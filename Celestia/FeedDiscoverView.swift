@@ -625,7 +625,7 @@ struct FeedDiscoverView: View {
                     .font(.title2)
                     .fontWeight(.bold)
 
-                Text("Your profile is being reviewed by our team. This usually takes just a few hours. Once approved, you'll be visible to others and can start making connections!")
+                Text("Your profile is being reviewed by our team. This usually takes just a few hours. Once approved, you'll be visible to others and can start finding workout partners!")
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)

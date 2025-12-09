@@ -387,7 +387,7 @@ struct ProfileRejectionFeedbackView: View {
                 icon: "megaphone.fill",
                 color: .orange,
                 title: "No Self-Promotion",
-                description: "This platform is for genuine connections, not advertising or business."
+                description: "This platform is for genuine fitness partnerships, not advertising or business."
             ))
         }
 

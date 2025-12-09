@@ -567,7 +567,7 @@ extension LegalDocumentView {
                         .fontWeight(.semibold)
 
                     SimpleBulletPoint("The accuracy or reliability of user profiles")
-                    SimpleBulletPoint("That you will find a compatible match")
+                    SimpleBulletPoint("That you will find a compatible training partner")
                     SimpleBulletPoint("Uninterrupted or error-free service")
                     SimpleBulletPoint("The conduct of other users")
                 }
