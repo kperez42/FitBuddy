@@ -336,7 +336,7 @@ struct CurrentUserDetailView: View {
             age: 28,
             gender: "Male",
             workoutPreference: "Women",
-            bio: "Love hiking and coffee. Looking for someone to explore the city with!",
+            bio: "Love hiking and weight training. Looking for a workout partner to stay motivated!",
             location: "San Francisco",
             country: "USA",
             interests: ["Hiking", "Coffee", "Photography", "Travel"],

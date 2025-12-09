@@ -1194,7 +1194,7 @@ struct ZoomablePhotoView: View {
         age: 25,
         gender: "Female",
         workoutPreference: "Men",
-        bio: "Love to travel and learn new languages. Looking for someone to explore the world with!",
+        bio: "Love yoga and HIIT workouts. Looking for a fitness partner to keep each other motivated!",
         location: "Barcelona",
         country: "Spain",
         languages: ["Spanish", "English", "French"],

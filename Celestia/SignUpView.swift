@@ -1111,11 +1111,11 @@ struct SignUpView: View {
     // MARK: - Step 5: Bio
     private let bioPrompts = [
         "I'm happiest when...",
-        "On weekends you'll find me...",
-        "Looking for someone who...",
-        "My friends describe me as...",
-        "I can't live without...",
-        "Let's talk about..."
+        "My ideal workout is...",
+        "Looking for a partner who...",
+        "My fitness goal is...",
+        "I train because...",
+        "Let's workout together..."
     ]
 
     var step5BioContent: some View {

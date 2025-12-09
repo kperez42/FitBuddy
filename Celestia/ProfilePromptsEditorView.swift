@@ -497,7 +497,7 @@ struct ProfilePromptsEditorView: View {
 
 #Preview {
     ProfilePromptsEditorView(prompts: .constant([
-        ProfilePrompt(question: "My ideal Sunday is...", answer: "Brunch with friends, a long walk in the park, and ending the day with a good book and wine."),
-        ProfilePrompt(question: "I'm looking for someone who...", answer: "Can make me laugh, loves adventures, and isn't afraid to be vulnerable.")
+        ProfilePrompt(question: "My ideal workout is...", answer: "Morning strength training followed by cardio. I love the energy of the gym early in the day."),
+        ProfilePrompt(question: "I'm looking for a workout partner who...", answer: "Can push me to go further, loves trying new exercises, and keeps workouts fun and challenging.")
     ]))
 }
