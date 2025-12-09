@@ -617,8 +617,8 @@ struct PartnerPickerView: View {
                         dismiss()
 
                         // Track analytics
-                        AnalyticsManager.shared.logEvent(.matchSelected, parameters: [
-                            "match_id": match.id ?? "",
+                        AnalyticsManager.shared.logEvent(.partnerSelected, parameters: [
+                            "partner_id": match.id ?? "",
                             "source": "share_workout"
                         ])
                     }

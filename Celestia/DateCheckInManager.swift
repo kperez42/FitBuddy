@@ -1,28 +1,28 @@
 //
-//  DateCheckInManager.swift
+//  WorkoutCheckInManager.swift
 //  FitBuddy
 //
-//  Manages date check-in and safety features for in-person meetups
+//  Manages workout check-in and safety features for in-person fitness meetups
 //
 
 import Foundation
 import Combine
 import CoreLocation
 
-// MARK: - Date Check-In Manager
+// MARK: - Workout Check-In Manager
 
 @MainActor
-class DateCheckInManager: ObservableObject {
+class WorkoutCheckInManager: ObservableObject {
 
     // MARK: - Singleton
 
-    static let shared = DateCheckInManager()
+    static let shared = WorkoutCheckInManager()
 
     // MARK: - Published Properties
 
-    @Published var activeCheckIns: [DateCheckIn] = []
-    @Published var scheduledCheckIns: [DateCheckIn] = []
-    @Published var pastCheckIns: [DateCheckIn] = []
+    @Published var activeCheckIns: [WorkoutCheckIn] = []
+    @Published var scheduledCheckIns: [WorkoutCheckIn] = []
+    @Published var pastCheckIns: [WorkoutCheckIn] = []
     @Published var hasActiveCheckIn: Bool = false
 
     // MARK: - Properties
@@ -34,22 +34,22 @@ class DateCheckInManager: ObservableObject {
 
     private init() {
         loadCheckIns()
-        Logger.shared.info("DateCheckInManager initialized", category: .general)
+        Logger.shared.info("WorkoutCheckInManager initialized", category: .general)
     }
 
     // MARK: - Check-In Management
 
-    /// Schedule a date check-in
+    /// Schedule a workout check-in
     func scheduleCheckIn(
-        matchId: String,
-        matchName: String,
+        partnerId: String,
+        partnerName: String,
         location: String,
         scheduledTime: Date,
         checkInTime: Date,
         emergencyContacts: [EmergencyContact]
-    ) async throws -> DateCheckIn {
+    ) async throws -> WorkoutCheckIn {
 
-        Logger.shared.info("Scheduling check-in for match: \(matchName)", category: .general)
+        Logger.shared.info("Scheduling check-in for workout partner: \(partnerName)", category: .general)
 
         // Validate times
         guard scheduledTime > Date() else {
@@ -61,10 +61,10 @@ class DateCheckInManager: ObservableObject {
         }
 
         // Create check-in
-        let checkIn = DateCheckIn(
+        let checkIn = WorkoutCheckIn(
             id: UUID().uuidString,
-            matchId: matchId,
-            matchName: matchName,
+            partnerId: partnerId,
+            partnerName: partnerName,
             location: location,
             scheduledTime: scheduledTime,
             checkInTime: checkInTime,
@@ -80,8 +80,8 @@ class DateCheckInManager: ObservableObject {
         try await scheduleCheckInNotifications(for: checkIn)
 
         // Track analytics
-        AnalyticsManager.shared.logEvent(.dateCheckInScheduled, parameters: [
-            "match_id": matchId,
+        AnalyticsManager.shared.logEvent(.workoutCheckInScheduled, parameters: [
+            "partner_id": partnerId,
             "scheduled_time": scheduledTime.timeIntervalSince1970
         ])
 
@@ -108,10 +108,10 @@ class DateCheckInManager: ObservableObject {
         startMonitoring(checkIn: checkIn)
 
         // Notify emergency contacts
-        await notifyEmergencyContacts(checkIn: checkIn, message: "Check-in started for date with \(checkIn.matchName)")
+        await notifyEmergencyContacts(checkIn: checkIn, message: "Check-in started for workout with \(checkIn.partnerName)")
 
         // Track analytics
-        AnalyticsManager.shared.logEvent(.dateCheckInStarted, parameters: [
+        AnalyticsManager.shared.logEvent(.workoutCheckInStarted, parameters: [
             "check_in_id": checkInId
         ])
 
@@ -139,7 +139,7 @@ class DateCheckInManager: ObservableObject {
         await notifyEmergencyContacts(checkIn: checkIn, message: "Check-in completed successfully")
 
         // Track analytics
-        AnalyticsManager.shared.logEvent(.dateCheckInCompleted, parameters: [
+        AnalyticsManager.shared.logEvent(.workoutCheckInCompleted, parameters: [
             "check_in_id": checkInId,
             "duration": checkIn.completedAt?.timeIntervalSince(checkIn.activatedAt ?? Date()) ?? 0
         ])
@@ -203,7 +203,7 @@ class DateCheckInManager: ObservableObject {
 
     // MARK: - Monitoring
 
-    private func startMonitoring(checkIn: DateCheckIn) {
+    private func startMonitoring(checkIn: WorkoutCheckIn) {
         // Set up timer to check if user checks in on time
         let timer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { [weak self] _ in
             Task { @MainActor [weak self] in
@@ -219,7 +219,7 @@ class DateCheckInManager: ObservableObject {
         checkInTimers.removeValue(forKey: checkInId)
     }
 
-    private func checkCheckInStatus(checkIn: DateCheckIn) async {
+    private func checkCheckInStatus(checkIn: WorkoutCheckIn) async {
         // Check if check-in time has passed
         guard Date() > checkIn.checkInTime else { return }
 
@@ -230,7 +230,7 @@ class DateCheckInManager: ObservableObject {
             // Send warning notification
             await notifyEmergencyContacts(
                 checkIn: checkIn,
-                message: "⚠️ Check-in overdue for date with \(checkIn.matchName)"
+                message: "⚠️ Check-in overdue for workout with \(checkIn.partnerName)"
             )
 
             // Trigger emergency after grace period
@@ -243,25 +243,25 @@ class DateCheckInManager: ObservableObject {
 
     // MARK: - Notifications
 
-    private func scheduleCheckInNotifications(for checkIn: DateCheckIn) async throws {
-        // Schedule reminder before date
+    private func scheduleCheckInNotifications(for checkIn: WorkoutCheckIn) async throws {
+        // Schedule reminder before workout
         // Schedule check-in reminder
         // In production, use UNUserNotificationCenter
         Logger.shared.debug("Scheduled notifications for check-in: \(checkIn.id)", category: .general)
     }
 
-    private func notifyEmergencyContacts(checkIn: DateCheckIn, message: String) async {
+    private func notifyEmergencyContacts(checkIn: WorkoutCheckIn, message: String) async {
         for contact in checkIn.emergencyContacts {
             // In production, send SMS or call emergency contacts
             Logger.shared.info("Notifying emergency contact: \(contact.name)", category: .general)
         }
     }
 
-    private func sendEmergencyAlerts(checkIn: DateCheckIn) async {
+    private func sendEmergencyAlerts(checkIn: WorkoutCheckIn) async {
         // Send emergency SMS/calls to all contacts
-        // Include location, match info, and emergency details
+        // Include location, workout partner info, and emergency details
         for contact in checkIn.emergencyContacts {
-            Logger.shared.warning("EMERGENCY: Notifying \(contact.name) about \(checkIn.matchName)", category: .general)
+            Logger.shared.warning("EMERGENCY: Notifying \(contact.name) about \(checkIn.partnerName)", category: .general)
         }
 
         // In production, also:
@@ -292,12 +292,12 @@ class DateCheckInManager: ObservableObject {
     }
 }
 
-// MARK: - Date Check-In Model
+// MARK: - Workout Check-In Model
 
-struct DateCheckIn: Identifiable, Codable {
+struct WorkoutCheckIn: Identifiable, Codable {
     let id: String
-    let matchId: String
-    let matchName: String
+    let partnerId: String
+    let partnerName: String
     let location: String
     let scheduledTime: Date
     let checkInTime: Date

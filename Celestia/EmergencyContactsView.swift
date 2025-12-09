@@ -436,7 +436,7 @@ class EmergencyContactsViewModel: ObservableObject {
                     "relationship": contact.relationship.rawValue,
                     "addedAt": Timestamp(date: contact.addedAt),
                     "notificationPreferences": [
-                        "receiveScheduledDateAlerts": contact.notificationPreferences.receiveScheduledDateAlerts,
+                        "receiveScheduledWorkoutAlerts": contact.notificationPreferences.receiveScheduledWorkoutAlerts,
                         "receiveCheckInAlerts": contact.notificationPreferences.receiveCheckInAlerts,
                         "receiveEmergencyAlerts": contact.notificationPreferences.receiveEmergencyAlerts,
                         "receiveMissedCheckInAlerts": contact.notificationPreferences.receiveMissedCheckInAlerts
@@ -480,13 +480,13 @@ class EmergencyContactsViewModel: ObservableObject {
         guard let index = contacts.firstIndex(where: { $0.id == contact.id }) else { return }
 
         var updatedContact = contact
-        updatedContact.notificationPreferences.receiveScheduledDateAlerts.toggle()
+        updatedContact.notificationPreferences.receiveScheduledWorkoutAlerts.toggle()
 
         do {
             try await db.collection("emergency_contacts")
                 .document(contact.id)
                 .updateData([
-                    "notificationPreferences.receiveScheduledDateAlerts": updatedContact.notificationPreferences.receiveScheduledDateAlerts
+                    "notificationPreferences.receiveScheduledWorkoutAlerts": updatedContact.notificationPreferences.receiveScheduledWorkoutAlerts
                 ])
 
             contacts[index] = updatedContact

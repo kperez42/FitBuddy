@@ -512,7 +512,7 @@ struct WelcomeAwarenessSlidesView: View {
             description: "Your safety is our priority. We review all profiles and provide tools to report inappropriate behavior.",
             color: .orange,
             tips: [
-                "Meet in public places for first dates",
+                "Meet in public places for first workouts",
                 "Tell a friend about your plans",
                 "Trust your instincts always",
                 "Report and block suspicious accounts"

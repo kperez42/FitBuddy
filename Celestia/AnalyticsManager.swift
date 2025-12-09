@@ -31,10 +31,10 @@ enum AnalyticsEvent: String {
     case emergencyContactAdded = "emergency_contact_added"
     case emergencyContactRemoved = "emergency_contact_removed"
 
-    // Date Check-ins
-    case dateCheckInScheduled = "date_checkin_scheduled"
-    case dateCheckInStarted = "date_checkin_started"
-    case dateCheckInCompleted = "date_checkin_completed"
+    // Workout Check-ins
+    case workoutCheckInScheduled = "workout_checkin_scheduled"
+    case workoutCheckInStarted = "workout_checkin_started"
+    case workoutCheckInCompleted = "workout_checkin_completed"
 
     // Filters & Search
     case filterPresetSaved = "filter_preset_saved"
@@ -166,11 +166,11 @@ enum AnalyticsEvent: String {
     case settingsOpened = "settings_opened"
     case helpDocumentViewed = "help_document_viewed"
 
-    // Match Picker & Date Sharing
-    case matchPickerOpened = "match_picker_opened"
-    case matchSelected = "match_selected"
-    case dateLocationAdded = "date_location_added"
-    case dateTimeScheduled = "date_time_scheduled"
+    // Partner Picker & Workout Sharing
+    case partnerPickerOpened = "partner_picker_opened"
+    case partnerSelected = "partner_selected"
+    case workoutLocationAdded = "workout_location_added"
+    case workoutTimeScheduled = "workout_time_scheduled"
 }
 
 // MARK: - Analytics Manager

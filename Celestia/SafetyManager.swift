@@ -24,7 +24,7 @@ class SafetyManager: ObservableObject {
     let fakeProfileDetector = FakeProfileDetector.shared
     let scammerDetector = ScammerDetector.shared
     let reportingManager = ReportingManager.shared
-    let checkInManager = DateCheckInManager.shared
+    let checkInManager = WorkoutCheckInManager.shared
     let emergencyContactManager = EmergencyContactManager.shared
 
     // MARK: - Published Properties
