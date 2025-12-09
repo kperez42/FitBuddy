@@ -651,9 +651,9 @@ struct FeedDiscoverView: View {
                     }
 
                     HStack(spacing: 10) {
-                        Image(systemName: "heart.circle")
+                        Image(systemName: "figure.run.circle")
                             .foregroundColor(.gray.opacity(0.4))
-                        Text("Start matching")
+                        Text("Start finding workout partners")
                             .font(.subheadline)
                             .foregroundColor(.gray)
                         Spacer()

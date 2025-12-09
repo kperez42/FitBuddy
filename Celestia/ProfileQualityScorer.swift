@@ -376,9 +376,9 @@ class ProfileQualityScorer: ObservableObject {
     func getQualityLevel(for score: Int) -> (level: String, color: Color, message: String) {
         switch score {
         case 0..<30:
-            return ("Incomplete", .red, "Complete your profile to start matching")
+            return ("Incomplete", .red, "Complete your profile to start finding workout partners")
         case 30..<50:
-            return ("Basic", .orange, "Add more details to improve your matches")
+            return ("Basic", .orange, "Add more details to improve your partner recommendations")
         case 50..<70:
             return ("Good", .yellow, "You're on the right track!")
         case 70..<85:

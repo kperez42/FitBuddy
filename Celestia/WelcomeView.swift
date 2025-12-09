@@ -26,9 +26,9 @@ struct WelcomeView: View {
     @State private var showPrivacyPolicy = false
 
     let features = [
-        Feature(icon: "heart.circle.fill", title: "Find Your Match", description: "Meet amazing people near you"),
-        Feature(icon: "heart.text.square.fill", title: "Smart Matching", description: "AI-powered compatibility algorithm"),
-        Feature(icon: "message.fill", title: "Real-Time Chat", description: "Instant messaging with your matches")
+        Feature(icon: "figure.run.circle.fill", title: "Find Workout Partners", description: "Connect with fitness enthusiasts near you"),
+        Feature(icon: "heart.text.square.fill", title: "Smart Matching", description: "AI-powered fitness compatibility algorithm"),
+        Feature(icon: "message.fill", title: "Real-Time Chat", description: "Instant messaging with your training partners")
     ]
     
     var body: some View {
