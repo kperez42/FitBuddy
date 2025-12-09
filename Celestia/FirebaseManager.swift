@@ -2,7 +2,7 @@
 //  FirebaseManager.swift
 //  FitBuddy
 //
-//  Dating app for international connections
+//  Fitness partner matching app
 //
 
 import Foundation

@@ -42,7 +42,7 @@ struct SearchFilterView: View {
                     // Lifestyle
                     lifestyleSection
 
-                    // Relationship
+                    // Fitness Goals
                     relationshipSection
 
                     // Preferences
@@ -337,14 +337,14 @@ struct SearchFilterView: View {
         }
     }
 
-    // MARK: - Relationship Section
+    // MARK: - Fitness Goals Section
 
     private var relationshipSection: some View {
-        FilterSection(title: "Relationship Goals", icon: "heart.circle.fill") {
+        FilterSection(title: "Fitness Goals", icon: "figure.run.circle.fill") {
             VStack(spacing: 16) {
                 MultiSelectMenu(
                     title: "Fitness Goal",
-                    options: RelationshipGoal.allCases,
+                    options: FitnessGoal.allCases,
                     selections: $filter.fitnessGoals,
                     displayName: { $0.displayName }
                 )

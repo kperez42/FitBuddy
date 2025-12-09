@@ -198,7 +198,7 @@ class SearchManager: ObservableObject {
             }
         }
 
-        // Relationship goals filter
+        // Fitness goals filter
         if !filter.fitnessGoals.isEmpty,
            let profileGoal = profile.fitnessGoal {
             if !filter.fitnessGoals.contains(profileGoal) {
@@ -228,7 +228,7 @@ struct UserProfile: Identifiable, Codable {
     let heightInInches: Int?
     let education: EducationLevel?
     let occupation: String?
-    let fitnessGoal: RelationshipGoal?
+    let fitnessGoal: FitnessGoal?
     let zodiacSign: ZodiacSign?
     let ethnicity: Ethnicity?
     let religion: Religion?
@@ -266,7 +266,7 @@ struct UserProfile: Identifiable, Codable {
         }
 
         if let goalRaw = data["fitnessGoal"] as? String {
-            self.fitnessGoal = RelationshipGoal(rawValue: goalRaw)
+            self.fitnessGoal = FitnessGoal(rawValue: goalRaw)
         } else {
             self.fitnessGoal = nil
         }

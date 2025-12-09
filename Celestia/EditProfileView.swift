@@ -1220,7 +1220,7 @@ struct EditProfileView: View {
 
     private var preferencesSection: some View {
         VStack(spacing: 20) {
-            SectionHeader(icon: "heart.fill", title: "Dating Preferences", color: .pink)
+            SectionHeader(icon: "figure.run", title: "Fitness Preferences", color: .green)
 
             VStack(alignment: .leading, spacing: 8) {
                 Text("Fitness Goal")
@@ -1427,9 +1427,9 @@ struct EditProfileView: View {
                         }
                     }
 
-                    // Relationship Goal
+                    // Fitness Goal
                     VStack(alignment: .leading, spacing: 8) {
-                        Label("Looking For", systemImage: "heart.circle")
+                        Label("Fitness Goal", systemImage: "figure.run")
                             .font(.caption)
                             .fontWeight(.semibold)
                             .foregroundColor(.secondary)
@@ -1854,14 +1854,14 @@ struct EditProfileView: View {
                 .cornerRadius(12)
             }
 
-            // Relationship Goal
+            // Fitness Goal
             VStack(alignment: .leading, spacing: 8) {
-                Text("Relationship Goal")
+                Text("Fitness Goal")
                     .font(.subheadline)
                     .fontWeight(.semibold)
                     .foregroundColor(.secondary)
 
-                Picker("Relationship Goal", selection: Binding(
+                Picker("Fitness Goal", selection: Binding(
                     get: { fitnessGoal ?? "Prefer not to say" },
                     set: { fitnessGoal = $0 == "Prefer not to say" ? nil : $0 }
                 )) {

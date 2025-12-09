@@ -1364,12 +1364,12 @@ struct OnboardingView: View {
                 }
 
                 VStack(spacing: 20) {
-                    // Relationship Goal
+                    // Fitness Goal
                     VStack(alignment: .leading, spacing: 12) {
                         HStack(spacing: 8) {
-                            Image(systemName: "heart.text.square.fill")
-                                .foregroundColor(.pink)
-                            Text("What are you looking for?")
+                            Image(systemName: "figure.run.circle.fill")
+                                .foregroundColor(.green)
+                            Text("What's your fitness goal?")
                                 .font(.headline)
                         }
 
