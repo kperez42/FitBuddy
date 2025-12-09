@@ -192,12 +192,12 @@ struct EditProfileView: View {
                         // Bio - self expression
                         aboutMeSection
 
-                        // SECTION 4: Dating Preferences
+                        // SECTION 4: Fitness Preferences
                         // Looking For, Age Range - what they want
                         preferencesSection
 
                         // SECTION 5: Personal Details
-                        // Height, Education, Religion, Relationship Goal
+                        // Height, Education, Religion, Fitness Goals
                         personalDetailsSection
 
                         // SECTION 6: Lifestyle Habits
