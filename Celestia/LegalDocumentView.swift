@@ -754,7 +754,7 @@ extension LegalDocumentView {
             LegalSection(title: "Be Authentic") {
                 VStack(alignment: .leading, spacing: 8) {
                     SimpleBulletPoint("Use your real name and recent photos")
-                    SimpleBulletPoint("Be honest about your age, relationship status, and intentions")
+                    SimpleBulletPoint("Be honest about your age, fitness level, and intentions")
                     SimpleBulletPoint("Don't impersonate others or create fake profiles")
                     SimpleBulletPoint("Represent yourself accurately in your bio and interests")
                 }

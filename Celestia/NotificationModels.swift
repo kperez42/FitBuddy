@@ -631,7 +631,7 @@ enum NotificationPayload {
                 "Your fitness journey awaits!",
                 "New training partners nearby",
                 "Time to find your workout buddy!",
-                "Ready to meet someone new?"
+                "Ready to crush your next workout?"
             ]
             return titles.randomElement() ?? "Your fitness journey awaits!"
         }
