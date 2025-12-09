@@ -114,7 +114,7 @@ class ReferralManager: ObservableObject {
                 Logger.shared.error("Failed to generate 8-character code", category: .referral)
                 continue
             }
-            let fullCode = "CEL-\(code)"
+            let fullCode = "FIT-\(code)"
 
             // Check if code exists in dedicated referralCodes collection (faster lookup at scale)
             // This collection is indexed by code for O(1) lookups
@@ -136,7 +136,7 @@ class ReferralManager: ObservableObject {
         // If we still can't generate a unique code after 5 attempts, use userId hash + timestamp
         let timestamp = Int(Date().timeIntervalSince1970)
         let hashSuffix = String(userId.hashValue).suffix(4)
-        let fallbackCode = "CEL-\(hashSuffix)\(String(timestamp).suffix(4))"
+        let fallbackCode = "FIT-\(hashSuffix)\(String(timestamp).suffix(4))"
 
         // Reserve the fallback code
         try await db.collection("referralCodes").document(fallbackCode).setData([

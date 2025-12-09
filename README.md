@@ -1,6 +1,6 @@
-# Celestia
+# FitBuddy
 
-A modern iOS dating application built with SwiftUI and Firebase, featuring swipe-based matching, real-time messaging, and premium subscriptions.
+A modern iOS fitness partner matching application built with SwiftUI and Firebase, featuring fitness-based partner discovery, real-time messaging, and premium subscriptions.
 
 ## Table of Contents
 
@@ -17,12 +17,12 @@ A modern iOS dating application built with SwiftUI and Firebase, featuring swipe
 
 ## Features
 
-### Core Dating Features
-- **User Discovery** - Swipe-based matching system with advanced filters (age, gender, location, distance)
-- **Profile System** - Multi-photo profiles with bio, interests, languages, and personality prompts
-- **Matching System** - Mutual likes create instant matches
-- **Real-time Messaging** - Live chat with match tracking, unread counts, and typing indicators
-- **Interests/Likes** - Send likes to users with optional messages
+### Core Fitness Partner Features
+- **User Discovery** - Fitness-based partner matching with advanced filters (fitness level, workout types, location, availability)
+- **Profile System** - Multi-photo profiles with bio, fitness goals, workout preferences, and gym locations
+- **Matching System** - Mutual interest creates instant workout partner matches
+- **Real-time Messaging** - Live chat with partner tracking, unread counts, and typing indicators
+- **Interests/Likes** - Send training interest to users with optional messages
 
 ### Advanced Features
 - **Photo Verification** - Face detection using Apple's Vision framework
@@ -57,8 +57,8 @@ A modern iOS dating application built with SwiftUI and Firebase, featuring swipe
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/Celestia.git
-cd Celestia
+git clone https://github.com/yourusername/FitBuddy.git
+cd FitBuddy
 ```
 
 ### 2. Install Dependencies
@@ -67,11 +67,11 @@ If using CocoaPods:
 
 ```bash
 pod install
-open Celestia.xcworkspace
+open FitBuddy.xcworkspace
 ```
 
 If using Swift Package Manager (SPM):
-- Open `Celestia.xcodeproj` in Xcode
+- Open `FitBuddy.xcodeproj` in Xcode
 - Dependencies should auto-resolve
 
 ### 3. Configure Firebase
@@ -81,7 +81,7 @@ See [Firebase Configuration](#firebase-configuration) section below for detailed
 ### 4. Configure Signing
 
 - Open the project in Xcode
-- Select the Celestia target
+- Select the FitBuddy target
 - Go to "Signing & Capabilities"
 - Select your development team
 - Xcode will automatically create provisioning profiles
@@ -103,8 +103,8 @@ See [Firebase Configuration](#firebase-configuration) section below for detailed
 
 #### 1. Add Configuration File
 
-- Place `GoogleService-Info.plist` in the root of the Celestia Xcode project
-- Make sure it's added to the Celestia target
+- Place `GoogleService-Info.plist` in the root of the FitBuddy Xcode project
+- Make sure it's added to the FitBuddy target
 
 #### 2. Enable Firebase Services
 
@@ -179,7 +179,7 @@ Email verification is required for all users. See the comprehensive guide: [FIRE
 
 ## Architecture
 
-Celestia follows the **MVVM (Model-View-ViewModel)** architecture pattern with a service layer for business logic.
+FitBuddy follows the **MVVM (Model-View-ViewModel)** architecture pattern with a service layer for business logic.
 
 ### Architecture Diagram
 
@@ -311,7 +311,7 @@ Celestia follows the **MVVM (Model-View-ViewModel)** architecture pattern with a
 
 ## Testing
 
-Celestia includes comprehensive unit tests for core services.
+FitBuddy includes comprehensive unit tests for core services.
 
 ### Running Tests
 
@@ -320,7 +320,7 @@ Celestia includes comprehensive unit tests for core services.
 Command + U in Xcode
 
 # Or via command line
-xcodebuild test -workspace Celestia.xcworkspace -scheme Celestia -destination 'platform=iOS Simulator,name=iPhone 15'
+xcodebuild test -workspace FitBuddy.xcworkspace -scheme FitBuddy -destination 'platform=iOS Simulator,name=iPhone 15'
 ```
 
 ### Test Coverage
@@ -336,7 +336,7 @@ The following services have comprehensive unit tests:
 ### Test Files
 
 ```
-CelestiaTests/
+FitBuddyTests/
 ├── AuthServiceTests.swift          (56 tests)
 ├── MatchServiceTests.swift         (32 tests)
 ├── ContentModeratorTests.swift     (45 tests)
@@ -350,7 +350,7 @@ Use Swift Testing framework:
 
 ```swift
 import Testing
-@testable import Celestia
+@testable import FitBuddy
 
 @Suite("My Feature Tests")
 struct MyFeatureTests {
@@ -377,7 +377,7 @@ struct MyFeatureTests {
 
 ### StoreKit 2 Implementation
 
-Celestia uses StoreKit 2 for in-app purchases with:
+FitBuddy uses StoreKit 2 for in-app purchases with:
 
 - **Transaction Verification** - Automatic verification of purchases
 - **Subscription Status** - Real-time subscription state tracking
@@ -396,8 +396,8 @@ Celestia uses StoreKit 2 for in-app purchases with:
 ## Project Structure
 
 ```
-Celestia/
-├── CelestiaApp.swift                 # App entry point
+FitBuddy/
+├── FitBuddyApp.swift                 # App entry point
 ├── ContentView.swift                 # Root view with auth routing
 │
 ├── Models/                          # Data models
@@ -456,7 +456,7 @@ Celestia/
 │   ├── GoogleService-Info.plist
 │   └── Info.plist
 │
-├── CelestiaTests/                   # Unit tests
+├── FitBuddyTests/                   # Unit tests
 │   ├── AuthServiceTests.swift
 │   ├── MatchServiceTests.swift
 │   ├── ContentModeratorTests.swift
@@ -503,7 +503,7 @@ do {
     try await someOperation()
 } catch {
     print("❌ Operation failed: \(error.localizedDescription)")
-    throw CelestiaError.from(error)
+    throw FitBuddyError.from(error)
 }
 
 // Bad
@@ -639,7 +639,7 @@ refactor: Extract StoreManager to separate file
 
 ### Reporting Security Issues
 
-Please email security concerns to: support@celestia.app
+Please email security concerns to: support@fitbuddy.app
 
 **Do not** open public issues for security vulnerabilities.
 
@@ -678,7 +678,7 @@ Please email security concerns to: support@celestia.app
 - [ ] Group chats
 - [ ] Advanced AI matching algorithm
 - [ ] Video profile support
-- [ ] In-app date planning tools
+- [ ] In-app workout planning tools
 
 ### Known Issues
 
@@ -696,13 +696,13 @@ Please email security concerns to: support@celestia.app
 
 ### Contact
 
-- **Email**: support@celestia.app
-- **Website**: https://celestia.app
-- **Twitter**: @celestiaapp
+- **Email**: support@fitbuddy.app
+- **Website**: https://fitbuddy.app
+- **Twitter**: @fitbuddyapp
 
 ## License
 
-Copyright © 2025 Celestia. All rights reserved.
+Copyright © 2025 FitBuddy. All rights reserved.
 
 ## Acknowledgments
 
@@ -712,6 +712,6 @@ Copyright © 2025 Celestia. All rights reserved.
 
 ---
 
-**Built with ❤️ using SwiftUI and Firebase**
+**Built with 💪 using SwiftUI and Firebase**
 
 *Last Updated: January 2025*

@@ -57,7 +57,7 @@ export default function LoginPage() {
     >
       <Paper sx={{ p: 4, maxWidth: 400, width: '100%' }}>
         <Typography variant="h4" gutterBottom align="center">
-          Celestia Admin
+          FitBuddy Admin
         </Typography>
         <Typography variant="body2" color="text.secondary" align="center" mb={3}>
           Sign in to access the admin dashboard

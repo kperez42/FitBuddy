@@ -1,5 +1,5 @@
 rules_version = '2';
-// Celestia Firestore Security Rules - Updated 2024-11-30
+// FitBuddy Firestore Security Rules - Updated 2025-12-09
 service cloud.firestore {
   match /databases/{database}/documents {
 
@@ -21,7 +21,7 @@ service cloud.firestore {
       return request.auth != null &&
         (request.auth.token.email == 'perezkevin640@gmail.com' ||
          request.auth.token.email == 'Perezkevin640@gmail.com' ||
-         request.auth.token.email == 'admin@celestia.app');
+         request.auth.token.email == 'admin@fitbuddy.app');
     }
 
     function isValidString(text, minLength, maxLength) {
@@ -497,7 +497,7 @@ service cloud.firestore {
     match /pendingVerifications/{verificationId} {
       // Admin helper function
       function isAdmin() {
-        return request.auth.token.email in ['perezkevin640@gmail.com', 'admin@celestia.app'];
+        return request.auth.token.email in ['perezkevin640@gmail.com', 'admin@fitbuddy.app'];
       }
 
       // Users can read their own verification status, admin can read all
@@ -528,7 +528,7 @@ service cloud.firestore {
     match /moderation_queue/{itemId} {
       // Admin helper function for moderation collections
       function isModerator() {
-        return request.auth.token.email in ['perezkevin640@gmail.com', 'admin@celestia.app'];
+        return request.auth.token.email in ['perezkevin640@gmail.com', 'admin@fitbuddy.app'];
       }
 
       // Only admin can read moderation queue
@@ -541,7 +541,7 @@ service cloud.firestore {
     // Flagged Content Collection (content moderation)
     match /flagged_content/{contentId} {
       function isModerator() {
-        return request.auth.token.email in ['perezkevin640@gmail.com', 'admin@celestia.app'];
+        return request.auth.token.email in ['perezkevin640@gmail.com', 'admin@fitbuddy.app'];
       }
 
       allow read: if isAuthenticated() && isModerator();
@@ -551,7 +551,7 @@ service cloud.firestore {
     // User Warnings Collection
     match /user_warnings/{warningId} {
       function isModerator() {
-        return request.auth.token.email in ['perezkevin640@gmail.com', 'admin@celestia.app'];
+        return request.auth.token.email in ['perezkevin640@gmail.com', 'admin@fitbuddy.app'];
       }
 
       // Users can read their own warnings, admin can read all
@@ -565,7 +565,7 @@ service cloud.firestore {
     // Admin Audit Logs Collection
     match /admin_audit_logs/{logId} {
       function isModerator() {
-        return request.auth.token.email in ['perezkevin640@gmail.com', 'admin@celestia.app'];
+        return request.auth.token.email in ['perezkevin640@gmail.com', 'admin@fitbuddy.app'];
       }
 
       // Only admin can read audit logs
@@ -581,7 +581,7 @@ service cloud.firestore {
     // Admin Alerts Collection
     match /admin_alerts/{alertId} {
       function isModerator() {
-        return request.auth.token.email in ['perezkevin640@gmail.com', 'admin@celestia.app'];
+        return request.auth.token.email in ['perezkevin640@gmail.com', 'admin@fitbuddy.app'];
       }
 
       allow read: if isAuthenticated() && isModerator();
@@ -592,7 +592,7 @@ service cloud.firestore {
     // Fraud Logs Collection
     match /fraud_logs/{logId} {
       function isModerator() {
-        return request.auth.token.email in ['perezkevin640@gmail.com', 'admin@celestia.app'];
+        return request.auth.token.email in ['perezkevin640@gmail.com', 'admin@fitbuddy.app'];
       }
 
       allow read: if isAuthenticated() && isModerator();
@@ -603,7 +603,7 @@ service cloud.firestore {
     // Flagged Transactions Collection
     match /flagged_transactions/{transactionId} {
       function isModerator() {
-        return request.auth.token.email in ['perezkevin640@gmail.com', 'admin@celestia.app'];
+        return request.auth.token.email in ['perezkevin640@gmail.com', 'admin@fitbuddy.app'];
       }
 
       allow read: if isAuthenticated() && isModerator();
@@ -614,7 +614,7 @@ service cloud.firestore {
     // Security Logs Collection
     match /security_logs/{logId} {
       function isModerator() {
-        return request.auth.token.email in ['perezkevin640@gmail.com', 'admin@celestia.app'];
+        return request.auth.token.email in ['perezkevin640@gmail.com', 'admin@fitbuddy.app'];
       }
 
       allow read: if isAuthenticated() && isModerator();
@@ -625,7 +625,7 @@ service cloud.firestore {
     // Purchases Collection
     match /purchases/{purchaseId} {
       function isModerator() {
-        return request.auth.token.email in ['perezkevin640@gmail.com', 'admin@celestia.app'];
+        return request.auth.token.email in ['perezkevin640@gmail.com', 'admin@fitbuddy.app'];
       }
 
       // Users can read their own purchases, admin can read all
@@ -646,7 +646,7 @@ service cloud.firestore {
     // Refund History Collection
     match /refund_history/{refundId} {
       function isModerator() {
-        return request.auth.token.email in ['perezkevin640@gmail.com', 'admin@celestia.app'];
+        return request.auth.token.email in ['perezkevin640@gmail.com', 'admin@fitbuddy.app'];
       }
 
       // Users can read their own refunds, admin can read all
@@ -704,7 +704,7 @@ service cloud.firestore {
     // Data Subject Requests Collection (GDPR)
     match /dataSubjectRequests/{requestId} {
       function isModerator() {
-        return request.auth.token.email in ['perezkevin640@gmail.com', 'admin@celestia.app'];
+        return request.auth.token.email in ['perezkevin640@gmail.com', 'admin@fitbuddy.app'];
       }
 
       // Users can read their own requests, admin can read all

@@ -175,6 +175,30 @@ class DiscoveryFilters: ObservableObject {
             }
         }
 
+        // Fitness level filter
+        if !fitnessLevels.isEmpty {
+            let userFitnessLevel = user.fitnessLevel
+            if !fitnessLevels.contains(userFitnessLevel) {
+                return false
+            }
+        }
+
+        // Workout types filter (user must have at least one matching workout type)
+        if !workoutTypes.isEmpty {
+            let userWorkoutTypes = Set(user.workoutTypes)
+            if workoutTypes.intersection(userWorkoutTypes).isEmpty {
+                return false
+            }
+        }
+
+        // Preferred workout times filter (user must have at least one matching time)
+        if !preferredWorkoutTimes.isEmpty {
+            let userTimes = Set(user.preferredWorkoutTimes)
+            if preferredWorkoutTimes.intersection(userTimes).isEmpty {
+                return false
+            }
+        }
+
         return true
     }
 
@@ -238,6 +262,12 @@ class DiscoveryFilters: ObservableObject {
         UserDefaults.standard.set(Array(petPreferences), forKey: "petPreferences")
         UserDefaults.standard.set(Array(exercisePreferences), forKey: "exercisePreferences")
         UserDefaults.standard.set(Array(dietPreferences), forKey: "dietPreferences")
+
+        // Fitness Filters
+        UserDefaults.standard.set(Array(fitnessLevels), forKey: "fitnessLevels")
+        UserDefaults.standard.set(Array(workoutTypes), forKey: "workoutTypes")
+        UserDefaults.standard.set(Array(preferredWorkoutTimes), forKey: "preferredWorkoutTimes")
+        UserDefaults.standard.set(Array(workoutFrequencies), forKey: "workoutFrequencies")
     }
 
     private func loadFromUserDefaults() {
@@ -281,6 +311,20 @@ class DiscoveryFilters: ObservableObject {
         }
         if let diet = UserDefaults.standard.array(forKey: "dietPreferences") as? [String] {
             dietPreferences = Set(diet)
+        }
+
+        // Fitness Filters
+        if let levels = UserDefaults.standard.array(forKey: "fitnessLevels") as? [String] {
+            fitnessLevels = Set(levels)
+        }
+        if let types = UserDefaults.standard.array(forKey: "workoutTypes") as? [String] {
+            workoutTypes = Set(types)
+        }
+        if let times = UserDefaults.standard.array(forKey: "preferredWorkoutTimes") as? [String] {
+            preferredWorkoutTimes = Set(times)
+        }
+        if let frequencies = UserDefaults.standard.array(forKey: "workoutFrequencies") as? [String] {
+            workoutFrequencies = Set(frequencies)
         }
     }
 

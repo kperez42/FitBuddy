@@ -87,6 +87,9 @@ class DiscoverViewModel: ObservableObject {
     private var passTask: Task<Void, Never>?
     private var filterTask: Task<Void, Never>?
 
+    // FITNESS: Compatibility scorer for fitness-based matching
+    private let fitnessScorer = FitnessCompatibilityScorer.shared
+
     // Dependency injection initializer
     // ARCHITECTURE FIX: Inject all required services to enable testing and reduce coupling
     init(
@@ -177,7 +180,10 @@ class DiscoverViewModel: ObservableObject {
                 // BOOST: Prioritize boosted profiles (show them first)
                 let prioritizedUsers = prioritizeBoostedProfiles(nonBlockedUsers)
 
-                users = prioritizedUsers
+                // FITNESS: Sort by fitness compatibility score
+                let fitnessRankedUsers = await sortByFitnessCompatibility(prioritizedUsers, currentUser: currentUser)
+
+                users = fitnessRankedUsers
                 isLoading = false
 
                 // Preload images for next 2 users
@@ -648,6 +654,48 @@ class DiscoverViewModel: ObservableObject {
         }
 
         return filteredUsers
+    }
+
+    // MARK: - Fitness Compatibility Ranking
+
+    /// Sort users by fitness compatibility score (maintaining boost priority)
+    private func sortByFitnessCompatibility(_ users: [User], currentUser: User) async -> [User] {
+        guard !users.isEmpty else { return users }
+
+        // Calculate compatibility scores for all users
+        var scoredUsers: [(user: User, score: Double, isBoosted: Bool)] = []
+
+        let now = Date()
+        for user in users {
+            let isBoosted = user.isBoostActive && (user.boostExpiryDate ?? Date.distantPast) > now
+            let compatibility = fitnessScorer.calculateCompatibility(currentUser: currentUser, otherUser: user)
+            scoredUsers.append((user: user, score: compatibility.overallScore, isBoosted: isBoosted))
+        }
+
+        // Sort: boosted users first (by score), then non-boosted by score
+        scoredUsers.sort { a, b in
+            // Both boosted or both not boosted - sort by score
+            if a.isBoosted == b.isBoosted {
+                return a.score > b.score
+            }
+            // Boosted users come first
+            return a.isBoosted && !b.isBoosted
+        }
+
+        let sortedUsers = scoredUsers.map { $0.user }
+
+        // Log fitness ranking stats
+        let avgScore = scoredUsers.map { $0.score }.reduce(0, +) / Double(max(1, scoredUsers.count))
+        let highCompatCount = scoredUsers.filter { $0.score >= 0.7 }.count
+        Logger.shared.info("Fitness ranked \(sortedUsers.count) users (avg score: \(String(format: "%.0f", avgScore * 100))%, \(highCompatCount) high compatibility)", category: .matching)
+
+        return sortedUsers
+    }
+
+    /// Get fitness compatibility result for a specific user
+    func getCompatibility(for user: User) -> FitnessCompatibilityResult? {
+        guard let currentUser = authService.currentUser else { return nil }
+        return fitnessScorer.calculateCompatibility(currentUser: currentUser, otherUser: user)
     }
 
     // MARK: - Profile Boost Prioritization

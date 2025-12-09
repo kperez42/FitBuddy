@@ -1,17 +1,17 @@
-Contact: mailto:security@celestia-app.com
-Contact: https://github.com/kperez42/Celestia/security
+Contact: mailto:security@fitbuddy.app
+Contact: https://github.com/kperez42/FitBuddy/security
 Expires: 2026-12-31T23:59:59.000Z
 Preferred-Languages: en
-Canonical: https://admin.celestia-app.com/.well-known/security.txt
-Policy: https://celestia-app.com/security-policy
-Acknowledgments: https://celestia-app.com/security-hall-of-fame
+Canonical: https://admin.fitbuddy.app/.well-known/security.txt
+Policy: https://fitbuddy.app/security-policy
+Acknowledgments: https://fitbuddy.app/security-hall-of-fame
 
 # Security Vulnerability Reporting
 
-If you discover a security vulnerability in Celestia, please report it responsibly:
+If you discover a security vulnerability in FitBuddy, please report it responsibly:
 
-1. Email: security@celestia-app.com
-2. GitHub: https://github.com/kperez42/Celestia/security/advisories/new
+1. Email: security@fitbuddy.app
+2. GitHub: https://github.com/kperez42/FitBuddy/security/advisories/new
 3. Do NOT create public GitHub issues for security vulnerabilities
 
 We take security seriously and will respond to all legitimate reports within 48 hours.
@@ -19,12 +19,12 @@ We take security seriously and will respond to all legitimate reports within 48 
 # Encryption
 
 If you need to send sensitive information, please use our PGP key available at:
-https://celestia-app.com/pgp-key.asc
+https://fitbuddy.app/pgp-key.asc
 
 # Scope
 
 In-scope:
-- iOS app (Celestia)
+- iOS app (FitBuddy)
 - Admin dashboard
 - Cloud Functions API
 - Firebase infrastructure configuration
@@ -44,4 +44,4 @@ individuals who:
 - Do not access or modify user data beyond what's necessary to demonstrate the vulnerability
 - Do not publicly disclose the vulnerability before we've had time to fix it
 
-Thank you for helping keep Celestia and our users safe!
+Thank you for helping keep FitBuddy and our users safe!

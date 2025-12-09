@@ -1136,21 +1136,21 @@ struct OnboardingView: View {
                 }
                 
                 VStack(spacing: 8) {
-                    Text("Dating Preferences")
+                    Text("Training Preferences")
                         .font(.title)
                         .fontWeight(.bold)
-                    
-                    Text("Who are you interested in?")
+
+                    Text("Who would you like to train with?")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                 }
                 
                 VStack(alignment: .leading, spacing: 12) {
-                    Text("Interested in")
+                    Text("Train with")
                         .font(.subheadline)
                         .fontWeight(.medium)
                         .foregroundColor(.secondary)
-                    
+
                     ForEach(workoutPreferenceOptions, id: \.self) { option in
                         Button {
                             withAnimation(.spring(response: 0.3)) {
